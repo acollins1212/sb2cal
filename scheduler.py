@@ -118,7 +118,14 @@ class Course:
 		
 		
 		self.finalExam_date = re.search(r'\d{1,2}/\d{1,2}/\d{4}', self.finalExam_str).group()
+		#The date is in MM/DD/YYYY format. split based on '/'
+		self.finalExam_date = self.finalExam_date.split('/') 
+		self.finalExam_date = datetime.date(int(self.finalExam_date[2]), int(self.finalExam_date[0]), int(self.finalExam_date[1]))
+
 		self.finalExam_time = re.search(r'\d{1,2}:\d{2} [A|P]M', self.finalExam_str).group()
+		self.finalExam_time = parse_time(self.finalExam_time)
+		self.finalExam_time = datetime.time(self.finalExam_time[0], self.finalExam_time[1])
+
 		self.units = re.search(r'Units: ([.\d]+)', class_string).group(1)
 
 		
@@ -190,7 +197,33 @@ class Course:
 
 		return event
 
+	def getFinalJSON(self):
+		#delta is two hours
+		delta = datetime.timedelta(0,0,0,0,0,2,)
+	
+		event = {
+		    'summary': "{} Final".format(self.name_str),
+		    'description': "Good Luck!",
+		    'start': {
+		        'dateTime': datetime.datetime.combine(self.finalExam_date, self.finalExam_time).isoformat(),
+		        'timeZone': 'America/Los_Angeles',
+		    },
+		    'end': {
+		        'dateTime': (datetime.datetime.combine(self.finalExam_date, self.finalExam_time) + delta).isoformat(),
+		        'timeZone': 'America/Los_Angeles',
+		    },
+		    'reminders': {
+		        'useDefault': False,            
+		        'overrides': [
+				{'method': 'email', 'minutes': 24 * 60},
+			        {'method': 'popup', 'minutes': 10},
+		        ],
+		     },
+		}
 
+		return event
+
+		
 
 def read_txt(schedule_str):
 	

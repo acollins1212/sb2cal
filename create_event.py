@@ -104,15 +104,20 @@ def main():
 
     #Create the course array
     course_array = getCourseArray(schedule_str)
-
+    
     for course in course_array:
         i = 0
-        
+	#first insert the final date and time
+        event = course.getFinalJSON()
+	service.events().insert(calendarId=new_calendar_id, body=event).execute()
+	
         for meeting in course.meeting_array:
             event = course.getEventJSON(i)
             service.events().insert(calendarId=new_calendar_id, body=event).execute()
             i += 1
-
+	
+    
+    course_array[0].getFinalJSON()
 
 
 
