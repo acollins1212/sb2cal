@@ -3,21 +3,30 @@
 #Reference Google Calendar API Documentation 
 #Credit: used quickstart.py from Google API Docs as framework
 
-
+#WARNING: THIS CODE WILL NOT WORK W/O schedule.txt and test_calendar_id.txt
+#	 I'M NOT UPLOADING THEM TO GITHUB BECAUSE THEY CONTAIN PERSONAL INFO
+#	 
+#	 schedule:txt	copy-paste entire, detail-visible schedule from UCD Schedule Builder
+#	 test_calendar_id.txt:   I created the calendar with the API and noted its id
 
 from __future__ import print_function
 import httplib2
 import os
+import sys
 
 from apiclient import discovery
 import oauth2client
 from oauth2client import client
 from oauth2client import tools
 
+
 import datetime
 from apiclient.discovery import build
 
 from scheduler import *
+
+
+
 ######################################
 
 try:
@@ -61,21 +70,6 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-'''
-#currently not using
-def updateCalendar(test_calendar_id):    
-    calendar = service.calendars().get(calendarId=test_calendar_id).execute()
-    '''
-    calendar['summary'] = "Testing Calendar"
-    calendar['description'] = "Used for the Schedule Builder -> Google Calendar program I'm making"
-
-    updated_calendar = service.calendars().update(calendarId=calendar['id'], body=calendar).execute()
-    '''
-
-    print(calendar['summary'])
-    print(calendar['description'])
-'''
-
 
 #creates calendar and returns the calendar id
 def createCalendar(name_of_calendar, description, SERVICE):
@@ -87,42 +81,38 @@ def createCalendar(name_of_calendar, description, SERVICE):
 
     created_calendar = SERVICE.calendars().insert(body=calendar).execute()
     return created_calendar['id']
-    
+
+
+
 
 def main():
     
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = build('calendar', 'v3', http=http)
-  
-    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time  
+    schedule_str = "schedule.txt"
 
-    new_calendar_id = createCalendar('TESTING', 'test description', service)
+
+    '''
+    with open ("test_calendar_id.txt", "r") as file:
+        new_calendar_id = file.read()
+        new_calendar_id = new_calendar_id[0:len(new_calendar_id)-1]
+        print(new_calendar_id)
+    '''
+    new_calendar_id = createCalendar('WQ Course Schedule', 'Created by create_event.py', service)
     calendar = service.calendars().get(calendarId=new_calendar_id).execute()
 
-    page_token = None
-    while True:
-        events = service.events().list(calendarId=new_calendar_id, pageToken=page_token).execute()
-        for event in events['items']:
-            print(event['summary'])
-        page_token = events.get('nextPageToken')
-        if not page_token:
-            break
-    '''
-    print('Getting the upcoming 10 events')
-    eventsResult = service.events().list(
-        calendarId=test_calendar_id, timeMin=now, maxResults=10, singleEvents=True,
-        orderBy='startTime').execute()
-    
-    events = eventsResult.get('items', [])
-    print(events)
+    #Create the course array
+    course_array = getCourseArray(schedule_str)
 
-    if not events:
-        print('No upcoming events found.')
-    for event in events:
-        start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'], event['id'])
-    '''    
+    for course in course_array:
+        i = 0
+        
+        for meeting in course.meeting_array:
+            event = course.getEventJSON(i)
+            service.events().insert(calendarId=new_calendar_id, body=event).execute()
+            i += 1
+
 
 
 
