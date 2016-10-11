@@ -107,7 +107,7 @@ def main():
     
     for course in course_array:
         i = 0
-	#first insert the final date and time
+	    #first insert the final date and time
         event = course.getFinalJSON()
 	service.events().insert(calendarId=new_calendar_id, body=event).execute()
 	
