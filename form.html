@@ -1,0 +1,87 @@
+ <!DOCTYPE html
+ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+A.J. Collins
+Schedule Builder to Google Calendar
+
+Started HTML on 13 October, 2016
+
+HTML Skeleton from this site:
+http://www.eg.bucknell.edu/~brk009/assets/skel.html
+
+References listed at the bottom of the document
+-->
+
+<html>
+
+<head>
+	<title>Schedule Builder to Google Calendar!</title>
+</head>
+
+<body>
+	<h1>Schedule Builder to Google Calendar!</h1>
+	<p>Hopefully this works!</p>
+
+	<!-- RELOAD BUTTON	
+	REFERENCE A -->
+	<button onclick="reloadPage()">Reload page</button>
+
+	<script>
+		function reloadPage() {
+			location.reload();
+		}
+	</script>
+
+
+	<!-- FORM FOR INPUT
+	REFERENCE B-->
+	<script>
+		function makeTextArea() {
+			var textArea = document.createElement("TEXTAREA");
+				textArea.setAttribute("id", "textArea_id"); //REFERENCE D
+
+				var t = document.createTextNode("Input text here"); 
+				textArea.appendChild(t);
+				document.body.appendChild(textArea);
+			}
+		window.onload = makeTextArea;	//REFERENCE E
+	</script>
+
+	<!-- GET FORM INPUT AND PRINT
+	REFERENCE C -->
+	<button onclick="printTextArea_HTML()">Print Text Area</button>
+
+	<p id="form_display_element"></p>
+
+	<script>
+		
+		function printTextArea_HTML() {
+			var disp = document.getElementById("textArea_id").value;
+			disp = disp.replace(/(\r\n|\n|\r)/gm, "<br>")
+			document.getElementById("form_display_element").innerHTML = disp; 
+			document.body.appendChild(disp);
+		}
+	</script>
+
+
+</body>
+
+
+
+</html>
+
+<!-- 
+
+References:
+	A:		http://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_loc_reload
+	B:		http://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_textarea_create
+	C:		http://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_text_get
+	D:		http://stackoverflow.com/questions/4851699/setting-the-id-attribute-of-an-input-element-dynamically-in-ie-alternative-for
+	E: 		http://stackoverflow.com/questions/2644615/how-do-i-automatically-execute-javascript
+
+
+
+
+-->
