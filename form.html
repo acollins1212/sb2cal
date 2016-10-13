@@ -45,7 +45,8 @@ References listed at the bottom of the document
 				var t = document.createTextNode("Input text here"); 
 				textArea.appendChild(t);
 				document.body.appendChild(textArea);
-			}
+		}
+		
 		window.onload = makeTextArea;	//REFERENCE E
 	</script>
 
@@ -59,12 +60,38 @@ References listed at the bottom of the document
 		
 		function printTextArea_HTML() {
 			var disp = document.getElementById("textArea_id").value;
-			disp = disp.replace(/(\r\n|\n|\r)/gm, "<br>")
+			disp = disp.replace(/(\r\n|\n|\r)/gm, "<br>");
 			document.getElementById("form_display_element").innerHTML = disp; 
-			document.body.appendChild(disp);
 		}
 	</script>
 
+
+	<button onclick="parseTime()">Parse Time</button>
+	<p id="time_disp"></p>
+	<script>
+		function parseTime() {
+
+			//time_string is expected as (X)X:XX AM/PM
+			var textAreaVal = document.getElementById("textArea_id").value;
+			var timeStr = textAreaVal;
+			var splitStr = timeStr.split(' ');
+			var hourMinute = splitStr[0];
+			var dayHalf = splitStr[1];
+
+			var time = hourMinute.split(':');
+			var hour = parseInt(time[0]);
+			var minute = parseInt(time[1]);
+
+			//this changes the hour to 24-hour time
+			if(time[0] != "12" && dayHalf == "PM"){
+				hour += 12;
+			}
+
+
+			document.getElementById("time_disp").innerHTML = hour.toString().concat(minute.toString(), " -- ", dayHalf);
+		}
+
+	</script>
 
 </body>
 
