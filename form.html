@@ -35,27 +35,12 @@ References listed at the bottom of the document
 	</script>
 
 
-	<!-- FORM FOR INPUT
-	REFERENCE B-->
-	<script>
-		function makeTextArea() {
-			var textArea = document.createElement("TEXTAREA");
-				textArea.setAttribute("id", "textArea_id"); //REFERENCE D
-
-				var t = document.createTextNode("Input text here"); 
-				textArea.appendChild(t);
-				document.body.appendChild(textArea);
-		}
-		
-		window.onload = makeTextArea;	//REFERENCE E
-	</script>
-
 	<!-- GET FORM INPUT AND PRINT
 	REFERENCE C -->
 	<button onclick="printTextArea_HTML()">Print Text Area</button>
 
 	<p id="form_display_element"></p>
-
+	
 	<script>
 		
 		function printTextArea_HTML() {
@@ -65,6 +50,7 @@ References listed at the bottom of the document
 		}
 	</script>
 
+	<textarea id="textArea_id" placeholder="Input text here" style="width: 500px; height: 500px;"></textarea>
 
 	<button onclick="parseTime()">Parse Time</button>
 	<p id="time_disp"></p>
@@ -93,6 +79,16 @@ References listed at the bottom of the document
 
 	</script>
 
+	
+	<button onclick="parseSchedule()">Parse Schedule</button>
+	<p id="schedule_disp></p>
+	<script>
+		function parseSchedule() {
+			//javascript regex --> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+		}
+	</script>
+	
+	
 </body>
 
 
