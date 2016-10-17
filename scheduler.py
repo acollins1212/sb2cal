@@ -254,10 +254,10 @@ def getCourseArray(schedule_str):
     i = 0 
     for str in class_strings:
         course_array.append(Course(class_strings[i]))
-        '''	
+        	
         course_array[i].print_Course()
         print('-----------------------------------------')
-        '''
+        
         i += 1
 
     return course_array

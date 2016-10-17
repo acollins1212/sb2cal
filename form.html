@@ -38,19 +38,11 @@ References listed at the bottom of the document
 	<!-- GET FORM INPUT AND PRINT
 	REFERENCE C -->
 	<button onclick="printTextArea_HTML()">Print Text Area</button>
-
-	<p id="form_display_element"></p>
 	
-	<script>
-		
-		function printTextArea_HTML() {
-			var disp = document.getElementById("textArea_id").value;
-			disp = disp.replace(/(\r\n|\n|\r)/gm, "<br>");
-			document.getElementById("form_display_element").innerHTML = disp; 
-		}
-	</script>
+	<p> </p>
 
 	<textarea id="textArea_id" placeholder="Input text here" style="width: 500px; height: 500px;"></textarea>
+
 
 	<button onclick="parseTime()">Parse Time</button>
 	<p id="time_disp"></p>
@@ -81,6 +73,7 @@ References listed at the bottom of the document
 
 	
 	<button onclick="parseSchedule()">Build Schedule</button>
+
 	<p id="schedule_disp"></p>
 	
 	<script type="text/javascript" src ="scheduler.js">
