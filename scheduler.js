@@ -48,11 +48,13 @@ function parseSchedule() {
 
 	//document.getElementById("time_disp").innerHTML = split_schedule[0];
 
-   	var TEST = new Course(split_schedule[0]);
+   	//var TEST = new Course(split_schedule[0]);
+
+   	return split_schedule;
 }
 
 var Course = function(class_string){
-	name_pattern = /(^[A-Z]{3} \d{3}.{0,1}) (.{3}) - (.+)/m;
+	name_pattern = /(^[A-Z]{3} \d{3}[A-Z]{0,1}) (.{3}) - (.+)/m;
     schedule_pattern = /^.*[A|P]M .*/gm;
     exam_pattern = /.* (\d{1,2}\/\d{1,2}\/\d{4}) \d{1,2}:\d{2} [A|P]M/m;
 
@@ -77,6 +79,15 @@ var Course = function(class_string){
     this.finalExam_date = this.finalExam_date.split('/');
 
     //FIXME: create datetimes from the final exam
+
+
+    this.getEventJSON = function(meeting_number) {
+    	//course_code ex: "ABC 101"
+    	//course_meeting  can be lecture, discussion, lab, etc
+
+    	var course_event = this.meeting_array[meeting_number];
+    	var course_code = this.name_str;
+    } //this.getEventJSON()
 }
 
 
@@ -138,7 +149,5 @@ var Course_meeting = function(single_schedule){
 	else {
 		console.log("location null");
 	}
-
-	console.log(this);
 	
 } //Course_meeting()

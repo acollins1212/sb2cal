@@ -18,6 +18,9 @@ References listed at the bottom of the document
 
 <head>
 	<title>Schedule Builder to Google Calendar!</title>
+	<script type="text/javascript" src ="scheduler.js">
+	</script>
+	<script type="text/javascript" src = "quickstart.html"></script>
 </head>
 
 <body>
@@ -46,38 +49,12 @@ References listed at the bottom of the document
 
 	<button onclick="parseTime()">Parse Time</button>
 	<p id="time_disp"></p>
-	<script>
-		function parseTime() {
-
-			//time_string is expected as (X)X:XX AM/PM
-			var textAreaVal = document.getElementById("textArea_id").value;
-			var timeStr = textAreaVal;
-			var splitStr = timeStr.split(' ');
-			var hourMinute = splitStr[0];
-			var dayHalf = splitStr[1];
-
-			var time = hourMinute.split(':');
-			var hour = parseInt(time[0]);
-			var minute = parseInt(time[1]);
-
-			//this changes the hour to 24-hour time
-			if(time[0] != "12" && dayHalf == "PM"){
-				hour += 12;
-			}
-
-
-			document.getElementById("time_disp").innerHTML = hour.toString().concat(minute.toString(), " -- ", dayHalf);
-		}
-
-	</script>
-
 	
 	<button onclick="parseSchedule()">Build Schedule</button>
 
 	<p id="schedule_disp"></p>
 	
-	<script type="text/javascript" src ="scheduler.js">
-	</script>
+	
 	
 	
 </body>
