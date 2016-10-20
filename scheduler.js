@@ -1,3 +1,11 @@
+/**
+A.J. Collins
+October 2016
+
+This is translated from python. 
+
+**/
+
 function parseTime() {
 
 	//time_string is expected as (X)X:XX AM/PM
@@ -20,15 +28,27 @@ function parseTime() {
 }
 
 function parseSchedule() {
-	var fullSchedule = document.getElementById("textArea_id").value;
-	var splitSchedule = fullSchedule.split("Actions");
-	document.getElementById("time_disp").innerHTML = splitSchedule[0];
+	var full_schedule = document.getElementById("textArea_id").value;
+	//var splitSchedule = fullSchedule.split("Actions");
 
-	var meeting_type_pattern = /[a-zA-Z]+/;
-   	var start_time_pattern = /\d{1,2}:\d{2} [A|P]M/;
-   	var end_time_pattern = /- (\d{1,2}:\d{2} [A|P]M)/;
-   	var days_of_week_pattern = /([A|P]M)([MTWRFS]+)[A-Z]/;
-   	var TEST = new Course(splitSchedule[0]);
+
+	var course_name_pattern = /[A-Z]{3} [0-9]{3}[A-Z]{0,1} [A-Z0-9]{3} - .*/gm;
+	var course_name_array = full_schedule.match(course_name_pattern);
+
+	var unique_delimiter = "!@#$%^&*";
+	var num_courses = course_name_array.length;
+	for(var i = 0; i < num_courses; i++){
+		var current_course = course_name_array[i];
+		//Adding random punctuation as future delimiter to split up full schedule
+		full_schedule = full_schedule.replace(current_course, unique_delimiter.concat(current_course));
+	}
+
+	var split_schedule = full_schedule.split(unique_delimiter);
+	split_schedule.shift();
+
+	//document.getElementById("time_disp").innerHTML = split_schedule[0];
+
+   	var TEST = new Course(split_schedule[0]);
 }
 
 var Course = function(class_string){
@@ -74,37 +94,37 @@ var Course_meeting = function(single_schedule){
 	this.location = "";
 
 	//taking meeting_type out of schedule passed in
-	if (this.meeting_type = single_schedule.match(meeting_type_pattern)){
+	if (this.meeting_type = single_schedule.match(meeting_type_pattern)[0]){
 	} // do nothing
 	else {
 		console.log("meeting_type null");
 	}
 
 	//taking start_time out of schedule passed in
-	if (this.start_time = single_schedule.match(start_time_pattern)){
+	if (this.start_time = single_schedule.match(start_time_pattern)[0]){
 	} //do nothing
 	else {
 		console.log("start_time null");
 	}
 
 	//Taking end_time out of schedule passed in
-	if (this.end_time = single_schedule.match(end_time_pattern)) {
+	if (this.end_time = single_schedule.match(end_time_pattern)[1]) {
 	} //do nothing
 	else {
 		console.log("end_time null");
 	}
 
 	//Taking days_of_week out of schedule passed in 
-	if (this.days_of_week = single_schedule.match(days_of_week_pattern)) {
+	if (this.days_of_week = single_schedule.match(days_of_week_pattern)[2]) {
 
-	    this.days_of_week = this.days_of_week[1];
-	    var dow_length = this.days_of_week.length-1;
 		//RFC 5545 takes recurrence dates given with two letter abbreviations
-		this.days_of_week = this.days_of_week.replace('M', 'MO,')
-        this.days_of_week = this.days_of_week.replace('T', 'TU,')
-        this.days_of_week = this.days_of_week.replace('W', 'WE,')
-        this.days_of_week = this.days_of_week.replace('R', 'TH,')
-        this.days_of_week = this.days_of_week.replace('F', 'FR,')
+		this.days_of_week = this.days_of_week.replace('M', 'MO,');
+        this.days_of_week = this.days_of_week.replace('T', 'TU,');
+        this.days_of_week = this.days_of_week.replace('W', 'WE,');
+        this.days_of_week = this.days_of_week.replace('R', 'TH,');
+        this.days_of_week = this.days_of_week.replace('F', 'FR,');
+   	    var dow_length = this.days_of_week.length-1;
+
         this.days_of_week = this.days_of_week.substring(0,dow_length);
 	}
 	else {
@@ -112,11 +132,13 @@ var Course_meeting = function(single_schedule){
 	}
 
 	//taking location out of schedule passed in 
-	if (this.location = single_schedule.match(location_pattern)) {
+	if (this.location = single_schedule.match(location_pattern)[1]) {
 		//do nothing
 	}
 	else {
 		console.log("location null");
 	}
+
+	console.log(this);
 	
 } //Course_meeting()
