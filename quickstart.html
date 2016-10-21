@@ -7,7 +7,7 @@
 
       var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
-      var CALENDAR_ID = 'apesrg92si5huhmt5g0bl3hbhg@group.calendar.google.com'
+      var CALENDAR_ID = 'sefi9caqu560102mm4u7rfnp3c@group.calendar.google.com'
 
       /**
        * Check if current user has authorized this application.
@@ -97,35 +97,37 @@
       }
 
 
-      function insertEvents(course) {
+      function insertEvents() {
 
         //parseSchedule() currently gets text from id="textArea_id"
         var course_array = parseSchedule();
 
         var event;
+        var course;
+        for(var i = 0; i < course_array.length; i++){
+          course = course_array[i];
 
-        for(var i = 0; i < course.meeting_array.length; i++) {
+          for(var j = 0; i < course.meeting_array.length; i++) {
 
-          event = getEventJSON(meeting_array[i]);
+           event = getEventJSON(i);
 
-          /////
+           var request = gapi.client.calendar.  events.insert({
+            'calendarId': CALENDAR_ID,
+            'resource': event
+            });
 
-          var request = gapi.client.calendar.events.insert({
-           'calendarId': CALENDAR_ID,
-           'resource': event
-         });
-
-          request.execute(function(event) {
-            appendPre('Event created: ' + event.htmlLink);
-          });
-        } //for
+            request.execute(function(event) {
+              appendPre('Event created: ' +   event.htmlLink);
+            });
+          } //inner for
+        } //outer for
 
 
 
         
       } //insertEvents()
 
-      
+
 
       /**
        * Append a pre element to the body containing the given message

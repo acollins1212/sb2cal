@@ -50,8 +50,8 @@ function parseSchedule() {
 
 	//document.getElementById("time_disp").innerHTML = split_schedule[0];
 
-   	var TEST = new Course(split_schedule[0]);
-   	TEST.getEventJSON(0);
+   	//var TEST = new Course(split_schedule[0]);
+   	//TEST.getEventJSON(0);
 
    	return split_schedule;
 }
@@ -139,20 +139,20 @@ var Course = function(class_string){
 			'description': desc,
 			'start': {
 				'dateTime': start_datetime,
-				//'timeZone': 'America/Los_Angeles'
+				'timeZone': 'America/Los_Angeles'
 			}, 
 			'end': {
 				'dateTime': end_datetime,
-				//'timeZone': 'America/Los_Angeles'
+				'timeZone': 'America/Los_Angeles'
 			}, 
 			'recurrence': [
 				recurrence_string
 			],
 			'reminders': {
-				'useDefault': false,
+				'useDefault': false
 				//FEATURE IDEA: Ask user whether they want reminders
 			}
-			//FEATURE IDEA: Ask user what color they want for the calendar
+			//FEATURE IDEA: Ask user what color they want for the calendari
 		} //event
 
 		console.log(event);
