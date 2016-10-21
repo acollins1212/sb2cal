@@ -105,7 +105,7 @@ class Course:
         self.section = reg_obj_name.group(2)		
         self.description_str = reg_obj_name.group(3)	#title of class, like Intro to Biology
 
-        self.finalExam_str = re.search(time_pattern, class_string, re.M).group()
+        
 	
         self.schedule_array = re.findall(schedule_pattern, class_string, re.M)
 		
@@ -113,7 +113,7 @@ class Course:
         for i in range(len(self.schedule_array)):
             self.meeting_array.append(Course_meeting(self.schedule_array[i]))
 		
-		
+		self.finalExam_str = re.search(time_pattern, class_string, re.M).group()
         self.finalExam_date = re.search(r'\d{1,2}/\d{1,2}/\d{4}', self.finalExam_str).group()
         #The date is in MM/DD/YYYY format. split based on '/'
         self.finalExam_date = self.finalExam_date.split('/') 

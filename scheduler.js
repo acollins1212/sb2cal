@@ -6,24 +6,23 @@ This is translated from python.
 
 **/
 
-function parseTime() {
+function parseTime(time_str) {
 
-	//time_string is expected as (X)X:XX AM/PM
-	var textAreaVal = document.getElementById("textArea_id").value;
-	var timeStr = textAreaVal;
-	var splitStr = timeStr.split(' ');
-	var hourMinute = splitStr[0];
-	var dayHalf = splitStr[1];
+	//time_str is expected as (X)X:XX AM/PM
+	
+	var split_str = time_str.split(' ');
+	var hour_minute = split_str[0];
+	var day_half = split_str[1];
 
-	var time = hourMinute.split(':');
-	var hour = parseInt(time[0]);
-	var minute = parseInt(time[1]);
+	var time = hour_minute.split(':');
+	time[0] = parseInt(time[0]);
+	time[1] = parseInt(time[1]);
 
 	//this changes the hour to 24-hour time
-	if(time[0] != "12" && dayHalf == "PM"){
-		hour += 12;
+	if(time[0] != "12" && day_half == "PM"){
+		time[0] += 12;
 	}
-
+	
 	return time;
 }
 
@@ -48,15 +47,18 @@ function parseSchedule() {
 
 	//document.getElementById("time_disp").innerHTML = split_schedule[0];
 
-   	//var TEST = new Course(split_schedule[0]);
+   	var TEST = new Course(split_schedule[1]);
 
    	return split_schedule;
 }
 
 var Course = function(class_string){
-	name_pattern = /(^[A-Z]{3} \d{3}[A-Z]{0,1}) (.{3}) - (.+)/m;
-    schedule_pattern = /^.*[A|P]M .*/gm;
-    exam_pattern = /.* (\d{1,2}\/\d{1,2}\/\d{4}) \d{1,2}:\d{2} [A|P]M/m;
+	
+	//WEEKLY SCHEDULE PORTION
+	var name_pattern = /(^[A-Z]{3} \d{3}[A-Z]{0,2}) (.{3}) - (.+)/m;
+    var schedule_pattern = /^.*[A|P]M .*/gm;
+    var exam_pattern = /.* (\d{1,2}\/\d{1,2}\/\d{4}) (\d{1,2}:\d{2} [A|P]M)/m;
+	
 
     var reg_obj_name = class_string.match(name_pattern);
 
@@ -74,19 +76,29 @@ var Course = function(class_string){
 
     //console.log(this.meeting_array);
 
-    this.finalExam_str = class_string.match(exam_pattern)[0];
-    this.finalExam_date = class_string.match(exam_pattern)[1];
-    this.finalExam_date = this.finalExam_date.split('/');
-
-    //FIXME: create datetimes from the final exam
-
-
+	
+	//FINAL EXAM PORTION
+    this.finalExam_str = class_string.match(exam_pattern);
+	//The date is in MM/DD/YYYY format. 
+    var mmddyyyy = this.finalExam_str[1].split('/');
+	console.log(mmddyyyy);
+	var time = parseTime(this.finalExam_str[2]);
+	//Months are zero indexed, so I'm subtracting one inside constructor
+	this.finalExam_date = new Date(mmddyyyy[2], mmddyyyy[0] - 1, mmddyyyy[1], time[0], time[1], 0, 0 );
+	console.log(this.finalExam_date.toISOString());
+	
+	
+	
+	
     this.getEventJSON = function(meeting_number) {
     	//course_code ex: "ABC 101"
     	//course_meeting  can be lecture, discussion, lab, etc
 
     	var course_event = this.meeting_array[meeting_number];
     	var course_code = this.name_str;
+		
+		//NOT FINISHED!
+		
     } //this.getEventJSON()
 }
 
