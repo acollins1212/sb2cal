@@ -6,6 +6,9 @@ This is translated from python.
 
 **/
 
+var FIRST_DAY = new Date(2017, 0, 9, 1, 0, 0, 0);
+var LAST_DAY = new Date(2017, 2, 18, 17, 0, 0, 0);
+
 function parseTime(time_str) {
 
 	//time_str is expected as (X)X:XX AM/PM
@@ -47,7 +50,8 @@ function parseSchedule() {
 
 	//document.getElementById("time_disp").innerHTML = split_schedule[0];
 
-   	var TEST = new Course(split_schedule[1]);
+   	var TEST = new Course(split_schedule[0]);
+   	TEST.getEventJSON(0);
 
    	return split_schedule;
 }
@@ -81,13 +85,10 @@ var Course = function(class_string){
     this.finalExam_str = class_string.match(exam_pattern);
 	//The date is in MM/DD/YYYY format. 
     var mmddyyyy = this.finalExam_str[1].split('/');
-	console.log(mmddyyyy);
 	var time = parseTime(this.finalExam_str[2]);
 	//Months are zero indexed, so I'm subtracting one inside constructor
 	this.finalExam_date = new Date(mmddyyyy[2], mmddyyyy[0] - 1, mmddyyyy[1], time[0], time[1], 0, 0 );
-	console.log(this.finalExam_date.toISOString());
-	
-	
+	//console.log(this.finalExam_date.toISOString()); //FIXME???
 	
 	
     this.getEventJSON = function(meeting_number) {
@@ -95,12 +96,71 @@ var Course = function(class_string){
     	//course_meeting  can be lecture, discussion, lab, etc
 
     	var course_event = this.meeting_array[meeting_number];
-    	var course_code = this.name_str;
+    	var desc = this.description_str + "\nSection: " + this.section;
 		
-		//NOT FINISHED!
+		var frequency_string = 'FREQ=WEEKLY';
+		var until_string = 'UNTIL='+LAST_DAY.toISOString();
+		var byday_string = "BYDAY="+course_event.days_of_week;
+		var recurrence_string = 'RRULE:WKST=SU;'+frequency_string+';'+until_string+';'+byday_string;
 		
+		//To give the proper start date of a class
+		var addition = 0;
+		if(course_event.days_of_week.search('MO') != -1){
+			addition = 0;
+
+		}
+		else if(course_event.days_of_week.search('TU') != -1){
+			addition = 1;
+		}
+		else if(course_event.days_of_week.search('WE') != -1){
+			addition = 2;
+		}
+		else if(course_event.days_of_week.search('TH') != -1){
+			addition = 3;
+		}
+		else if(course_event.days_of_week.search('FR') != -1){
+			addition = 4;
+		}
+
+		var start_datetime = FIRST_DAY;
+		start_datetime.setDate(FIRST_DAY.getDate() + addition);
+		start_datetime.setHours(course_event.start_time[0]);
+		start_datetime.setMinutes(course_event.start_time[1]);
+		console.log(start_datetime);
+
+		var end_datetime = FIRST_DAY;
+		end_datetime.setHours(course_event.end_time[0]);
+		end_datetime.setMinutes(course_event.end_time[1]);
+		console.log(end_datetime);
+
+		var event = {
+			'summary': this.name_str + ' ' + course_event.meeting_type,
+			'location': course_event.location,
+			'description': desc,
+			'start': {
+				'dateTime': start_datetime,
+				//'timeZone': 'America/Los_Angeles'
+			}, 
+			'end': {
+				'dateTime': end_datetime,
+				//'timeZone': 'America/Los_Angeles'
+			}, 
+			'recurrence': [
+				recurrence_string
+			],
+			'reminders': {
+				'useDefault': false,
+				//FEATURE IDEA: Ask user whether they want reminders
+			}
+			//FEATURE IDEA: Ask user what color they want for the calendar
+		} //event
+
+		console.log(event);
+		return event;
+
     } //this.getEventJSON()
-}
+
+} //Course
 
 
 var Course_meeting = function(single_schedule){
@@ -125,6 +185,8 @@ var Course_meeting = function(single_schedule){
 
 	//taking start_time out of schedule passed in
 	if (this.start_time = single_schedule.match(start_time_pattern)[0]){
+		this.start_time = parseTime(this.start_time);
+		console.log(this.start_time);
 	} //do nothing
 	else {
 		console.log("start_time null");
@@ -132,6 +194,7 @@ var Course_meeting = function(single_schedule){
 
 	//Taking end_time out of schedule passed in
 	if (this.end_time = single_schedule.match(end_time_pattern)[1]) {
+		this.end_time = parseTime(this.end_time);
 	} //do nothing
 	else {
 		console.log("end_time null");
