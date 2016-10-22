@@ -1,13 +1,14 @@
 <html>
 <head>
+  <script type="text/javascript" src="scheduler.js"></script>
   <script type="text/javascript">
       // Your Client ID can be retrieved from your project in the Google
       // Developer Console, https://console.developers.google.com
       var CLIENT_ID = '939118948007-9uokpjk932ff0ci9kv6subk7hdbkg76d.apps.googleusercontent.com';
 
-      var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
+      var SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
-      var CALENDAR_ID = 'sefi9caqu560102mm4u7rfnp3c@group.calendar.google.com'
+      var CALENDAR_ID = 'agcujdtvsnfgblj5rev529a2s8@group.calendar.google.com'
 
       /**
        * Check if current user has authorized this application.
@@ -31,7 +32,7 @@
         if (authResult && !authResult.error) {
           // Hide auth UI, then load client library.
           authorizeDiv.style.display = 'none';
-          loadCalendarApi();
+          //loadCalendarApi();
         } else {
           // Show auth UI, allowing the user to initiate authorization by
           // clicking authorize button.
@@ -58,7 +59,7 @@
        function loadCalendarApi() {
         //gapi.client.load('calendar', 'v3', listUpcomingEvents);
 
-        gapi.client.load('calendar', 'v3', insertEvents());
+        gapi.client.load('calendar', 'v3', insertEvents);
       }
 
       /**
@@ -98,20 +99,20 @@
 
 
       function insertEvents() {
-
         //parseSchedule() currently gets text from id="textArea_id"
         var course_array = parseSchedule();
 
         var event;
         var course;
         for(var i = 0; i < course_array.length; i++){
-          course = course_array[i];
+          course = new Course(course_array[i]);
 
-          for(var j = 0; i < course.meeting_array.length; i++) {
+          for(var j = 0; j < course.meeting_array.length; j++) {
 
-           event = getEventJSON(i);
+            event = course.getEventJSON(j);
+            console.log(event);
 
-           var request = gapi.client.calendar.  events.insert({
+            var request = gapi.client.calendar.events.insert({
             'calendarId': CALENDAR_ID,
             'resource': event
             });
@@ -154,6 +155,8 @@
         Authorize
       </button>
     </div>
+    <textarea id="textArea_id" placeholder="Input text here" style="width: 500px; height: 100px;"></textarea>
+    <button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
     <pre id="output"></pre>
   </body>
   </html>
