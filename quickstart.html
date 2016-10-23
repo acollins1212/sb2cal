@@ -1,14 +1,11 @@
 <html>
 <head>
   <script type="text/javascript" src="scheduler.js"></script>
+  <script type="text/javascript" src="ID+scope.js"></script>
   <script type="text/javascript">
       // Your Client ID can be retrieved from your project in the Google
       // Developer Console, https://console.developers.google.com
-      var CLIENT_ID = '939118948007-9uokpjk932ff0ci9kv6subk7hdbkg76d.apps.googleusercontent.com';
-
-      var SCOPES = ["https://www.googleapis.com/auth/calendar"];
-
-      var CALENDAR_ID = 'agcujdtvsnfgblj5rev529a2s8@group.calendar.google.com'
+      
 
       /**
        * Check if current user has authorized this application.
@@ -97,7 +94,6 @@
         });
       }
 
-
       function insertEvents() {
         //parseSchedule() currently gets text from id="textArea_id"
         var course_array = parseSchedule();
@@ -109,8 +105,9 @@
 
           for(var j = 0; j < course.meeting_array.length; j++) {
 
+
             event = course.getEventJSON(j);
-            console.log(event);
+            //console.log(event);
 
             var request = gapi.client.calendar.events.insert({
             'calendarId': CALENDAR_ID,
@@ -119,7 +116,9 @@
 
             request.execute(function(event) {
               appendPre('Event created: ' +   event.htmlLink);
+
             });
+
           } //inner for
         } //outer for
 
@@ -158,5 +157,6 @@
     <textarea id="textArea_id" placeholder="Input text here" style="width: 500px; height: 100px;"></textarea>
     <button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
     <pre id="output"></pre>
+    
   </body>
   </html>
