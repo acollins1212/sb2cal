@@ -93,6 +93,7 @@ function parseSchedule() {
 		var desc = this.description_str + "\nSection: " + this.section;
 		
 		var last_day_iso = LAST_DAY.toISOString().replace(/[:\-.]/g,'');
+		last_day_iso = last_day_iso.replace(/00000Z/, '00Z');
 		
 
 		//RECURRENCE STRING
@@ -157,9 +158,9 @@ function parseSchedule() {
 				"dateTime": end_datetime,
 				"timeZone": "America/Los_Angeles"
 			},
-			//"recurrence": [
-			//	recurrence_string
-			//]
+			"recurrence": [
+				recurrence_string
+			]
 
 			/*
 			"reminders": {
