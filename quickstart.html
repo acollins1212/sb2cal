@@ -121,7 +121,21 @@
 
 
           } //inner for
+
+          //insert the Final Exam event
+          var final_exam = course.getFinalJSON();
+
+          var request = gapi.client.calendar.events.insert({
+           'calendarId': CALENDAR_ID,
+           'resource': final_exam
+          });
+
+          request.execute(function(final_exam) {
+            appendPre('Final created: ' +   final_exam.htmlLink);
+
+          });
         } //outer for
+
 
 
 

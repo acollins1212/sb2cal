@@ -85,6 +85,38 @@ function parseSchedule() {
 	var time = parseTime(this.finalExam_str[2]);
 	//Months are zero indexed, so I'm subtracting one inside constructor
 	this.finalExam_date = new Date(mmddyyyy[2], mmddyyyy[0] - 1, mmddyyyy[1], time[0], time[1], 0, 0 );
+	this.finalExam_date.setHours(this.finalExam_date.getHours() - 7); //-7 for timezone offset
+	this.finalExam_end = new Date(this.finalExam_date);
+	this.finalExam_end.setHours(this.finalExam_date.getHours() + 2); //finals last for two hours
+	
+	this.finalExam_date = this.finalExam_date.toISOString();
+	this.finalExam_date = this.finalExam_date.replace('.000Z', '-07:00');
+	this.finalExam_end = this.finalExam_end.toISOString();
+	this.finalExam_end = this.finalExam_end.replace('.000Z', '-07:00');
+
+
+
+    this.getFinalJSON = function() {
+    	console.log("Final Exam date: " + this.finalExam_date);
+
+
+
+    	finalExam = {
+    		'summary': this.name_str+ " Final",
+    		'description': "Good luck!",
+    		'start': {
+    			'dateTime': this.finalExam_date,
+    			'timeZone': 'America/Los_Angeles'
+    		},
+    		'end': {
+    			'dateTime': this.finalExam_end,
+    			'timeZone': 'America/Los_Angeles'
+    		},
+    		//FEATURE IDEA: ask user for reminders they want set
+    	} //finalExam
+
+    	return finalExam;
+    } //this.getFinalJSON()
 	
 	
 	this.getEventJSON = function(meeting_number) {
@@ -179,6 +211,8 @@ function parseSchedule() {
 		return event;
 
     } //this.getEventJSON()
+
+
 
 } //Course
 
