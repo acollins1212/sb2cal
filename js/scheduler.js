@@ -28,7 +28,7 @@ function parseTime(time_str) {
 	}
 	
 	return time;
-}
+} //parseTime()
 
 function parseSchedule() {
 	var full_schedule = document.getElementById("textArea_id").value;
@@ -53,9 +53,9 @@ function parseSchedule() {
    	//TEST.getEventJSON(0);
 
    	return split_schedule;
-   }
+} //parseSchedule()
 
-   var Course = function(class_string){
+var Course = function(class_string){
 
 	//WEEKLY SCHEDULE PORTION
 	var name_pattern = /(^[A-Z]{3} \d{3}[A-Z]{0,2}) (.{3}) - (.+)/m;
@@ -96,37 +96,37 @@ function parseSchedule() {
 
 
 
-    this.getFinalJSON = function() {
-    	console.log("Final Exam date: " + this.finalExam_date);
+	this.getFinalJSON = function() {
+		console.log("Final Exam date: " + this.finalExam_date);
 
 
 
-    	finalExam = {
-    		'summary': this.name_str+ " Final",
-    		'description': "Good luck!",
-    		'start': {
-    			'dateTime': this.finalExam_date,
-    			'timeZone': 'America/Los_Angeles'
-    		},
-    		'end': {
-    			'dateTime': this.finalExam_end,
-    			'timeZone': 'America/Los_Angeles'
-    		},
+		finalExam = {
+			'summary': this.name_str+ " Final",
+			'description': "Good luck!",
+			'start': {
+				'dateTime': this.finalExam_date,
+				'timeZone': 'America/Los_Angeles'
+			},
+			'end': {
+				'dateTime': this.finalExam_end,
+				'timeZone': 'America/Los_Angeles'
+			},
     		//FEATURE IDEA: ask user for reminders they want set
     	} //finalExam
 
     	return finalExam;
     } //this.getFinalJSON()
-	
-	
-	this.getEventJSON = function(meeting_number) {
 
-		var course_event = this.meeting_array[meeting_number];
-		var desc = this.description_str + "\nSection: " + this.section;
-		
-		var last_day_iso = LAST_DAY.toISOString().replace(/[:\-.]/g,'');
-		last_day_iso = last_day_iso.replace(/00000Z/, '00Z');
-		
+
+    this.getEventJSON = function(meeting_number) {
+
+    	var course_event = this.meeting_array[meeting_number];
+    	var desc = this.description_str + "\nSection: " + this.section;
+
+    	var last_day_iso = LAST_DAY.toISOString().replace(/[:\-.]/g,'');
+    	last_day_iso = last_day_iso.replace(/00000Z/, '00Z');
+
 
 		//RECURRENCE STRING
 		var frequency_string = 'FREQ=WEEKLY';

@@ -1,7 +1,10 @@
 <html>
 <head>
-  <script type="text/javascript" src="scheduler.js"></script>
-  <script type="text/javascript" src="ID+scope.js"></script>
+  <script type="text/javascript" src="js/scheduler.js"></script>
+  <script type="text/javascript" src="js/ID+scope.js">
+    //NOT UPLOADED FOR PRIVACY REASONS 
+    //contains vital variables: CLIENT_ID, SCOPES, CALENDAR_ID
+  </script> 
   <script type="text/javascript">
       // Your Client ID can be retrieved from your project in the Google
       // Developer Console, https://console.developers.google.com
@@ -53,9 +56,7 @@
        * Load Google Calendar client library. Insert Events from each course
        * once client library is loaded.
        */
-       function loadCalendarApi() {
-        //gapi.client.load('calendar', 'v3', listUpcomingEvents);
-
+      function loadCalendarApi() {
         gapi.client.load('calendar', 'v3', insertEvents);
       }
 
@@ -169,7 +170,7 @@
         Authorize
       </button>
     </div>
-    <textarea id="textArea_id" placeholder="Input text here" style="width: 500px; height: 100px;"></textarea>
+    <textarea id="textArea_id" placeholder="Paste schedule here" style="width: 500px; height: 100px;"></textarea>
     <button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
     <pre id="output"></pre>
     
