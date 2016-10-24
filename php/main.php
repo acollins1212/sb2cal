@@ -172,19 +172,21 @@
       </button>
     </div>
     
-    <textarea id="textArea_id" placeholder="Paste schedule here" style="width: 500px; height: 100px;"></textarea>
-    <!--
-    <div id="reminders-selection">Which reminders would you like for your schedule?
-      <form>
+    <div>
+      <form action="php/handle.php" method="post">
+        <textarea name="textArea" id="textArea_id" placeholder="Paste schedule here" style="width: 500px; height: 100px;"></textarea>
+ 
+<!-- 
         <input type="radio" name="reminders" value="none" checked>None<br>
         <input type="radio" name="reminders" value="email">Email<br>
         <input type="radio" name="reminders" value="popup">Popup<br>
+  -->
 
+        <input type="submit">
       </form>
 
-
     </div>
-    -->
+
     <div><button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button></div>
     <pre id="output"></pre>
 
