@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <script type="text/javascript" src="js/scheduler.js"></script>
@@ -170,9 +171,25 @@
         Authorize
       </button>
     </div>
+    
     <textarea id="textArea_id" placeholder="Paste schedule here" style="width: 500px; height: 100px;"></textarea>
-    <button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
+    <!--
+    <div id="reminders-selection">Which reminders would you like for your schedule?
+      <form>
+        <input type="radio" name="reminders" value="none" checked>None<br>
+        <input type="radio" name="reminders" value="email">Email<br>
+        <input type="radio" name="reminders" value="popup">Popup<br>
+
+      </form>
+
+
+    </div>
+    -->
+    <div><button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button></div>
     <pre id="output"></pre>
+
+    
+
     
   </body>
   </html>
