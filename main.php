@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" type="text/css" href="./mainstyle.css">
+  
   <script type="text/javascript" src="scheduler.js"></script>
   <script type="text/javascript" src="ID+scope.js">
     //NOT UPLOADED FOR PRIVACY REASONS 
@@ -162,6 +164,7 @@
     <script src="https://apis.google.com/js/client.js?onload=checkAuth">
     </script>
   </head>
+  
   <body>
     <h1>Schedule Builder to Google Calendar</h1>
     <div id="authorize-div" style="display: none">
@@ -174,14 +177,14 @@
     
     <div>
       <form action="handle.php" method="post">
-        <textarea name="textArea" id="textArea_id" placeholder="Paste schedule here" style="width: 500px; height: 100px;"></textarea>
+        <textarea name="textArea" id="textArea_id" placeholder="Paste schedule here" ></textarea>
  
 <!-- 
         <input type="radio" name="reminders" value="none" checked>None<br>
         <input type="radio" name="reminders" value="email">Email<br>
         <input type="radio" name="reminders" value="popup">Popup<br>
   -->
-
+		<br>
         <input type="submit">
       </form>
 

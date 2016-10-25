@@ -1,0 +1,23 @@
+/* 
+Color codes from: http://marketingtoolbox.ucdavis.edu/identity/color.html  
+	Blue: #002855  Gold: #C99700 Gray: #B1B3B3
+	Light blue: #E5E9EF
+
+
+
+*/
+
+body {
+	background-color: #E5E9EF 
+}
+
+h1 {
+	color: #002855
+}
+
+textarea {
+	width: 500px; 
+	height: 100px;
+	font-weight: bold;
+	color: #335379
+}
