@@ -35,11 +35,11 @@ function parseSchedule() {
 
 class Meeting {
 
-	private $meetingType;
-	private $startTime;
-	private $endTime;
-	private $daysOfWeek;
-	private $location;
+	public $meetingType;
+	public $startTime;
+	public $endTime;
+	public $daysOfWeek;
+	public $location;
 
 	function __construct($singleSchedule) {
 		$meetingType_pattern = '/[a-zA-Z]+/';
@@ -50,7 +50,7 @@ class Meeting {
 
 		//Taking $meetingType out of $singleSchedule
 		if (preg_match($meetingType_pattern, $singleSchedule, $this->meetingType)) {
-			$this->meetingType = $meetingType[0];
+			$this->meetingType = $this->meetingType[0];
 		}
 		else { 
 			echo "Meeting Type Error!";
@@ -107,10 +107,10 @@ class Meeting {
 
 class Course {
 
-	private $meetingArray;
-	private $courseCode;
-	private $section;
-	private $descriptionStr;
+	public $meetingArray;
+	public $courseCode;
+	public $section;
+	public $descriptionStr;
 
 	function __construct($classString){
 
@@ -143,6 +143,11 @@ class Course {
 
 } //Course class
 
+function checkWithUser($c) {
+	
+	echo '<div><input type="text" name="' . $c->courseCode . '" value="' . $c->courseCode . '" /></div>';
+
+} //checkWithUser
 
 
 $courseList = parseSchedule();
@@ -154,9 +159,23 @@ $courseArray = [];
 $numCourses = count($courseList);
 for ($i = 0; $i < $numCourses; $i++) {
 	$courseArray[] = new Course($courseList[$i]);
+
 } //for
 
-print_r($courseArray);
+
+//Double-check with user. Is everything inserted correctly
+echo '<form action="handle2.php" method="post">';
+for ($i = 0; $i < $numCourses; $i++) {
+	$currentCourse = $courseArray[$i];
+
+	echo '<div><input type="text" name="' . $i . '" value="' . $currentCourse->courseCode . '" /></div>';
+
+
+} //for
+
+echo '<input type="submit">';
+echo '</form>';
+
 
 
 
