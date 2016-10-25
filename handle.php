@@ -163,23 +163,35 @@ for ($i = 0; $i < $numCourses; $i++) {
 } //for
 
 
-//Double-check with user. Is everything inserted correctly
-echo '<form action="handle2.php" method="post">';
-for ($i = 0; $i < $numCourses; $i++) {
-	$currentCourse = $courseArray[$i];
-
-	echo '<div><input type="text" name="' . $i . '" value="' . $currentCourse->courseCode . '" /></div>';
-
-
-} //for
-
-echo '<input type="submit">';
-echo '</form>';
-
-
-
-
 ?>
+
+<form action="handle2.php" method="post">
+	<table>
+	<tr>
+		<th>Course</th>
+		<th>Title</th>
+
+	<?php
+		//Double-check with user. Is everything inserted correctly
+
+
+
+		for ($i = 0; $i < $numCourses; $i++) {
+			$currentCourse = $courseArray[$i];
+			echo '<tr><td><input type="text" name="course' . $i 
+				 . '" value="' . $currentCourse->courseCode . '" size="8" ></td>'
+				 . '<td><input type="text" name="desc' . $i 
+				 . '" value="' . $currentCourse->descriptionStr . '" size="15" ></td></tr>';
+
+		} //for
+
+
+	?>
+
+	</table>
+	<input type="submit">
+
+</form>
 
 
 
