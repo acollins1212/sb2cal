@@ -1,4 +1,8 @@
 <html>
+<head>
+  <link rel="stylesheet" type="text/css" href="./mainstyle.css">
+
+</head>
 <body>
 
 <?php
@@ -217,8 +221,12 @@ for ($i = 0; $i < $numCourses; $i++) {
 				$currentMeeting = $currentCourse->meetingArray[$j];
 
 				printMeeting($currentCourse->courseCode, $currentMeeting, $i, $j);
+				
 
 			} //inner for
+
+			echo '<input type="hidden" name="course' . $i . 'meetingcount"'
+					. ' value="' . count($currentCourse->meetingArray). '" >';
 
 			echo '</table>';
 			echo '<tr>=========================================</tr>';

@@ -2,7 +2,7 @@
 A.J. Collins
 October 2016
 
-This is translated from python. 
+This is translated from python.
 
 **/
 
