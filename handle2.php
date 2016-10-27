@@ -1,11 +1,10 @@
 <html>
+<head>
+</head>
 <body>
 
 <table>
-
 <?php
-
-	
     foreach ($_POST as $key => $value) {
         echo "<tr>";
         echo "<td>";
@@ -16,12 +15,20 @@
         echo "</td>";
         echo "</tr>";
     }
+?>
+</table>
 
+<?php
 
+    $numCourses = $_POST["numCourses"];
+
+    for ($i = 0; $i < $numCourses; $i++) {
+        
+        
+
+    } //for
 
 ?>
-
-</table>
 
 </body>
 </html>

@@ -149,6 +149,35 @@ function checkWithUser($c) {
 
 } //checkWithUser
 
+function printHeader($currentCourse, $i) {
+
+	echo '<th><input type="text" name="course' . $i 
+		. '" value="' . $currentCourse->courseCode . '" size="8" ></th>' 
+		. '<th><input type="text" name="desc' . $i 
+		. '" value="' . $currentCourse->descriptionStr . '" size="15">'
+		. '</th>' ;
+
+} //echoHeader()
+
+function printMeeting($courseCode, $currentMeeting, $i, $j) {
+
+	echo '<tr>' . '<td><input type="text" name="' . $i 
+		. 'meetingtype' . $j . '" value="' . $currentMeeting->meetingType .'"></td>'
+		. '<td><input type="text" name="' . $i 
+		. 'startTime' . $j . '" value="' . $currentMeeting->startTime . '"></td>'
+		. '<td><input type="text" name="' . $i 
+		. 'endTime' . $j . '" value="' . $currentMeeting->endTime . '"></td></tr>'
+		. '<tr><td>@</td'
+		. '<td><input type="text" name="' . $i 
+		. 'location' . $j . '" value="' . $currentMeeting->location . '"></td>'
+		. '<td><input type="text" name="' . $i 
+		. 'daysOfWeek' . $j . '" value="' . $currentMeeting->daysOfWeek . '"></td>'
+		. '</tr>';
+
+	echo '<tr><td>----------------------------------------</td></tr>';
+
+
+} //echoMeeting()
 
 $courseList = parseSchedule();
 $object = new Course($courseList[0]);
@@ -166,31 +195,42 @@ for ($i = 0; $i < $numCourses; $i++) {
 ?>
 
 <form action="handle2.php" method="post">
-	<table>
-	<tr>
-		<th>Course</th>
-		<th>Title</th>
+	
+	
+	<h3>Course    Title</h3>
+		
 
 	<?php
-		//Double-check with user. Is everything inserted correctly
-
+		//Double-check with user. Is everything inserted correctly??
 
 
 		for ($i = 0; $i < $numCourses; $i++) {
 			$currentCourse = $courseArray[$i];
-			echo '<tr><td><input type="text" name="course' . $i 
-				 . '" value="' . $currentCourse->courseCode . '" size="8" ></td>'
-				 . '<td><input type="text" name="desc' . $i 
-				 . '" value="' . $currentCourse->descriptionStr . '" size="15" ></td></tr>';
 
-		} //for
+			echo '<table>';
+	
+			//create table header row for current course
+			printHeader($currentCourse, $i);
 
+			//output all the meetings
+			for ($j = 0; $j < count($currentCourse->meetingArray); $j++) {
+				$currentMeeting = $currentCourse->meetingArray[$j];
+
+				printMeeting($currentCourse->courseCode, $currentMeeting, $i, $j);
+
+			} //inner for
+
+			echo '</table>';
+			echo '<tr>=========================================</tr>';
+		} //outer for
+
+		echo '<input type="hidden" name="numCourses" value="' . $numCourses. '" >';
 
 	?>
 
-	</table>
+	<div>
 	<input type="submit">
-
+	</div>
 </form>
 
 
