@@ -110,15 +110,18 @@ class Meeting {
 
 
 class Course {
-
+	public static $numCourses = 0;
 	public $meetingArray;
 	public $courseCode;
 	public $section;
 	public $descriptionStr;
+	public $numMeetings;
 
 	function __construct($classString){
 
 		$fullName = [];
+		$this->numMeetings = 0;
+		Course::$numCourses++;
 
 		$namePattern = '/(^[A-Z]{3} \d{3}[A-Z]{0,2}) (.{3}) - (.+)/m';
 		$schedulePattern = '/^.*[A|P]M .*/m';
@@ -135,10 +138,12 @@ class Course {
 
 
 		//Insert each course meeting into meeting array
-		$numMeetings = count($scheduleArray[0]);
-		for ($i = 0; $i < $numMeetings; $i++) {
+		$this->numMeetings = count($scheduleArray[0]);
+		for ($i = 0; $i < $this->numMeetings; $i++) {
 	
 			$this->meetingArray[] = new Meeting($scheduleArray[0][$i]);
+
+			
 		} //for
 
 		//TO-DO: Insert final exams
@@ -147,34 +152,28 @@ class Course {
 
 } //Course class
 
-function checkWithUser($c) {
-	
-	echo '<div><input type="text" name="' . $c->courseCode . '" value="' . $c->courseCode . '" /></div>';
-
-} //checkWithUser
-
 function printHeader($currentCourse, $i) {
 
-	echo '<th><input type="text" name="course' . $i 
+	echo '<th><input type="text" id="course' . $i 
 		. '" value="' . $currentCourse->courseCode . '" size="8" ></th>' 
-		. '<th><input type="text" name="desc' . $i 
+		. '<th><input type="text" id="desc' . $i 
 		. '" value="' . $currentCourse->descriptionStr . '" size="15">'
 		. '</th>' ;
 
 } //echoHeader()
 
-function printMeeting($courseCode, $currentMeeting, $i, $j) {
+function printMeeting( $currentMeeting, $i, $j) {
 
-	echo '<tr>' . '<td><input type="text" name="' . $i 
-		. 'meetingtype' . $j . '" value="' . $currentMeeting->meetingType .'"></td>'
-		. '<td><input type="text" name="' . $i 
+	echo '<tr>' . '<td><input type="text" id="' . $i 
+		. 'meetingType' . $j . '" value="' . $currentMeeting->meetingType .'"></td>'
+		. '<td><input type="text" id="' . $i 
 		. 'startTime' . $j . '" value="' . $currentMeeting->startTime . '"></td>'
-		. '<td><input type="text" name="' . $i 
+		. '<td><input type="text" id="' . $i 
 		. 'endTime' . $j . '" value="' . $currentMeeting->endTime . '"></td></tr>'
 		. '<tr><td>@</td'
-		. '<td><input type="text" name="' . $i 
+		. '<td><input type="text" id="' . $i 
 		. 'location' . $j . '" value="' . $currentMeeting->location . '"></td>'
-		. '<td><input type="text" name="' . $i 
+		. '<td><input type="text" id="' . $i 
 		. 'daysOfWeek' . $j . '" value="' . $currentMeeting->daysOfWeek . '"></td>'
 		. '</tr>';
 
@@ -184,7 +183,6 @@ function printMeeting($courseCode, $currentMeeting, $i, $j) {
 } //echoMeeting()
 
 $courseList = parseSchedule();
-$object = new Course($courseList[0]);
 
 $courseArray = [];
 
@@ -198,48 +196,87 @@ for ($i = 0; $i < $numCourses; $i++) {
 
 ?>
 
-<form action="handle2.php" method="post">
-	
-	
-	<h3>Course    Title</h3>
 		
 
 	<?php
 		//Double-check with user. Is everything inserted correctly??
 
-
-		for ($i = 0; $i < $numCourses; $i++) {
+		for ($i = 0; $i < Course::$numCourses; $i++) {
 			$currentCourse = $courseArray[$i];
 
 			echo '<table>';
-	
+
 			//create table header row for current course
 			printHeader($currentCourse, $i);
 
-			//output all the meetings
-			for ($j = 0; $j < count($currentCourse->meetingArray); $j++) {
-				$currentMeeting = $currentCourse->meetingArray[$j];
 
-				printMeeting($currentCourse->courseCode, $currentMeeting, $i, $j);
+			echo '<tr><td id="' . $i . 'numMeetings">' . $currentCourse->numMeetings 
+				. '</td></tr>';
+
+			//output all the meetings
+			for ($j = 0; $j < $currentCourse->numMeetings; $j++) {
+
+				$currentMeeting = $currentCourse->meetingArray[$j];
+				printMeeting( $currentMeeting, $i, $j);
 				
 
 			} //inner for
-
-			echo '<input type="hidden" name="course' . $i . 'meetingcount"'
-					. ' value="' . count($currentCourse->meetingArray). '" >';
 
 			echo '</table>';
 			echo '<tr>=========================================</tr>';
 		} //outer for
 
-		echo '<input type="hidden" name="numCourses" value="' . $numCourses. '" >';
+		echo '<input type="hidden" id="numCourses" value="' . $numCourses. '" >';
 
 	?>
 
 	<div>
-	<input type="submit">
+	<!--<input type="submit">-->
+	<button id="readInput-button" onclick="getTextInput()">Read Events</button>
 	</div>
-</form>
+
+
+	<script type="text/javascript">
+
+		function getTextInput() {
+			var numCourses = <?php echo $numCourses; ?>;
+
+			for (var i = 0; i < numCourses; i++) {
+
+        		var courseKey = 'course' + i; //course i
+        		var descriptionKey = 'desc' + i; //desc  i
+        		console.log(document.getElementById(courseKey).value);
+        		console.log(document.getElementById(descriptionKey).value);
+
+
+        		var numMeetingsKey = i + "numMeetings";
+        		var numMeetings = document.getElementById(numMeetingsKey).innerHTML;
+
+        		for (var j = 0; j < numMeetings; j++) {
+
+        			var meetingTypeKey = i + 'meetingType' + j;
+		        	var startTimeKey = i + 'startTime' + j;
+        			var endTimeKey = i + 'endTime' + j;
+        			var locationKey = i + 'location' + j;
+        			var daysOfWeekKey = i + 'daysOfWeek' + j;
+
+        			console.log(document.getElementById(meetingTypeKey).value);
+        			console.log(document.getElementById(startTimeKey).value);
+        			console.log(document.getElementById(endTimeKey).value);
+        			console.log(document.getElementById(locationKey).value);
+        			console.log(document.getElementById(daysOfWeekKey).value);
+
+
+        		} //inner for
+
+
+    		} //outer for
+
+    } //getTextInput()
+	</script>
+
+
+
 
 
 
