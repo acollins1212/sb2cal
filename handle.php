@@ -1,6 +1,21 @@
 <html>
 <head>
+
   <link rel="stylesheet" type="text/css" href="./mainstyle.css">
+  <script type="text/javascript" src="scheduler.js"></script>
+  <script type="text/javascript" src="ID+scope.js"></script>
+  <script type="text/javascript" src="api_call.js"></script>
+
+<!--
+
+ISSUE WITH LOADING THE API FOR THE FUNCTIONS THAT NEED THEM
+http://stackoverflow.com/questions/31144874/gapi-is-not-defined-google-sign-in-issue-with-gapi-auth2-init
+
+-->
+
+<script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+
+  <?php require 'classes.php'; ?>
 
 </head>
 <body>
@@ -36,129 +51,23 @@ function parseSchedule() {
 
 } //parseSchedule()
 
-
-class Meeting {
-
-	public $meetingType;
-	public $startTime;
-	public $endTime;
-	public $daysOfWeek;
-	public $location;
-
-	function __construct($singleSchedule) {
-		$meetingType_pattern = '/[a-zA-Z]+/';
-		$startTime_pattern = '/\d{1,2}:\d{2} [A|P]M/';
-		$endTime_pattern = '/- (\d{1,2}:\d{2} [A|P]M)/';
-		$daysOfWeek_pattern = '/([A|P]M)([MTWRFS]+)[A-Z]/';
-		$location_pattern = '/[A|P]M[MTWRFS]+([A-Z].*)/';
-
-		//Taking $meetingType out of $singleSchedule
-		if (preg_match($meetingType_pattern, $singleSchedule, $this->meetingType)) {
-			$this->meetingType = $this->meetingType[0];
-		}
-		else { 
-			echo "Meeting Type Error!";
-		}
-
-		//Taking $startTime out of schedule
-		if (preg_match($startTime_pattern, $singleSchedule, $this->startTime)) {
-			$this->startTime = $this->startTime[0];
-		}
-		else {
-			echo "Start Time Error!";
-		}
-
-		//Taking $endTime out of schedule passed in
-		if (preg_match($endTime_pattern, $singleSchedule, $this->endTime)) {
-			$this->endTime = $this->endTime[1];
-		} 
-		else {
-			echo "End Time Error!";
-		}
-
-		//Taking daysOfWeek out of schedule
-		if (preg_match($daysOfWeek_pattern, $singleSchedule, $this->daysOfWeek)) {
-
-			$this->daysOfWeek = $this->daysOfWeek[2];
-
-			// VVV RFC 5545 Compliance block VVV
-			$this->daysOfWeek = preg_replace('/M/', 'MO,', $this->daysOfWeek);
-			$this->daysOfWeek = preg_replace('/T/', 'TU,', $this->daysOfWeek);
-			$this->daysOfWeek = preg_replace('/W/', 'WE,', $this->daysOfWeek);
-			$this->daysOfWeek = preg_replace('/R/', 'TH,', $this->daysOfWeek);
-			$this->daysOfWeek = preg_replace('/F/', 'FR,', $this->daysOfWeek);
-
-			$this->daysOfWeek = rtrim($this->daysOfWeek, ','); //chop off last comma
-
-		}
-		else {
-			echo "Days Of Week Error!";
-		}
-
-		//taking location out of schedule passed in
-		if (preg_match($location_pattern, $singleSchedule, $this->location)) {
-			$this->location = $this->location[1];
-			//echo $this->location;
-		}
-		else {
-			echo "Location Error!";
-		}
-
-	} //Meeting constructor
-
-} //Meeting class
-
-
-class Course {
-	public static $numCourses = 0;
-	public $meetingArray;
-	public $courseCode;
-	public $section;
-	public $descriptionStr;
-	public $numMeetings;
-
-	function __construct($classString){
-
-		$fullName = [];
-		$this->numMeetings = 0;
-		Course::$numCourses++;
-
-		$namePattern = '/(^[A-Z]{3} \d{3}[A-Z]{0,2}) (.{3}) - (.+)/m';
-		$schedulePattern = '/^.*[A|P]M .*/m';
-		$examPattern = '/.* (\d{1,2}\/\d{1,2}\/\d{4}) (\d{1,2}:\d{2} [A|P]M)/m';
-
-		
-		preg_match($namePattern, $classString, $fullName);
-
-		$this->courseCode = $fullName[1];
-		$this->section = $fullName[2];
-		$this->descriptionStr = $fullName[3];
-
-		preg_match_all($schedulePattern, $classString, $scheduleArray);
-
-
-		//Insert each course meeting into meeting array
-		$this->numMeetings = count($scheduleArray[0]);
-		for ($i = 0; $i < $this->numMeetings; $i++) {
-	
-			$this->meetingArray[] = new Meeting($scheduleArray[0][$i]);
-
-			
-		} //for
-
-		//TO-DO: Insert final exams
-
-	} //Class constructor
-
-} //Course class
-
 function printHeader($currentCourse, $i) {
 
 	echo '<th><input type="text" id="course' . $i 
 		. '" value="' . $currentCourse->courseCode . '" size="8" ></th>' 
 		. '<th><input type="text" id="desc' . $i 
-		. '" value="' . $currentCourse->descriptionStr . '" size="15">'
-		. '</th>' ;
+		. '" value="' . $currentCourse->descriptionStr . '" size="15"></th>'
+		. '<th><input type="text" id="finalDate' . $i 
+		. '" value="' . $currentCourse->finalDate . '"></th> <th> @ </th> '
+		. '<th><input type="text" id="finalTime' . $i 
+		. '" value="' . $currentCourse->finalTime . '"></th>'
+		. '</th>'
+		. '<th><input type="text" id="' . $i . 'section'
+		. '" value="' . $currentCourse->section . '"></th>' ;
+
+	echo '<th><input type="hidden" id="' . $i . 'numMeetings"' 
+		. ' value="' . $currentCourse->numMeetings . '" ></th>';
+
 
 } //echoHeader()
 
@@ -167,10 +76,11 @@ function printMeeting( $currentMeeting, $i, $j) {
 	echo '<tr>' . '<td><input type="text" id="' . $i 
 		. 'meetingType' . $j . '" value="' . $currentMeeting->meetingType .'"></td>'
 		. '<td><input type="text" id="' . $i 
-		. 'startTime' . $j . '" value="' . $currentMeeting->startTime . '"></td>'
+		. 'startTime' . $j . '" value="' . $currentMeeting->startTime . '" width="8"></td>'
 		. '<td><input type="text" id="' . $i 
-		. 'endTime' . $j . '" value="' . $currentMeeting->endTime . '"></td></tr>'
-		. '<tr><td>@</td'
+		. 'endTime' . $j . '" value="' . $currentMeeting->endTime . '" width="8"></td>'
+		. '</tr>'
+		. '<tr>' . '<td>@</td>'
 		. '<td><input type="text" id="' . $i 
 		. 'location' . $j . '" value="' . $currentMeeting->location . '"></td>'
 		. '<td><input type="text" id="' . $i 
@@ -179,102 +89,166 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 	echo '<tr><td>----------------------------------------</td></tr>';
 
-
 } //echoMeeting()
-
-$courseList = parseSchedule();
-
-$courseArray = [];
-
-//create array of every class
-$numCourses = count($courseList);
-for ($i = 0; $i < $numCourses; $i++) {
-	$courseArray[] = new Course($courseList[$i]);
-
-} //for
-
 
 ?>
 
-		
+<h1>Courses and their meetings:</h1>
 
-	<?php
-		//Double-check with user. Is everything inserted correctly??
+<?php
 
-		for ($i = 0; $i < Course::$numCourses; $i++) {
-			$currentCourse = $courseArray[$i];
+	$courseList = parseSchedule();
+	$courseArray = [];
 
-			echo '<table>';
+	//courseArray will have all Course objects
+	$numCourses = count($courseList);
+	for ($i = 0; $i < $numCourses; $i++) {
+		$courseArray[] = new Course($courseList[$i]);
 
-			//create table header row for current course
-			printHeader($currentCourse, $i);
-
-
-			echo '<tr><td id="' . $i . 'numMeetings">' . $currentCourse->numMeetings 
-				. '</td></tr>';
-
-			//output all the meetings
-			for ($j = 0; $j < $currentCourse->numMeetings; $j++) {
-
-				$currentMeeting = $currentCourse->meetingArray[$j];
-				printMeeting( $currentMeeting, $i, $j);
-				
-
-			} //inner for
-
-			echo '</table>';
-			echo '<tr>=========================================</tr>';
-		} //outer for
-
-		echo '<input type="hidden" id="numCourses" value="' . $numCourses. '" >';
-
-	?>
-
-	<div>
-	<!--<input type="submit">-->
-	<button id="readInput-button" onclick="getTextInput()">Read Events</button>
-	</div>
+	} //for
 
 
-	<script type="text/javascript">
+	//Double-check with user. Is everything inserted correctly??
+	for ($i = 0; $i < Course::$numCourses; $i++) {
+		$currentCourse = $courseArray[$i];
 
-		function getTextInput() {
-			var numCourses = <?php echo $numCourses; ?>;
+		echo '<table>';
 
-			for (var i = 0; i < numCourses; i++) {
+		//create table header row for current course
+		printHeader($currentCourse, $i);
 
-        		var courseKey = 'course' + i; //course i
-        		var descriptionKey = 'desc' + i; //desc  i
-        		console.log(document.getElementById(courseKey).value);
-        		console.log(document.getElementById(descriptionKey).value);
+		//output all the meetings
+		for ($j = 0; $j < $currentCourse->numMeetings; $j++) {
 
+			$currentMeeting = $currentCourse->meetingArray[$j];
+			printMeeting( $currentMeeting, $i, $j);
+			
 
-        		var numMeetingsKey = i + "numMeetings";
-        		var numMeetings = document.getElementById(numMeetingsKey).innerHTML;
+		} //inner for
 
-        		for (var j = 0; j < numMeetings; j++) {
+		echo '</table>';
+		echo '<tr>=========================================</tr>';
+	} //outer for
 
-        			var meetingTypeKey = i + 'meetingType' + j;
-		        	var startTimeKey = i + 'startTime' + j;
-        			var endTimeKey = i + 'endTime' + j;
-        			var locationKey = i + 'location' + j;
-        			var daysOfWeekKey = i + 'daysOfWeek' + j;
+	echo '<input type="hidden" id="numCourses" value="' . $numCourses . '" >';
 
-        			console.log(document.getElementById(meetingTypeKey).value);
-        			console.log(document.getElementById(startTimeKey).value);
-        			console.log(document.getElementById(endTimeKey).value);
-        			console.log(document.getElementById(locationKey).value);
-        			console.log(document.getElementById(daysOfWeekKey).value);
+?>
 
 
-        		} //inner for
+<script type="text/javascript">
 
 
-    		} //outer for
+	function insertAllCourses() {
+		COURSE_ARRAY = [];
+		var numCourses = <?php echo $numCourses; ?>;
 
-    } //getTextInput()
-	</script>
+		for (var i = 0; i < numCourses; i++) {
+			var currentCourse = getCourse(i);
 
+
+			for(var j = 0; j < getCourse(i).meeting_array.length; j++) {
+
+
+	        var event = currentCourse.getEventJSON(j);
+	        console.log(event);
+
+	        var request = gapi.client.calendar.events.insert({
+	        'calendarId': CALENDAR_ID,
+	        'resource': event
+	        });
+
+	        request.execute(function(event) {
+	          appendPre('Event created: ' +   event.htmlLink);
+
+	        });
+
+	      } //inner for
+
+	      //insert the Final Exam event
+	      var final_exam = currentCourse.getFinalJSON();
+
+	      var request = gapi.client.calendar.events.insert({
+	       'calendarId': CALENDAR_ID,
+	       'resource': final_exam
+	      });
+
+	      request.execute(function(final_exam) {
+	        appendPre('Final created: ' +   final_exam.htmlLink);
+
+	      });
+	    } //outer for
+			
+	} //insertAllCourses()
+
+	function getCourse(i) {
+
+		//These are the ID's for course elements
+		var courseKey = 'course' + i; //course i
+		var sectionKey = i + 'section'; 
+		var descriptionKey = 'desc' + i; //desc  i
+		var finalDateKey = 'finalDate' + i;
+		var finalTimeKey = 'finalTime' + i;
+
+		//Using the ID's from above, get the values inputted
+		var course_id = document.getElementById(courseKey).value;
+		var section = document.getElementById(sectionKey).value;
+		var desc = document.getElementById(descriptionKey).value;
+		var finalDate = document.getElementById(finalDateKey).value;
+   		var finalTime = document.getElementById(finalTimeKey).value;
+
+   		c = new Course(course_id, section, desc, finalDate, finalTime);
+
+   		//Get number of meetings for this course
+		var numMeetingsKey = i + "numMeetings";
+		var numMeetings = document.getElementById(numMeetingsKey).value;
+
+		for (var j = 0; j < numMeetings; j++) {
+
+			//Get the meeting values out of the text boxes
+			var meetingTypeKey = i + 'meetingType' + j;
+        	var startTimeKey = i + 'startTime' + j;
+			var endTimeKey = i + 'endTime' + j;
+			var locationKey = i + 'location' + j;
+			var daysOfWeekKey = i + 'daysOfWeek' + j;
+			var type = document.getElementById(meetingTypeKey).value;
+			var start = document.getElementById(startTimeKey).value;
+			var end = document.getElementById(endTimeKey).value;
+			var loc = document.getElementById(locationKey).value;
+			var dow = document.getElementById(daysOfWeekKey).value;
+
+			c.addMeeting(type, start, end, loc, dow);
+		} //inner for
+		return c; //return the course created
+
+	} //getCourse(i)
+
+
+	/**
+	 * Load Google Calendar client library. Insert Events from each course
+	 * once client library is loaded.
+	 */
+	function loadCalendarApi() {
+	  	gapi.client.load('calendar', 'v3', insertAllCourses());
+	}
+
+
+</script>
+
+
+
+<div>
+<button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
+</div>
+
+
+
+<div id="authorize-div" style="display: none">
+      <span>Authorize access to Google Calendar API</span>
+      <!--Button for the user to click to initiate auth sequence -->
+      <button id="authorize-button" onclick="handleAuthClick(event)">
+        Authorize
+      </button>
+</div>
 
 
 

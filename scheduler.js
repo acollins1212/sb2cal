@@ -4,6 +4,9 @@ October 2016
 
 This is translated from python.
 
+Reworked on October 28 because the server-side 
+	script does all of the parsing now. 
+
 **/
 
 
@@ -55,34 +58,21 @@ function parseSchedule() {
    	return split_schedule;
 } //parseSchedule()
 
-var Course = function(class_string){
+var Course = function(name_str, section, desc, finalDate, finalTime){
+	//FIXME: GET SECTION IN HANDLE!!!
 
-	//WEEKLY SCHEDULE PORTION
-	var name_pattern = /(^[A-Z]{3} \d{3}[A-Z]{0,2}) (.{3}) - (.+)/m;
-	var schedule_pattern = /^.*[A|P]M .*/gm;
-	var exam_pattern = /.* (\d{1,2}\/\d{1,2}\/\d{4}) (\d{1,2}:\d{2} [A|P]M)/m;
-	
+	this.name_str = name_str;
+	this.section = section;
+	this.description_str = desc;
 
-	var reg_obj_name = class_string.match(name_pattern);
-
-	this.name_str = reg_obj_name[1];
-	this.section = reg_obj_name[2];
-	this.description_str = reg_obj_name[3];
-
-	this.schedule_array = class_string.match(schedule_pattern);
 	this.meeting_array = [];
-
-
-	for(i = 0; i < this.schedule_array.length; i++){
-		this.meeting_array.push(new Course_meeting(this.schedule_array[i]));
-	}
 
 	
 	//FINAL EXAM PORTION
-	this.finalExam_str = class_string.match(exam_pattern);
+	this.finalExam_date = finalDate;
 	//The date is in MM/DD/YYYY format. 
-	var mmddyyyy = this.finalExam_str[1].split('/');
-	var time = parseTime(this.finalExam_str[2]);
+	var mmddyyyy = this.finalExam_date.split('/');
+	var time = parseTime(finalTime);
 	//Months are zero indexed, so I'm subtracting one inside constructor
 	this.finalExam_date = new Date(mmddyyyy[2], mmddyyyy[0] - 1, mmddyyyy[1], time[0], time[1], 0, 0 );
 	this.finalExam_date.setHours(this.finalExam_date.getHours() - 7); //-7 for timezone offset
@@ -94,6 +84,11 @@ var Course = function(class_string){
 	this.finalExam_end = this.finalExam_end.toISOString();
 	this.finalExam_end = this.finalExam_end.replace('.000Z', '-07:00');
 
+
+	this.addMeeting = function(type, start, end, loc, dow) {
+		var m = new Course_meeting(type, start, end, loc, dow);
+		this.meeting_array.push(m);
+	} //this.addMeeting()
 
 
 	this.getFinalJSON = function() {
@@ -120,6 +115,10 @@ var Course = function(class_string){
 
 
     this.getEventJSON = function(meeting_number) {
+
+    	if(meeting_number >= this.meeting_array.length) {
+    		console.log("Out of Bounds error");
+    	}
 
     	var course_event = this.meeting_array[meeting_number];
     	var desc = this.description_str + "\nSection: " + this.section;
@@ -217,65 +216,17 @@ var Course = function(class_string){
 } //Course
 
 
-var Course_meeting = function(single_schedule){
-	meeting_type_pattern = /[a-zA-Z]+/;
-	start_time_pattern = /\d{1,2}:\d{2} [A|P]M/;
-	end_time_pattern = /- (\d{1,2}:\d{2} [A|P]M)/;
-	days_of_week_pattern = /([A|P]M)([MTWRFS]+)[A-Z]/;
-	location_pattern = /[A|P]M[MTWRFS]+([A-Z].*)/;
+var Course_meeting = function(type, start, end, loc, dow){
+	
+	this.meeting_type = type;
 
-	this.meeting_type = "";
-	this.start_time = "";
-	this.end_time = "";
-	this.days_of_week = "";
-	this.location = "";
+	this.start_time = start;
+	this.start_time = parseTime(this.start_time);
 
-	//taking meeting_type out of schedule passed in
-	if (this.meeting_type = single_schedule.match(meeting_type_pattern)[0]){
-	} // do nothing
-	else {
-		console.log("meeting_type null");
-	}
+	this.end_time = end;
+	this.end_time = parseTime(this.end_time);
 
-
-	//taking start_time out of schedule passed in
-	if (this.start_time = single_schedule.match(start_time_pattern)[0]){
-		this.start_time = parseTime(this.start_time);
-	} //do nothing
-	else {
-		console.log("start_time null");
-	}
-	//Taking end_time out of schedule passed in
-	if (this.end_time = single_schedule.match(end_time_pattern)[1]) {
-		this.end_time = parseTime(this.end_time);
-	} //do nothing
-	else {
-		console.log("end_time null");
-	}
-
-	//Taking days_of_week out of schedule passed in 
-	if (this.days_of_week = single_schedule.match(days_of_week_pattern)[2]) {
-
-		//RFC 5545 takes recurrence dates given with two letter abbreviations
-		this.days_of_week = this.days_of_week.replace('M', 'MO,');
-		this.days_of_week = this.days_of_week.replace('T', 'TU,');
-		this.days_of_week = this.days_of_week.replace('W', 'WE,');
-		this.days_of_week = this.days_of_week.replace('R', 'TH,');
-		this.days_of_week = this.days_of_week.replace('F', 'FR,');
-		var dow_length = this.days_of_week.length-1;
-
-		this.days_of_week = this.days_of_week.substring(0,dow_length);
-	}
-	else {
-		console.log("dow null");
-	}
-
-	//taking location out of schedule passed in 
-	if (this.location = single_schedule.match(location_pattern)[1]) {
-		//do nothing
-	}
-	else {
-		console.log("location null");
-	}
+	this.location = loc;
+	this.days_of_week = dow;
 	
 } //Course_meeting()
