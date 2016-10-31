@@ -4,15 +4,6 @@
   <link rel="stylesheet" type="text/css" href="./mainstyle.css">
   <script type="text/javascript" src="scheduler.js"></script>
   <script type="text/javascript" src="ID+scope.js"></script>
-
-<!--
-
-ISSUE WITH LOADING THE API FOR THE FUNCTIONS THAT NEED THEM
-http://stackoverflow.com/questions/31144874/gapi-is-not-defined-google-sign-in-issue-with-gapi-auth2-init
-
--->
-
-
   <?php require 'classes.php'; ?>
 
 </head>
@@ -346,6 +337,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 </div>
 <pre id="output"></pre>
 
+<!-- Create an input box for the calendar id needed!!!! -->
 
 
 
