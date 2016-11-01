@@ -5,18 +5,11 @@
   <script type="text/javascript" src="scheduler.js"></script>
   <script type="text/javascript" src="ID+scope.js"></script>
 
-<!--
-
-ISSUE WITH LOADING THE API FOR THE FUNCTIONS THAT NEED THEM
-http://stackoverflow.com/questions/31144874/gapi-is-not-defined-google-sign-in-issue-with-gapi-auth2-init
-
--->
-
-
   <?php require 'classes.php'; ?>
 
 </head>
 <body>
+
 <script type="text/javascript">
       // Your Client ID can be retrieved from your project in the Google
       // Developer Console, https://console.developers.google.com
@@ -73,40 +66,6 @@ http://stackoverflow.com/questions/31144874/gapi-is-not-defined-google-sign-in-i
         gapi.client.load('calendar', 'v3', insertAllCourses);
       }
 
-      /**
-       * Print the summary and start datetime/date of the next ten events in
-       * the authorized user's calendar. If no events are found an
-       * appropriate message is printed.
-       */
-      function listUpcomingEvents() {
-        var request = gapi.client.calendar.events.list({
-          'calendarId': 'primary',
-          'timeMin': (new Date()).toISOString(),
-          'showDeleted': false,
-          'singleEvents': true,
-          'maxResults': 10,
-          'orderBy': 'startTime'
-        });
-
-        request.execute(function(resp) {
-          var events = resp.items;
-          appendPre('Upcoming events:');
-
-          if (events.length > 0) {
-            for (i = 0; i < events.length; i++) {
-              var event = events[i];
-              var when = event.start.dateTime;
-              if (!when) {
-                when = event.start.date;
-              }
-              appendPre(event.summary + ' (' + when + ')')
-            }
-          } else {
-            appendPre('No upcoming events found.');
-          }
-
-        });
-      }
 
       /**
        * Append a pre element to the body containing the given message
@@ -128,7 +87,7 @@ http://stackoverflow.com/questions/31144874/gapi-is-not-defined-google-sign-in-i
 function parseSchedule() {
 
 	$fullSchedule = $_POST["textArea"];
-
+	
 
 	$courseName_pattern = '/[A-Z]{3} [0-9]{3}[A-Z]{0,1} [A-Z0-9]{3} - .*/';
 	$courseName_array;
@@ -196,12 +155,16 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 ?>
 
+
+
+
 <h1>Courses and their meetings:</h1>
 
 <?php
 
 	$courseList = parseSchedule();
 	$courseArray = [];
+	echo $_POST["CALENDAR_ID"];
 
 	//courseArray will have all Course objects
 	$numCourses = count($courseList);
@@ -235,11 +198,13 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 	echo '<input type="hidden" id="numCourses" value="' . $numCourses . '" >';
 
+
 ?>
 
 
 <script type="text/javascript">
 
+	var CALENDAR_ID = <?php echo $_POST["CALENDAR_ID"]; ?>;
 
 	function insertAllCourses() {
 		COURSE_ARRAY = [];
@@ -271,7 +236,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 	      var final_exam = currentCourse.getFinalJSON();
 
 	      var request = gapi.client.calendar.events.insert({
-	       'calendarId': CALENDAR_ID,
+	       'calendarId': document.getElementById(CALENDAR_ID).value,
 	       'resource': final_exam
 	      });
 

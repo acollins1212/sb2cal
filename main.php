@@ -17,14 +17,16 @@
     
     <div>
       <form action="handle.php" method="post">
+
         <textarea name="textArea" id="textArea_id" placeholder="Paste schedule here" ></textarea>
+        <div><input name="CALENDAR_ID" id="CALENDAR_ID" type="text"  placeholder="Insert Calendar ID"></div>
  
 <!-- 
         <input type="radio" name="reminders" value="none" checked>None<br>
         <input type="radio" name="reminders" value="email">Email<br>
         <input type="radio" name="reminders" value="popup">Popup<br>
   -->
-		<br>
+		    <br>
         <input type="submit">
       </form>
 

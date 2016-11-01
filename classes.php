@@ -14,11 +14,13 @@ class Meeting {
 		$daysOfWeek_pattern = '/([A|P]M)([MTWRFS]+)[A-Z]/';
 		$location_pattern = '/[A|P]M[MTWRFS]+([A-Z].*)/';
 
+		$DEBUG = False;
+
 		//Taking $meetingType out of $singleSchedule
 		if (preg_match($meetingType_pattern, $singleSchedule, $this->meetingType)) {
 			$this->meetingType = $this->meetingType[0];
 		}
-		else { 
+		else if ($DEBUG == True){ 
 			echo "Meeting Type Error!";
 		}
 
@@ -26,7 +28,7 @@ class Meeting {
 		if (preg_match($startTime_pattern, $singleSchedule, $this->startTime)) {
 			$this->startTime = $this->startTime[0];
 		}
-		else {
+		else if ($DEBUG == True){
 			echo "Start Time Error!";
 		}
 
@@ -34,7 +36,7 @@ class Meeting {
 		if (preg_match($endTime_pattern, $singleSchedule, $this->endTime)) {
 			$this->endTime = $this->endTime[1];
 		} 
-		else {
+		else if ($DEBUG == True){
 			echo "End Time Error!";
 		}
 
@@ -53,7 +55,7 @@ class Meeting {
 			$this->daysOfWeek = rtrim($this->daysOfWeek, ','); //chop off last comma
 
 		}
-		else {
+		else if ($DEBUG == True){
 			echo "Days Of Week Error!";
 		}
 
@@ -62,7 +64,7 @@ class Meeting {
 			$this->location = $this->location[1];
 			//echo $this->location;
 		}
-		else {
+		else if ($DEBUG == True){
 			echo "Location Error!";
 		}
 
@@ -108,7 +110,6 @@ class Course {
 		//Insert each course meeting into meeting array
 		$this->numMeetings = count($scheduleArray[0]);
 		for ($i = 0; $i < $this->numMeetings; $i++) {
-	
 			$this->meetingArray[] = new Meeting($scheduleArray[0][$i]);
 
 			
