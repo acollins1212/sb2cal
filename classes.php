@@ -90,7 +90,8 @@ class Course {
 		Course::$numCourses++;
 
 		$namePattern = '/(^[A-Z]{3} \d{3}[A-Z]{0,2}) (.{3}) - (.+)/m';
-		$schedulePattern = '/^.*[A|P]M .*/m';
+		$schedulePattern = '/^[A-Z]+.*[A|P]M .*/m'; //only works for chrome
+		$alt_schedulePattern = '/^[A-Z][a-zA-Z\/ ]+\r\n[0-9]{1,2}:[0-9]{2} [A|P]M - [0-9]{1,2}:[0-9]{2} [A|P]M\r\n[A-Z]+\r\n.*$/m'; 
 		$examPattern = '/.* (\d{1,2}\/\d{1,2}\/\d{4}) (\d{1,2}:\d{2} [A|P]M)/m';
 
 		
@@ -100,7 +101,16 @@ class Course {
 		$this->section = $fullName[2];
 		$this->descriptionStr = $fullName[3];
 
-		preg_match_all($schedulePattern, $classString, $scheduleArray);
+
+		//If the simple, Chrome-only pattern DOESN'T work, use the multiline pattern
+		if(!preg_match_all($schedulePattern, $classString, $scheduleArray)) {
+			
+			preg_match_all($alt_schedulePattern, $classString, $scheduleArray, 0, 0);
+			for($i = 0; $i < count($scheduleArray[0]); $i++) {
+				$scheduleArray[0][$i] = str_replace("\r\n", "", $scheduleArray[0][$i]);
+			}
+		}
+
 
 		preg_match($examPattern, $classString, $finalDateTime);
 
@@ -110,9 +120,7 @@ class Course {
 		//Insert each course meeting into meeting array
 		$this->numMeetings = count($scheduleArray[0]);
 		for ($i = 0; $i < $this->numMeetings; $i++) {
-			$this->meetingArray[] = new Meeting($scheduleArray[0][$i]);
-
-			
+			$this->meetingArray[] = new Meeting($scheduleArray[0][$i]);			
 		} //for
 
 		//TO-DO: Insert final exams
