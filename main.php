@@ -21,8 +21,8 @@
 		<li>Click "Show (Important) Details" for every single course in your schedule</li>
 		<li>Highlight all of your schedules on the page. Make sure you're using Chrome!</li>
 		<li>Paste your schedules into the text box below</li>
+    <li>Paste your calendar id in the second text box</li>
 		<li>Click Submit. The next page will give you a chance to edit any of your schedule entries</li>
-		<li>Paste your calendar id on the next page as well</li>
 		<li>Insert into Google Calendar!</li>
 	</ol>
     <div>
@@ -36,13 +36,10 @@
         <input type="radio" name="reminders" value="email">Email<br>
         <input type="radio" name="reminders" value="popup">Popup<br>
   -->
-<<<<<<< HEAD
-		    <br>
-        <input type="submit">
-=======
-		<br>
+
+    		<br>
         <input type="submit" value="Submit">
->>>>>>> 6edc0b2112fce2d844814aede67c039c59e32c4b
+
       </form>
 
     </div>

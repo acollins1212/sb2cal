@@ -163,7 +163,6 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 	$courseList = parseSchedule();
 	$courseArray = [];
-	echo $_POST["CALENDAR_ID"];
 
 	//courseArray will have all Course objects
 	$numCourses = count($courseList);
@@ -203,7 +202,8 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 <script type="text/javascript">
 
-	var CALENDAR_ID = <?php echo $_POST["CALENDAR_ID"]; ?>;
+	var CALENDAR_ID = '<?php echo $_POST["CALENDAR_ID"]; ?>'; 
+	console.log(CALENDAR_ID);
 
 	function insertAllCourses() {
 		COURSE_ARRAY = [];
@@ -235,7 +235,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 	      var final_exam = currentCourse.getFinalJSON();
 
 	      var request = gapi.client.calendar.events.insert({
-	       'calendarId': document.getElementById(CALENDAR_ID).value,
+	       'calendarId': CALENDAR_ID,
 	       'resource': final_exam
 	      });
 
