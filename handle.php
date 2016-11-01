@@ -4,7 +4,6 @@
   <link rel="stylesheet" type="text/css" href="./mainstyle.css">
   <script type="text/javascript" src="scheduler.js"></script>
   <script type="text/javascript" src="ID+scope.js"></script>
-
   <?php require 'classes.php'; ?>
 
 </head>
@@ -311,6 +310,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 </div>
 <pre id="output"></pre>
 
+<!-- Create an input box for the calendar id needed!!!! -->
 
 
 
