@@ -13,14 +13,13 @@
 
   <body>
     <h1>Schedule Builder to Google Calendar</h1>
-	<h3>Note: This only works on Google Chrome at the moment!</h3>
     <p>Instructions</p>
 	<ol>
-		<li>Create a new calendar in Google Calendar. Take note of its calendar id (describe how to do this).</li>
+		<li>Create a new calendar in Google Calendar. Take note of its calendar id. This can be done by going to the settings of the calendar and looking near the bottom</li>
 		<li>Go to <a href="https://my.ucdavis.edu/schedulebuilder/index.cfm?sb" target="_blank">Schedule Builder</a></li>
 		<li>Click "Show (Important) Details" for every single course in your schedule</li>
-		<li>Highlight all of your schedules on the page. Make sure you're using Chrome!</li>
-		<li>Paste your schedules into the text box below</li>
+		<li>Highlight all of your schedules on the page.</li>
+		<li>Paste your schedule into the text box below</li>
     <li>Paste your calendar id in the second text box</li>
 		<li>Click Submit. The next page will give you a chance to edit any of your schedule entries</li>
 		<li>Insert into Google Calendar!</li>
