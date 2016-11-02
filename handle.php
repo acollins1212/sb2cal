@@ -3,17 +3,14 @@
 
   <link rel="stylesheet" type="text/css" href="./mainstyle.css">
   <script type="text/javascript" src="scheduler.js"></script>
-  <script type="text/javascript" src="ID+scope.js"></script>
   <?php require 'classes.php'; ?>
 
 </head>
 <body>
 
 <script type="text/javascript">
-      // Your Client ID can be retrieved from your project in the Google
-      // Developer Console, https://console.developers.google.com
-      
-
+ 
+      var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
       var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
       /**
@@ -308,10 +305,6 @@ function printMeeting( $currentMeeting, $i, $j) {
       </button>
 </div>
 <pre id="output"></pre>
-
-<!-- Create an input box for the calendar id needed!!!! -->
-
-
 
 
 </body>
