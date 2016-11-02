@@ -2,26 +2,71 @@
 Color codes from: http://marketingtoolbox.ucdavis.edu/identity/color.html  
 	Blue: #002855  Gold: #C99700 Gray: #B1B3B3
 	Light blue: #E5E9EF
-
-
+	
+Positioning: http://www.barelyfitz.com/screencast/html-training/css/positioning/
 
 */
 
 body {
-	background-color: #E5E9EF 
+	background-color: #FFFFFF;
+}
+
+#main-container {
+	margin: auto;
+	width: 90%;
+	height: 100%;
+	background-color: #E5E9EF;
+	padding: 3px;
 }
 
 h1 {
 	color: #002855
+	
 }
 
-input {
-	width: 250;
+#instruction-div {
+	background-color: #FFFFFF;
+	border-style: solid;
+	border-width: 1px;
+	width: 95%;
+	padding: 5px;
+	margin: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px; 
+}
+
+ul {
+	list-style-type: disc;
 }
 
 textarea {
 	width: 500px; 
 	height: 100px;
-	font-weight: bold;
-	color: #335379
+	margin: 3px;
+	border-style: solid;
+	border-width: 1px;
+}
+
+#calendar-id {
+	width: 300px;
+	height: 20px;
+	margin: 3px;
+	padding: 1px 5px;
+	border-style: solid;
+	border-width: 1px;
+}
+
+
+
+input[type=submit] {
+    padding:5px 15px;
+	position: relative;
+	margin: 3px;
+    background:#ccc; 
+	border-style: solid;
+	border-color: #002855;
+    border-width: 1px;
+    cursor:pointer;
+    -webkit-border-radius: 3px;
+    border-radius: 3px; 
 }
