@@ -91,7 +91,7 @@ class Course {
 
 		$namePattern = '/(^[A-Z]{3} \d{3}[A-Z]{0,2}) (.{3}) - (.+)/m';
 		$schedulePattern = '/^[A-Z]+.*[A|P]M .*/m'; //only works for chrome
-		$alt_schedulePattern = '/^[A-Z][a-zA-Z\/ ]+\r\n[0-9]{1,2}:[0-9]{2} [A|P]M - [0-9]{1,2}:[0-9]{2} [A|P]M\r\n[A-Z]+\r\n.*$/m'; 
+		$alt_schedulePattern = '/^[A-Z][a-zA-Z\/ ]+[\r\n]+[0-9]{1,2}:[0-9]{2} [A|P]M - [0-9]{1,2}:[0-9]{2} [A|P]M[\r\n]+[A-Z]+[\r\n]+.*$/m'; 
 		$examPattern = '/.* (\d{1,2}\/\d{1,2}\/\d{4}) (\d{1,2}:\d{2} [A|P]M)/m';
 
 		

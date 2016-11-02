@@ -112,9 +112,9 @@ function parseSchedule() {
 function printHeader($currentCourse, $i) {
 
 	echo '<th><input type="text" id="course' . $i 
-		. '" value="' . $currentCourse->courseCode . '" size="8" ></th>' 
+		. '" value="' . $currentCourse->courseCode . '"></th>' 
 		. '<th><input type="text" id="desc' . $i 
-		. '" value="' . $currentCourse->descriptionStr . '" size="15"></th>'
+		. '" value="' . $currentCourse->descriptionStr . '"></th>'
 		. '<th><input type="text" id="finalDate' . $i 
 		. '" value="' . $currentCourse->finalDate . '"></th> <th> @ </th> '
 		. '<th><input type="text" id="finalTime' . $i 
@@ -134,9 +134,9 @@ function printMeeting( $currentMeeting, $i, $j) {
 	echo '<tr>' . '<td><input type="text" id="' . $i 
 		. 'meetingType' . $j . '" value="' . $currentMeeting->meetingType .'"></td>'
 		. '<td><input type="text" id="' . $i 
-		. 'startTime' . $j . '" value="' . $currentMeeting->startTime . '" width="8"></td>'
+		. 'startTime' . $j . '" value="' . $currentMeeting->startTime . '" ></td>'
 		. '<td><input type="text" id="' . $i 
-		. 'endTime' . $j . '" value="' . $currentMeeting->endTime . '" width="8"></td>'
+		. 'endTime' . $j . '" value="' . $currentMeeting->endTime . '" ></td>'
 		. '</tr>'
 		. '<tr>' . '<td>@</td>'
 		. '<td><input type="text" id="' . $i 
@@ -154,15 +154,26 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 
 
-<h1>Courses and their meetings:</h1>
+<h1>Your Schedule</h1>
 
 <?php
 
 	$courseList = parseSchedule();
 	$courseArray = [];
 
-	//courseArray will have all Course objects
+	//For some reason, Internet Explorer copy-paste puts in null elements
+	//Had something to do with a null character
 	$numCourses = count($courseList);
+	for($i = 0; $i < $numCourses; $i++) {
+		if(strlen($courseList[$i]) < 25) {
+	 		array_splice($courseList, $i, 1);
+	 		$numCourses--;
+	 		$i--;
+	 	} //if
+
+	} //for
+
+	//courseArray inputted  all Course objects
 	for ($i = 0; $i < $numCourses; $i++) {
 		$courseArray[] = new Course($courseList[$i]);
 
