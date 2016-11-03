@@ -149,15 +149,8 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 } //echoMeeting()
 
-?>
 
-
-
-
-<h1>Your Schedule</h1>
-
-<?php
-
+	//Set up Course objects to be used
 	$courseList = parseSchedule();
 	$courseArray = [];
 
@@ -179,34 +172,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 	} //for
 
-
-	//Double-check with user. Is everything inserted correctly??
-	for ($i = 0; $i < Course::$numCourses; $i++) {
-		$currentCourse = $courseArray[$i];
-
-		echo '<table>';
-
-		//create table header row for current course
-		printHeader($currentCourse, $i);
-
-		//output all the meetings
-		for ($j = 0; $j < $currentCourse->numMeetings; $j++) {
-
-			$currentMeeting = $currentCourse->meetingArray[$j];
-			printMeeting( $currentMeeting, $i, $j);
-			
-
-		} //inner for
-
-		echo '</table>';
-		echo '<tr>=========================================</tr>';
-	} //outer for
-
-	echo '<input type="hidden" id="numCourses" value="' . $numCourses . '" >';
-
-
 ?>
-
 
 <script type="text/javascript">
 
@@ -297,10 +263,41 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 	} //getCourse(i)
 
-
-
 </script>
 
+
+
+<h1>Your Schedule</h1>
+
+<?php
+
+	//Double-check with user. Is everything inserted correctly??
+	for ($i = 0; $i < Course::$numCourses; $i++) {
+		$currentCourse = $courseArray[$i];
+		echo '<div>';
+		echo '<table style="width: 50%">';
+
+		//create table header row for current course
+		printHeader($currentCourse, $i);
+
+		//output all the meetings
+		for ($j = 0; $j < $currentCourse->numMeetings; $j++) {
+
+			$currentMeeting = $currentCourse->meetingArray[$j];
+			printMeeting( $currentMeeting, $i, $j);
+			
+
+		} //inner for
+
+		echo '</table>';
+		echo '</div>';
+		echo '<tr>=========================================</tr>';
+	} //outer for
+
+	echo '<input type="hidden" id="numCourses" value="' . $numCourses . '" >';
+
+
+?>
 
 
 <div>
