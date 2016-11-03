@@ -4,14 +4,17 @@ Color codes from: http://marketingtoolbox.ucdavis.edu/identity/color.html
 	Light blue: #E5E9EF
 	
 Positioning: http://www.barelyfitz.com/screencast/html-training/css/positioning/
-
+Tables: http://www.w3schools.com/css/css_table.asp;
 */
 
+
 body {
-	background-color: #C99700;
-	color: #333;
+	background-color: #AAA;
+	color: #002855;
 	font-family: "proxima-nova","Lucida Grande","Lucida Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 16px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 
 div {
@@ -22,17 +25,14 @@ div {
 	margin: auto;
 	width: 90%;
 	height: 100%;
-	background-color: #E5E9EF;
+	background-color: #D0D5DF;
 	padding: 3px;
-}
-
-h1 {
-	color: #002855
-	
+    -webkit-border-radius: 3px;
+    border-radius: 3px; 
 }
 
 #instruction-div {
-	background-color: #FFFFFF;
+	background-color: #F9F9F9;
 	border-style: solid;
 	border-width: 1px;
 	width: 95%;
@@ -47,11 +47,13 @@ ul {
 }
 
 textarea {
+	background-color: #F9F9F9;
 	width: 500px; 
 	height: 100px;
 	margin: 3px;
 	border-style: solid;
 	border-width: 1px;
+	color: #002855;
 }
 
 #calendar-id {
@@ -63,17 +65,25 @@ textarea {
 	border-width: 1px;
 }
 
+input {
+	background-color: #F9F9F9;
 
+}
 
 input[type=submit] {
     padding:5px 15px;
 	position: relative;
 	margin: 3px;
-    background:#ccc; 
+    background:#CCC;
+    color: #002855;
 	border-style: solid;
 	border-color: #002855;
     border-width: 1px;
     cursor:pointer;
     -webkit-border-radius: 3px;
     border-radius: 3px; 
+}
+
+table {
+	background-color: #CCC;
 }

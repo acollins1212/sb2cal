@@ -211,6 +211,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 <script type="text/javascript">
 
 	var CALENDAR_ID = '<?php echo $_POST["CALENDAR_ID"]; ?>'; 
+	CALENDAR_ID = CALENDAR_ID.trim();
 
 	function insertAllCourses() {
 		COURSE_ARRAY = [];
