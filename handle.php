@@ -145,7 +145,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 		. 'daysOfWeek' . $j . '" value="' . $currentMeeting->daysOfWeek . '"></td>'
 		. '</tr>';
 
-	echo '<tr><td>----------------------------------------</td></tr>';
+	
 
 } //echoMeeting()
 
@@ -291,7 +291,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 		echo '</table>';
 		echo '</div>';
-		echo '<tr>=========================================</tr>';
+		
 	} //outer for
 
 	echo '<input type="hidden" id="numCourses" value="' . $numCourses . '" >';
