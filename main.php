@@ -27,7 +27,7 @@
 			<li>Insert into Google Calendar!</li>
 		</ol>
 	</div>
-    <div>
+    <div id="form">
       <form action="handle.php" method="post">
 
         <div><input name="CALENDAR_ID" id="calendar-id" type="text"  placeholder="xxxxxxxxxx@group.calendar.google.com"></div>
