@@ -16,7 +16,7 @@
 			<li>Create a new calendar in Google Calendar.</li>
 				<ul>
 					<li> Take note of its Calendar Id</li>
-					<li>"Calendar Settings" → "Calendar Address"</li>
+					<li>"Calendar Settings" -> "Calendar Address"</li>
 				</ul>
 			<li>Go to <a href="https://my.ucdavis.edu/schedulebuilder/index.cfm?sb" target="_blank">Schedule Builder</a></li>
 			<li>Click "Show (Important) Details" for every single course in your schedule</li>

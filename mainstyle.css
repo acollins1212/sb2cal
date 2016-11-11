@@ -17,6 +17,14 @@ body {
     border-radius: 3px;
 }
 
+h1 {
+	font-size: 48px;
+}
+
+li, p {
+	font-size: 24px;
+}
+
 div {
 	display: block;
 }
@@ -67,10 +75,15 @@ textarea {
 
 input {
 	background-color: #F9F9F9;
+	font-size: 18px;
+	margin-bottom: 2px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #002855;
 
 }
 
-input[type=submit] {
+input[type=submit], button {
     padding:5px 15px;
 	position: relative;
 	margin: 3px;
@@ -82,8 +95,9 @@ input[type=submit] {
     cursor:pointer;
     -webkit-border-radius: 3px;
     border-radius: 3px; 
+	font-size:20px;
 }
 
 table {
-	background-color: #CCC;
+	background-color: #D0D5DF;
 }
