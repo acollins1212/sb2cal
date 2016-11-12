@@ -18,18 +18,18 @@ body {
 }
 
 h1 {
-	font-size: 48px;
+	font-size: 2.2em;
 }
 
 li, p {
-	font-size: 24px;
+	font-size: 1em;
 }
 
 div {
 	display: block;
 }
 
-#main-container {
+.main-container {
 	margin: auto;
 	width: 90%;
 	height: 100%;
@@ -66,7 +66,7 @@ textarea {
 
 #calendar-id {
 	width: 300px;
-	height: 20px;
+	height: 21px;
 	margin: 3px;
 	padding: 1px 5px;
 	border-style: solid;
@@ -75,7 +75,7 @@ textarea {
 
 input {
 	background-color: #F9F9F9;
-	font-size: 18px;
+	font-size: 1em;
 	margin-bottom: 2px;
 	border-style: solid;
 	border-width: 1px;
@@ -95,9 +95,19 @@ input[type=submit], button {
     cursor:pointer;
     -webkit-border-radius: 3px;
     border-radius: 3px; 
-	font-size:20px;
+	font-size:1em;
 }
 
 table {
 	background-color: #D0D5DF;
+}
+
+.table-div {
+	margin-top: 10px;
+	width: 50%;
+}
+
+.footer {
+	text-align: right;
+	position: relative;
 }

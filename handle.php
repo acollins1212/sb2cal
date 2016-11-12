@@ -115,13 +115,14 @@ function printHeader($currentCourse, $i) {
 		. '" value="' . $currentCourse->courseCode . '"></th>' 
 		. '<th><input type="text" id="desc' . $i 
 		. '" value="' . $currentCourse->descriptionStr . '"></th>'
-		. '<th><input type="text" id="finalDate' . $i 
+		. '<th><input type="text" id="' . $i . 'section'
+		. '" value="' . $currentCourse->section . '"></th>';
+		/*. '<th><input type="text" id="finalDate' . $i 
 		. '" value="' . $currentCourse->finalDate . '"></th> <th> @ </th> '
 		. '<th><input type="text" id="finalTime' . $i 
 		. '" value="' . $currentCourse->finalTime . '"></th>'
 		. '</th>'
-		. '<th><input type="text" id="' . $i . 'section'
-		. '" value="' . $currentCourse->section . '"></th>' ;
+		*/
 
 	echo '<th><input type="hidden" id="' . $i . 'numMeetings"' 
 		. ' value="' . $currentCourse->numMeetings . '" ></th>';
@@ -266,16 +267,24 @@ function printMeeting( $currentMeeting, $i, $j) {
 </script>
 
 
+<div class="main-container">
+<h1 >Your Schedule</h1>
 
-<h1>Your Schedule</h1>
+<div id="authorize-div" style="display: none">
+      <span>Authorize access to Google Calendar API</span>
+      <!--Button for the user to click to initiate auth sequence -->
+      <button id="authorize-button" onclick="handleAuthClick(event)">
+        Authorize
+      </button>
+</div>
 
 <?php
 
 	//Double-check with user. Is everything inserted correctly??
 	for ($i = 0; $i < Course::$numCourses; $i++) {
 		$currentCourse = $courseArray[$i];
-		echo '<div>';
-		echo '<table style="width: 50%">';
+		echo '<div class="table-div">';
+		echo '<table>';
 
 		//create table header row for current course
 		printHeader($currentCourse, $i);
@@ -303,16 +312,16 @@ function printMeeting( $currentMeeting, $i, $j) {
 <div>
 <button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
 </div>
+<br>
+<br>
+<p class="footer" > sb2cal.com </p>
+
+</div> <!-- Close main-container-->
 
 
 
-<div id="authorize-div" style="display: none">
-      <span>Authorize access to Google Calendar API</span>
-      <!--Button for the user to click to initiate auth sequence -->
-      <button id="authorize-button" onclick="handleAuthClick(event)">
-        Authorize
-      </button>
-</div>
+
+
 <pre id="output"></pre>
 
 
