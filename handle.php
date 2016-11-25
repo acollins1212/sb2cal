@@ -116,13 +116,13 @@ function printHeader($currentCourse, $i) {
 		. '<th><input type="text" id="desc' . $i 
 		. '" value="' . $currentCourse->descriptionStr . '"></th>'
 		. '<th><input type="text" id="' . $i . 'section'
-		. '" value="' . $currentCourse->section . '"></th>';
-		/*. '<th><input type="text" id="finalDate' . $i 
+		. '" value="' . $currentCourse->section . '"></th>'
+		. '<th><input type="text" id="finalDate' . $i 
 		. '" value="' . $currentCourse->finalDate . '"></th> <th> @ </th> '
 		. '<th><input type="text" id="finalTime' . $i 
 		. '" value="' . $currentCourse->finalTime . '"></th>'
-		. '</th>'
-		*/
+		. '</th>';
+		
 
 	echo '<th><input type="hidden" id="' . $i . 'numMeetings"' 
 		. ' value="' . $currentCourse->numMeetings . '" ></th>';
@@ -200,7 +200,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 	        });
 
 	        request.execute(function(event) {
-	          appendPre('Event created: ' +   event.htmlLink);
+	          //appendPre('Event created: ' +   event.htmlLink);
 
 	        });
 
@@ -215,7 +215,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 	      });
 
 	      request.execute(function(final_exam) {
-	        appendPre('Final created: ' +   final_exam.htmlLink);
+	        //appendPre('Final created: ' +   final_exam.htmlLink);
 
 	      });
 	    } //outer for

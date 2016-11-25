@@ -32,14 +32,6 @@
 
         <div><input name="CALENDAR_ID" id="calendar-id" type="text"  placeholder="xxxxxxxxxx@group.calendar.google.com"></div>
         <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" ></textarea>
- 
-<!-- 
-		DON'T FORGET ABOUT THIS FUNCTIONALITY!
-		
-        <input type="radio" name="reminders" value="none" checked>None<br>
-        <input type="radio" name="reminders" value="email">Email<br>
-        <input type="radio" name="reminders" value="popup">Popup<br>
-  -->
 
     		<br>
         <input type="submit" value="Submit">
