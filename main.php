@@ -15,16 +15,15 @@
 		<ol>
 			<li>Create a new calendar in Google Calendar.</li>
 				<ul>
-					<li> Take note of its Calendar Id</li>
-					<li>"Calendar Settings" -> "Calendar Address"</li>
+					<li> Paste the calendar ID in the first text box</li>
+					<li> Found in "Calendar Settings" -> "Calendar Address"</li>
 				</ul>
 			<li>Go to <a href="https://my.ucdavis.edu/schedulebuilder/index.cfm?sb" target="_blank">Schedule Builder</a></li>
 			<li>Click "Show (Important) Details" for every single course in your schedule</li>
-			<li>Highlight all of your schedules on the page.</li>
-			<li>Paste your schedule into the text box below</li>
-			<li>Paste your calendar id in the second text box</li>
+			<li>Highlight all of your schedules on the page. Copy it.</li>
+			<li>Paste your schedule into the second text box</li>
 			<li>Click Submit. The next page will give you a chance to edit any of your schedule entries</li>
-			<li>Insert into Google Calendar!</li>
+			<li>Insert into Google Calendar! From there, you can export the calendar to another device's calendar</li>
 		</ol>
 	</div>
     <div id="form">
