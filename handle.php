@@ -110,18 +110,19 @@ function parseSchedule() {
 } //parseSchedule()
 
 function printHeader($currentCourse, $i) {
-
-	echo '<th><input type="text" id="course' . $i 
+	
+	echo '<tr><th><input type="text" id="course' . $i 
 		. '" value="' . $currentCourse->courseCode . '"></th>' 
 		. '<th><input type="text" id="desc' . $i 
 		. '" value="' . $currentCourse->descriptionStr . '"></th>'
 		. '<th><input type="text" id="' . $i . 'section'
-		. '" value="' . $currentCourse->section . '"></th>'
-		. '<th><input type="text" id="finalDate' . $i 
-		. '" value="' . $currentCourse->finalDate . '"></th> <th> @ </th> '
-		. '<th><input type="text" id="finalTime' . $i 
-		. '" value="' . $currentCourse->finalTime . '"></th>'
-		. '</th>';
+		. '" value="' . $currentCourse->section . '"></th></tr>';
+	echo '<tr><td>Final Exam: </td>' 
+		. '<td><input type="text" id="finalDate' . $i 
+		. '" value="' . $currentCourse->finalDate . '"></td><td> @ </td> '
+		. '<td><input type="text" id="finalTime' . $i 
+		. '" value="' . $currentCourse->finalTime . '"></td>'
+		. '</tr></thead>';
 		
 
 	echo '<th><input type="hidden" id="' . $i . 'numMeetings"' 
@@ -192,7 +193,6 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 
 	        var event = currentCourse.getEventJSON(j);
-	        console.log(event);
 
 	        var request = gapi.client.calendar.events.insert({
 	        'calendarId': CALENDAR_ID,
@@ -284,7 +284,9 @@ function printMeeting( $currentMeeting, $i, $j) {
 	for ($i = 0; $i < Course::$numCourses; $i++) {
 		$currentCourse = $courseArray[$i];
 		echo '<div class="table-div">';
-		echo '<table>';
+		echo '<table>'
+			.'<col style="width:10%"> <col style="width:20%">'
+			.'<col style="width:20%"> <col style="width:20%"> <col style="width:20%"> <thead>';
 
 		//create table header row for current course
 		printHeader($currentCourse, $i);

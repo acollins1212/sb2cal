@@ -92,7 +92,6 @@ var Course = function(name_str, section, desc, finalDate, finalTime){
 
 
 	this.getFinalJSON = function() {
-		console.log("Final Exam date: " + this.finalExam_date);
 
 
 
@@ -133,7 +132,6 @@ var Course = function(name_str, section, desc, finalDate, finalTime){
 		var byday_string = "BYDAY="+course_event.days_of_week;
 		var recurrence_string = 'RRULE:WKST=SU;' + frequency_string + ';'
 		+ until_string + ';' +byday_string;
-		console.log(until_string);
 
 		//To give the proper start date of a class
 		var addition = 0;
@@ -161,8 +159,6 @@ var Course = function(name_str, section, desc, finalDate, finalTime){
 		start_datetime = start_datetime.toISOString();
 		start_datetime = start_datetime.replace('.000Z', '-07:00');
 
-		console.log(start_datetime);
-
 		var end_datetime = new Date(FIRST_DAY);
 		end_datetime.setDate(FIRST_DAY.getDate() + addition);
 		end_datetime.setHours(course_event.end_time[0] - 7); //-7 accounts for toISOString() adding 7 
@@ -170,7 +166,6 @@ var Course = function(name_str, section, desc, finalDate, finalTime){
 		end_datetime = end_datetime.toISOString();
 		end_datetime = end_datetime.replace('.000Z', '-07:00');
 
-		console.log(end_datetime);
 		
 		//I'M REALLY NOT UNDERSTANDING TIMEZONING. HOPEFULLY ILL UNDERSTAND IT L8R
 		//I JUST DISCOVERED THAT THE GCALENDAR IS SET TO GMT (due to daylight savings)

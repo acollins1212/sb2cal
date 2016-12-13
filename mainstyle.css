@@ -80,6 +80,7 @@ input {
 	border-style: solid;
 	border-width: 1px;
 	border-color: #002855;
+	width: 100%;
 
 }
 
@@ -96,15 +97,24 @@ input[type=submit], button {
     -webkit-border-radius: 3px;
     border-radius: 3px; 
 	font-size:1em;
+	width: 120px;
 }
 
 table {
 	background-color: #D0D5DF;
 }
 
+.header-div {
+	background-color: #002855;
+}
+
+.first-column {
+	width: 10px;
+}
+
 .table-div {
 	margin-top: 10px;
-	width: 50%;
+	width: 80%;
 }
 
 .footer {
