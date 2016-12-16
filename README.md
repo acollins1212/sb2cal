@@ -1,5 +1,5 @@
 # UCDschedule--Gcalendar
-Easily load your school schedule into Google Calendar
+Easily insert your school schedule into Google Calendar
 
 Copy text from Schedule Builder, paste into this webpage. Insert the ID of the calendar you wish to use.
 This program will create your schedule, including finals!

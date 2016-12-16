@@ -2,10 +2,11 @@
 A.J. Collins
 October 2016
 
-This is translated from python.
+This is translated from python code I wrote.
 
 Reworked on October 28 because the server-side 
-	script does all of the parsing now. 
+	script does all of the parsing from the user input.
+This packages up that input and calls the REST api 
 
 **/
 
@@ -50,24 +51,17 @@ function parseSchedule() {
 	var split_schedule = full_schedule.split(unique_delimiter);
 	split_schedule.shift();
 
-	//document.getElementById("time_disp").innerHTML = split_schedule[0];
-
-   	//var TEST = new Course(split_schedule[0]);
-   	//TEST.getEventJSON(0);
 
    	return split_schedule;
 } //parseSchedule()
 
 var Course = function(name_str, section, desc, finalDate, finalTime){
-	//FIXME: GET SECTION IN HANDLE!!!
 
 	this.name_str = name_str;
 	this.section = section;
 	this.description_str = desc;
-
 	this.meeting_array = [];
 
-	
 	//FINAL EXAM PORTION
 	this.finalExam_date = finalDate;
 	//The date is in MM/DD/YYYY format. 
@@ -106,7 +100,6 @@ var Course = function(name_str, section, desc, finalDate, finalTime){
 				'dateTime': this.finalExam_end,
 				'timeZone': 'America/Los_Angeles'
 			},
-    		//FEATURE IDEA: ask user for reminders they want set
     	} //finalExam
 
     	return finalExam;
@@ -114,10 +107,6 @@ var Course = function(name_str, section, desc, finalDate, finalTime){
 
 
     this.getEventJSON = function(meeting_number) {
-
-    	if(meeting_number >= this.meeting_array.length) {
-    		console.log("Out of Bounds error");
-    	}
 
     	var course_event = this.meeting_array[meeting_number];
     	var desc = this.description_str + "\nSection: " + this.section;
@@ -166,9 +155,9 @@ var Course = function(name_str, section, desc, finalDate, finalTime){
 		end_datetime = end_datetime.toISOString();
 		end_datetime = end_datetime.replace('.000Z', '-07:00');
 
-		
-		//I'M REALLY NOT UNDERSTANDING TIMEZONING. HOPEFULLY ILL UNDERSTAND IT L8R
-		//I JUST DISCOVERED THAT THE GCALENDAR IS SET TO GMT (due to daylight savings)
+		//This was set to a -7 offset because I wrote it during Daylight Savings Time.
+		//I'm pretty relieved that it still works after DST. I think it's because 
+		//	I set the timezone when I insert the event, and GCalendar fixes it for me!
 
 		var summary_string = this.name_str + " " + course_event.meeting_type;
 		
@@ -188,19 +177,6 @@ var Course = function(name_str, section, desc, finalDate, finalTime){
 				recurrence_string
 			]
 
-			/*
-			"reminders": {
-				"useDefault": false;
-				'overrides': [
-				{'method': 'email', 'minutes': 24 * 60},
-				{'method': 'popup', 'minutes': 10}
-				]
-
-				//FEATURE IDEA: Ask user whether they want reminders
-			}
-			*/
-
-			//FEATURE IDEA: Ask user what color they want for the calendar
 		}; //event
 		return event;
 

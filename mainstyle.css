@@ -31,6 +31,10 @@ div {
 	display: block;
 }
 
+a:hover {
+	color: #C99700;
+}
+
 #main-container {
 	margin: auto;
 	width: 90%;
@@ -102,6 +106,15 @@ input[type=submit], button {
     border-radius: 3px; 
 	font-size:1em;
 	width: 120px;
+}
+
+input[type=submit]:hover, button:hover {
+    background: yellow;
+}
+
+input[type=submit]:active, button:active {
+	top: 2px;
+    background: #C99700;
 }
 
 #loadCalendarApi-button {
