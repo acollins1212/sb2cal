@@ -33,6 +33,7 @@ div {
 	margin: auto;
 	width: 90%;
 	height: 100%;
+	position: relative;
 	background-color: #D0D5DF;
 	padding: 3px;
     -webkit-border-radius: 3px;
@@ -101,7 +102,12 @@ input[type=submit], button {
 }
 
 table {
-	background-color: #D0D5DF;
+	background-color: #C99700;
+	border: 1px solid #002855;
+}
+
+th, td {
+	padding: 1px;
 }
 
 .header-div {
@@ -114,7 +120,7 @@ table {
 
 .table-div {
 	margin-top: 10px;
-	width: 80%;
+	width: 45%;
 }
 
 .footer {

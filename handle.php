@@ -119,7 +119,7 @@ function printHeader($currentCourse, $i) {
 		. '" value="' . $currentCourse->section . '"></th></tr>';
 	echo '<tr><td>Final Exam: </td>' 
 		. '<td><input type="text" id="finalDate' . $i 
-		. '" value="' . $currentCourse->finalDate . '"></td><td> @ </td> '
+		. '" value="' . $currentCourse->finalDate . '">'
 		. '<td><input type="text" id="finalTime' . $i 
 		. '" value="' . $currentCourse->finalTime . '"></td>'
 		. '</tr></thead>';
@@ -283,10 +283,13 @@ function printMeeting( $currentMeeting, $i, $j) {
 	//Double-check with user. Is everything inserted correctly??
 	for ($i = 0; $i < Course::$numCourses; $i++) {
 		$currentCourse = $courseArray[$i];
+		if ($i % 2 == 0) {
+			echo '<span>';
+		}
 		echo '<div class="table-div">';
-		echo '<table>'
-			.'<col style="width:10%"> <col style="width:20%">'
-			.'<col style="width:20%"> <col style="width:20%"> <col style="width:20%"> <thead>';
+		echo '<table class="course-table">'
+			.'<col style="width:20%"> <col style="width:40%">'
+			.'<col style="width:40%"><thead>';
 
 		//create table header row for current course
 		printHeader($currentCourse, $i);
@@ -302,6 +305,9 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 		echo '</table>';
 		echo '</div>';
+		if ($i % 2 == 1) {
+			echo '</span>';
+		}
 		
 	} //outer for
 
