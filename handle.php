@@ -267,8 +267,11 @@ function printMeeting( $currentMeeting, $i, $j) {
 </script>
 
 
-<div class="main-container">
-<h1 >Your Schedule</h1>
+<div id="main-container">
+	<div id="header">
+	<h1 >Your Schedule</h1>
+	<h4>Please double check that these were read correctly before inserting them into your Google Calendar</h4>
+	</div>
 
 <div id="authorize-div" style="display: none">
       <span>Authorize access to Google Calendar API</span>
@@ -284,11 +287,13 @@ function printMeeting( $currentMeeting, $i, $j) {
 	for ($i = 0; $i < Course::$numCourses; $i++) {
 		$currentCourse = $courseArray[$i];
 		if ($i % 2 == 0) {
-			echo '<span>';
+			echo '<div class="two-tables">';
+			echo '<table class="left-course-table">';
+
+		} else {
+			echo '<table class="right-course-table">';
 		}
-		echo '<div class="table-div">';
-		echo '<table class="course-table">'
-			.'<col style="width:20%"> <col style="width:40%">'
+		echo '<col style="width:20%"> <col style="width:40%">'
 			.'<col style="width:40%"><thead>';
 
 		//create table header row for current course
@@ -304,12 +309,17 @@ function printMeeting( $currentMeeting, $i, $j) {
 		} //inner for
 
 		echo '</table>';
-		echo '</div>';
 		if ($i % 2 == 1) {
-			echo '</span>';
+			echo '</div>';
 		}
 		
 	} //outer for
+
+	if ($i % 2 == 1) {
+		echo '</div>';
+	}
+
+	
 
 	echo '<input type="hidden" id="numCourses" value="' . $numCourses . '" >';
 
@@ -317,12 +327,12 @@ function printMeeting( $currentMeeting, $i, $j) {
 ?>
 
 
-<div>
+<div style="clear: both; text-align: center; margin-top: 10px;">
 <button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
 </div>
 <br>
 <br>
-<p class="footer" > sb2cal.com </p>
+<p id="footer" > sb2cal.com </p>
 
 </div> <!-- Close main-container-->
 

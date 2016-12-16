@@ -9,6 +9,8 @@ Tables: http://www.w3schools.com/css/css_table.asp;
 
 
 body {
+	margin: 5px;
+	padding: 5px;
 	background-color: #AAA;
 	color: #002855;
 	font-family: "proxima-nova","Lucida Grande","Lucida Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -29,15 +31,16 @@ div {
 	display: block;
 }
 
-.main-container {
+#main-container {
 	margin: auto;
 	width: 90%;
-	height: 100%;
 	position: relative;
 	background-color: #D0D5DF;
-	padding: 3px;
+	padding: 5px;
     -webkit-border-radius: 3px;
-    border-radius: 3px; 
+    border-radius: 3px;
+    padding: 5px; 
+
 }
 
 #instruction-div {
@@ -101,29 +104,42 @@ input[type=submit], button {
 	width: 120px;
 }
 
+#loadCalendarApi-button {
+	margin: auto;
+}
+
 table {
+	margin-top: 10px;
+	margin-bottom: 10px;
 	background-color: #C99700;
-	border: 1px solid #002855;
+	border: 3px solid #002855;
+	padding: 3px;
+	width: 45%;
+}
+
+.two-tables {
+	position: relative;
+	overflow: auto;
+}
+
+.left-course-table {
+	margin-left: 2%;
+	float: left;
+}
+
+.right-course-table {
+	margin-right: 2%;
+	float: right;
 }
 
 th, td {
 	padding: 1px;
 }
 
-.header-div {
-	background-color: #002855;
+#header {
+	margin-left:2%;
 }
-
-.first-column {
-	width: 10px;
-}
-
-.table-div {
-	margin-top: 10px;
-	width: 45%;
-}
-
-.footer {
+#footer {
 	text-align: right;
 	position: relative;
 }

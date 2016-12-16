@@ -8,7 +8,7 @@
   </head>
 
   <body>
-	<div class="main-container">
+	<div id="main-container">
     <h1>Schedule Builder to Google Calendar</h1>
 	<div id="instruction-div">
 		<p><strong>Instructions</strong></p>
