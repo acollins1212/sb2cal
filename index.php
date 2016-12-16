@@ -4,7 +4,6 @@
   <link rel="stylesheet" type="text/css" href="mainstyle.css">
   
   <script type="text/javascript" src="scheduler.js"></script>
-  <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
   </head>
 
   <body>
@@ -29,7 +28,8 @@
     <div id="form">
       <form action="handle.php" method="post">
 
-        <div><input name="CALENDAR_ID" id="calendar-id" type="text"  placeholder="xxxxxxxxxx@group.calendar.google.com"></div>
+        <div><input name="CALENDAR_ID" id="calendar-id" type="text"  placeholder="xxxxxxxxxx@group.calendar.google.com">
+        </div>
         <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" ></textarea>
 
     		<br>

@@ -274,13 +274,12 @@ function printMeeting( $currentMeeting, $i, $j) {
 	</div>
 
 <div id="authorize-div" style="display: none">
-      <span>Authorize access to Google Calendar API</span>
+      <span>Please authorize access to SB2CAL to add to the calendar you selected before submitting!</span>
       <!--Button for the user to click to initiate auth sequence -->
       <button id="authorize-button" onclick="handleAuthClick(event)">
         Authorize
       </button>
 </div>
-
 <?php
 
 	//Double-check with user. Is everything inserted correctly??

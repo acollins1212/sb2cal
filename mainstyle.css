@@ -143,3 +143,8 @@ th, td {
 	text-align: right;
 	position: relative;
 }
+
+#authorize-div {
+	margin-left:2%;
+	background-color: yellow;
+}
