@@ -11,28 +11,28 @@
 <!--Google Calendar API Functions -->
 <script type="text/javascript">
  
-      var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
-      var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
+    var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
+    var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
-      /**
-       * Check if current user has authorized this application.
-       */
-      function checkAuth() {
+    /**
+     * Check if current user has authorized this application.
+    */
+    function checkAuth() {
         gapi.auth.authorize(
-          {
-            'client_id': CLIENT_ID,
+        {
+    	    'client_id': CLIENT_ID,
             'scope': SCOPES.join(' '),
             'immediate': true
-          }, handleAuthResult);
-      }
+        }, handleAuthResult);
+    }
 
-      /**
-       * Handle response from authorization server.
-       *
-       * @param {Object} authResult Authorization result.
-       */
-      function handleAuthResult(authResult) {
-        var authorizeDiv = document.getElementById('authorize-div');
+    /**
+     * Handle response from authorization server.
+     *
+     * @param {Object} authResult Authorization result.
+    */
+    function handleAuthResult(authResult) {
+    	var authorizeDiv = document.getElementById('authorize-div');
         if (authResult && !authResult.error) {
           // Hide auth UI, then load client library.
           authorizeDiv.style.display = 'none';
@@ -41,43 +41,44 @@
           // clicking authorize button.
           authorizeDiv.style.display = 'inline';
         }
-      }
+    }
 
-      /**
-       * Initiate auth flow in response to user clicking authorize button.
-       *
-       * @param {Event} event Button click event.
-       */
-      function handleAuthClick(event) {
-        gapi.auth.authorize(
-          {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
-          handleAuthResult);
+    /**
+     * Initiate auth flow in response to user clicking authorize button.
+     *
+     * @param {Event} event Button click event.
+    */
+    function handleAuthClick(event) {
+    	gapi.auth.authorize(
+        {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
+         	handleAuthResult);
         return false;
-      }
+    }
 
-      /**
-       * Load Google Calendar client library. List upcoming events
-       * once client library is loaded.
-       */
-      function loadCalendarApi() {
-        gapi.client.load('calendar', 'v3', insertAllCourses);
-      }
+    /**
+     * Load Google Calendar client library. List upcoming events
+     * once client library is loaded.
+    */
+    function loadCalendarApi() {
+    	gapi.client.load('calendar', 'v3', insertAllCourses);
+    }
 
 
-      /**
-       * Append a pre element to the body containing the given message
-       * as its text node.
-       *
-       * @param {string} message Text to be placed in pre element.
-       */
-      function appendPre(message) {
-        var pre = document.getElementById('output');
+    /**
+     * Append a pre element to the body containing the given message
+     * as its text node.
+     *
+     * @param {string} message Text to be placed in pre element.
+    */
+    function appendPre(message) {
+    	var pre = document.getElementById('output');
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
-      }
+    }
 
-    </script>
-    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+</script>
+
+<script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 
 <?php
 
@@ -153,27 +154,27 @@ function printMeeting( $currentMeeting, $i, $j) {
 } //echoMeeting()
 
 
-	//Set up Course objects to be used
-	$courseList = parseSchedule();
-	$courseArray = [];
+//Set up Course objects to be used
+$courseList = parseSchedule();
+$courseArray = [];
 
-	//For some reason, Internet Explorer copy-paste puts in null elements
-	//Had something to do with a null character
-	$numCourses = count($courseList);
-	for($i = 0; $i < $numCourses; $i++) {
-		if(strlen($courseList[$i]) < 25) {
-	 		array_splice($courseList, $i, 1);
-	 		$numCourses--;
-	 		$i--;
-	 	} //if
+//For some reason, Internet Explorer copy-paste puts in null elements
+//Had something to do with a null character
+$numCourses = count($courseList);
+for($i = 0; $i < $numCourses; $i++) {
+	if(strlen($courseList[$i]) < 25) {
+ 		array_splice($courseList, $i, 1);
+ 		$numCourses--;
+ 		$i--;
+ 	} //if
 
-	} //for
+} //for
 
-	//courseArray inputted  all Course objects
-	for ($i = 0; $i < $numCourses; $i++) {
-		$courseArray[] = new Course($courseList[$i]);
+//courseArray inputted  all Course objects
+for ($i = 0; $i < $numCourses; $i++) {
+	$courseArray[] = new Course($courseList[$i]);
 
-	} //for
+} //for
 
 ?>
 
@@ -193,14 +194,14 @@ function printMeeting( $currentMeeting, $i, $j) {
 			for(var j = 0; j < getCourse(i).meeting_array.length; j++) {
 
 
-	        var event = currentCourse.getEventJSON(j);
+	        	var event = currentCourse.getEventJSON(j);
 
-	        var request = gapi.client.calendar.events.insert({
-	        'calendarId': CALENDAR_ID,
-	        'resource': event
-	        });
+	        	var request = gapi.client.calendar.events.insert({
+	        		'calendarId': CALENDAR_ID,
+	        		'resource': event
+	        	});
 
-	        request.execute(function(event) {
+	        	request.execute(function(event) {
 	          //appendPre('Event created: ' +   event.htmlLink);
 
 	        });
@@ -209,10 +210,9 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 	      //insert the Final Exam event
 	      var final_exam = currentCourse.getFinalJSON();
-
 	      var request = gapi.client.calendar.events.insert({
-	       'calendarId': CALENDAR_ID,
-	       'resource': final_exam
+	      	'calendarId': CALENDAR_ID,
+	      	'resource': final_exam
 	      });
 
 	      request.execute(function(final_exam) {
@@ -246,7 +246,6 @@ function printMeeting( $currentMeeting, $i, $j) {
 		var numMeetings = document.getElementById(numMeetingsKey).value;
 
 		for (var j = 0; j < numMeetings; j++) {
-
 			//Get the meeting values out of the text boxes
 			var meetingTypeKey = i + 'meetingType' + j;
         	var startTimeKey = i + 'startTime' + j;
@@ -290,9 +289,11 @@ function printMeeting( $currentMeeting, $i, $j) {
 			echo '<div class="two-tables">';
 			echo '<table class="left-course-table">';
 
-		} else {
+		} 
+		else {
 			echo '<table class="right-course-table">';
 		}
+
 		echo '<col style="width:20%"> <col style="width:40%">'
 			.'<col style="width:40%"><thead>';
 
@@ -301,17 +302,14 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 		//output all the meetings
 		for ($j = 0; $j < $currentCourse->numMeetings; $j++) {
-
 			$currentMeeting = $currentCourse->meetingArray[$j];
-			printMeeting( $currentMeeting, $i, $j);
-			
-
+			printMeeting( $currentMeeting, $i, $j);			
 		} //inner for
 
 		echo '</table>';
 		if ($i % 2 == 1) {
 			echo '</div>';
-		}
+		} 
 		
 	} //outer for
 
@@ -319,13 +317,9 @@ function printMeeting( $currentMeeting, $i, $j) {
 		echo '</div>';
 	}
 
-	
-
 	echo '<input type="hidden" id="numCourses" value="' . $numCourses . '" >';
 
-
 ?>
-
 
 <div style="clear: both; text-align: center; margin-top: 10px;">
 <button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
@@ -336,12 +330,7 @@ function printMeeting( $currentMeeting, $i, $j) {
 
 </div> <!-- Close main-container-->
 
-
-
-
-
 <pre id="output"></pre>
-
 
 </body>
 </html>
