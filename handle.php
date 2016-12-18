@@ -20,7 +20,7 @@
     function checkAuth() {
         gapi.auth.authorize(
         {
-    	    'client_id': CLIENT_ID,
+            'client_id': CLIENT_ID,
             'scope': SCOPES.join(' '),
             'immediate': true
         }, handleAuthResult);
@@ -32,7 +32,7 @@
      * @param {Object} authResult Authorization result.
     */
     function handleAuthResult(authResult) {
-    	var authorizeDiv = document.getElementById('authorize-div');
+        var authorizeDiv = document.getElementById('authorize-div');
         if (authResult && !authResult.error) {
           // Hide auth UI, then load client library.
           authorizeDiv.style.display = 'none';
@@ -49,9 +49,9 @@
      * @param {Event} event Button click event.
     */
     function handleAuthClick(event) {
-    	gapi.auth.authorize(
+        gapi.auth.authorize(
         {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
-         	handleAuthResult);
+             handleAuthResult);
         return false;
     }
 
@@ -60,7 +60,7 @@
      * once client library is loaded.
     */
     function loadCalendarApi() {
-    	gapi.client.load('calendar', 'v3', insertAllCourses);
+        gapi.client.load('calendar', 'v3', insertAllCourses);
     }
 
 
@@ -71,7 +71,7 @@
      * @param {string} message Text to be placed in pre element.
     */
     function appendPre(message) {
-    	var pre = document.getElementById('output');
+        var pre = document.getElementById('output');
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
     }
@@ -84,72 +84,76 @@
 
 function parseSchedule() {
 
-	$fullSchedule = $_POST["textArea"];
-	
+    $fullSchedule = $_POST["textArea"];
+    
 
-	$courseName_pattern = '/[A-Z]{3} [0-9]{3}[A-Z]{0,1} [A-Z0-9]{3} - .*/';
-	$courseName_array;
+    $courseName_pattern = '/[A-Z]{3} [0-9]{3}[A-Z]{0,1} [A-Z0-9]{3} - .*/';
+    $courseName_array;
 
-	preg_match_all($courseName_pattern, $fullSchedule, $courseName_array);
+    preg_match_all($courseName_pattern, $fullSchedule, $courseName_array);
 
 
-	$uniqueDelimiter = "!@#!@#!@#!@#!";
-	$uniqueDelimiter_pattern = '/' . $uniqueDelimiter . '/m';
-	$numCourses = count($courseName_array[0]);
+    $uniqueDelimiter = "!@#!@#!@#!@#!";
+    $uniqueDelimiter_pattern = '/' . $uniqueDelimiter . '/m';
+    $numCourses = count($courseName_array[0]);
 
-	for ($i = 0; $i < $numCourses; $i++) {
-		$currentCourse = $courseName_array[0][$i];
-		$currentCourse_pattern = '/' . $currentCourse . '/m';
+    for ($i = 0; $i < $numCourses; $i++) {
+        $currentCourse = $courseName_array[0][$i];
+        $currentCourse_pattern = '/' . $currentCourse . '/m';
 
-		$fullSchedule = preg_replace($currentCourse_pattern, $uniqueDelimiter . $currentCourse, $fullSchedule);
+        $fullSchedule = preg_replace($currentCourse_pattern, 
+                                     $uniqueDelimiter . $currentCourse, 
+                                     $fullSchedule);
 
-		$scheduleArray = preg_split($uniqueDelimiter_pattern, $fullSchedule, NULL, PREG_SPLIT_NO_EMPTY);
+        $scheduleArray = preg_split($uniqueDelimiter_pattern, $fullSchedule, 
+                                    NULL, PREG_SPLIT_NO_EMPTY);
 
-	} //for
+    } //for
 
-	return $scheduleArray;
+    return $scheduleArray;
 
 } //parseSchedule()
 
 function printHeader($currentCourse, $i) {
-	
-	echo '<tr><th><input type="text" id="course' . $i 
-		. '" value="' . $currentCourse->courseCode . '"></th>' 
-		. '<th><input type="text" id="desc' . $i 
-		. '" value="' . $currentCourse->descriptionStr . '"></th>'
-		. '<th><input type="text" id="' . $i . 'section'
-		. '" value="' . $currentCourse->section . '"></th></tr>';
-	echo '<tr><td>Final Exam: </td>' 
-		. '<td><input type="text" id="finalDate' . $i 
-		. '" value="' . $currentCourse->finalDate . '">'
-		. '<td><input type="text" id="finalTime' . $i 
-		. '" value="' . $currentCourse->finalTime . '"></td>'
-		. '</tr></thead>';
-		
+    
+    echo '<tr><th><input type="text" id="course' . $i 
+        . '" value="' . $currentCourse->courseCode . '"></th>' 
+        . '<th><input type="text" id="desc' . $i 
+        . '" value="' . $currentCourse->descriptionStr . '"></th>'
+        . '<th><input type="text" id="' . $i . 'section'
+        . '" value="' . $currentCourse->section . '"></th></tr>';
+    echo '<tr><td>Final Exam: </td>' 
+        . '<td><input type="text" id="finalDate' . $i 
+        . '" value="' . $currentCourse->finalDate . '">'
+        . '<td><input type="text" id="finalTime' . $i 
+        . '" value="' . $currentCourse->finalTime . '"></td>'
+        . '</tr></thead>';
+        
 
-	echo '<th><input type="hidden" id="' . $i . 'numMeetings"' 
-		. ' value="' . $currentCourse->numMeetings . '" ></th>';
+    echo '<th><input type="hidden" id="' . $i . 'numMeetings"' 
+        . ' value="' . $currentCourse->numMeetings . '" ></th>';
 
 
 } //echoHeader()
 
 function printMeeting( $currentMeeting, $i, $j) {
 
-	echo '<tr>' . '<td><input type="text" id="' . $i 
-		. 'meetingType' . $j . '" value="' . $currentMeeting->meetingType .'"></td>'
-		. '<td><input type="text" id="' . $i 
-		. 'startTime' . $j . '" value="' . $currentMeeting->startTime . '" ></td>'
-		. '<td><input type="text" id="' . $i 
-		. 'endTime' . $j . '" value="' . $currentMeeting->endTime . '" ></td>'
-		. '</tr>'
-		. '<tr>' . '<td>@</td>'
-		. '<td><input type="text" id="' . $i 
-		. 'location' . $j . '" value="' . $currentMeeting->location . '"></td>'
-		. '<td><input type="text" id="' . $i 
-		. 'daysOfWeek' . $j . '" value="' . $currentMeeting->daysOfWeek . '"></td>'
-		. '</tr>';
+    echo '<tr>' 
+        . '<td><input type="text" id="' . $i . 'meetingType' . $j 
+        . '" value="' . $currentMeeting->meetingType . '"></td>'
+        . '<td><input type="text" id="' . $i 
+        . 'startTime' . $j . '" value="' . $currentMeeting->startTime . '"></td>'
+        . '<td><input type="text" id="' . $i 
+        . 'endTime' . $j . '" value="' . $currentMeeting->endTime . '"></td>'
+        . '</tr>'
+        . '<tr>' . '<td>@</td>'
+        . '<td><input type="text" id="' . $i 
+        . 'location' . $j . '" value="' . $currentMeeting->location . '"></td>'
+        . '<td><input type="text" id="' . $i 
+        . 'daysOfWeek' . $j . '" value="' . $currentMeeting->daysOfWeek . '"></td>'
+        . '</tr>';
 
-	
+    
 
 } //echoMeeting()
 
@@ -162,17 +166,17 @@ $courseArray = [];
 //Had something to do with a null character
 $numCourses = count($courseList);
 for($i = 0; $i < $numCourses; $i++) {
-	if(strlen($courseList[$i]) < 25) {
- 		array_splice($courseList, $i, 1);
- 		$numCourses--;
- 		$i--;
- 	} //if
+    if(strlen($courseList[$i]) < 25) {
+         array_splice($courseList, $i, 1);
+         $numCourses--;
+         $i--;
+     } //if
 
 } //for
 
 //courseArray inputted  all Course objects
 for ($i = 0; $i < $numCourses; $i++) {
-	$courseArray[] = new Course($courseList[$i]);
+    $courseArray[] = new Course($courseList[$i]);
 
 } //for
 
@@ -180,98 +184,98 @@ for ($i = 0; $i < $numCourses; $i++) {
 
 <script type="text/javascript">
 
-	var CALENDAR_ID = '<?php echo $_POST["CALENDAR_ID"]; ?>'; 
-	CALENDAR_ID = CALENDAR_ID.trim();
+    var CALENDAR_ID = '<?php echo $_POST["CALENDAR_ID"]; ?>'; 
+    CALENDAR_ID = CALENDAR_ID.trim();
 
-	function insertAllCourses() {
-		COURSE_ARRAY = [];
-		var numCourses = <?php echo $numCourses; ?>;
+    function insertAllCourses() {
+        COURSE_ARRAY = [];
+        var numCourses = <?php echo $numCourses; ?>;
 
-		for (var i = 0; i < numCourses; i++) {
-			var currentCourse = getCourse(i);
-
-
-			for(var j = 0; j < getCourse(i).meeting_array.length; j++) {
+        for (var i = 0; i < numCourses; i++) {
+            var currentCourse = getCourse(i);
 
 
-	        	var event = currentCourse.getEventJSON(j);
+            for(var j = 0; j < getCourse(i).meetingArray.length; j++) {
 
-	        	var request = gapi.client.calendar.events.insert({
-	        		'calendarId': CALENDAR_ID,
-	        		'resource': event
-	        	});
 
-	        	request.execute(function(event) {
-	          //appendPre('Event created: ' +   event.htmlLink);
+                var event = currentCourse.getEventJSON(j);
 
-	        });
+                var request = gapi.client.calendar.events.insert({
+                    'calendarId': CALENDAR_ID,
+                    'resource': event
+                });
 
-	      } //inner for
+                request.execute(function(event) {
+              //appendPre('Event created: ' +   event.htmlLink);
 
-	      //insert the Final Exam event
-	      var final_exam = currentCourse.getFinalJSON();
-	      var request = gapi.client.calendar.events.insert({
-	      	'calendarId': CALENDAR_ID,
-	      	'resource': final_exam
-	      });
+            });
 
-	      request.execute(function(final_exam) {
-	        //appendPre('Final created: ' +   final_exam.htmlLink);
+          } //inner for
 
-	      });
-	    } //outer for
-			
-	} //insertAllCourses()
+          //insert the Final Exam event
+          var finalExam = currentCourse.getFinalJSON();
+          var request = gapi.client.calendar.events.insert({
+              'calendarId': CALENDAR_ID,
+              'resource': finalExam
+          });
 
-	function getCourse(i) {
+          request.execute(function(finalExam) {
+            //appendPre('Final created: ' +   finalExam.htmlLink);
 
-		//These are the ID's for course elements
-		var courseKey = 'course' + i; //course i
-		var sectionKey = i + 'section'; 
-		var descriptionKey = 'desc' + i; //desc  i
-		var finalDateKey = 'finalDate' + i;
-		var finalTimeKey = 'finalTime' + i;
+          });
+        } //outer for
+            
+    } //insertAllCourses()
 
-		//Using the ID's from above, get the values inputted
-		var course_id = document.getElementById(courseKey).value;
-		var section = document.getElementById(sectionKey).value;
-		var desc = document.getElementById(descriptionKey).value;
-		var finalDate = document.getElementById(finalDateKey).value;
-   		var finalTime = document.getElementById(finalTimeKey).value;
+    function getCourse(i) {
 
-   		c = new Course(course_id, section, desc, finalDate, finalTime);
+        //These are the ID's for course elements
+        var courseKey = 'course' + i; //course i
+        var sectionKey = i + 'section'; 
+        var descriptionKey = 'desc' + i; //desc  i
+        var finalDateKey = 'finalDate' + i;
+        var finalTimeKey = 'finalTime' + i;
 
-   		//Get number of meetings for this course
-		var numMeetingsKey = i + "numMeetings";
-		var numMeetings = document.getElementById(numMeetingsKey).value;
+        //Using the ID's from above, get the values inputted
+        var courseID = document.getElementById(courseKey).value;
+        var section = document.getElementById(sectionKey).value;
+        var desc = document.getElementById(descriptionKey).value;
+        var finalDate = document.getElementById(finalDateKey).value;
+           var finalTime = document.getElementById(finalTimeKey).value;
 
-		for (var j = 0; j < numMeetings; j++) {
-			//Get the meeting values out of the text boxes
-			var meetingTypeKey = i + 'meetingType' + j;
-        	var startTimeKey = i + 'startTime' + j;
-			var endTimeKey = i + 'endTime' + j;
-			var locationKey = i + 'location' + j;
-			var daysOfWeekKey = i + 'daysOfWeek' + j;
-			var type = document.getElementById(meetingTypeKey).value;
-			var start = document.getElementById(startTimeKey).value;
-			var end = document.getElementById(endTimeKey).value;
-			var loc = document.getElementById(locationKey).value;
-			var dow = document.getElementById(daysOfWeekKey).value;
+           c = new Course(courseID, section, desc, finalDate, finalTime);
 
-			c.addMeeting(type, start, end, loc, dow);
-		} //inner for
-		return c; //return the course created
+           //Get number of meetings for this course
+        var numMeetingsKey = i + "numMeetings";
+        var numMeetings = document.getElementById(numMeetingsKey).value;
 
-	} //getCourse(i)
+        for (var j = 0; j < numMeetings; j++) {
+            //Get the meeting values out of the text boxes
+            var meetingTypeKey = i + 'meetingType' + j;
+            var startTimeKey = i + 'startTime' + j;
+            var endTimeKey = i + 'endTime' + j;
+            var locationKey = i + 'location' + j;
+            var daysOfWeekKey = i + 'daysOfWeek' + j;
+            var type = document.getElementById(meetingTypeKey).value;
+            var start = document.getElementById(startTimeKey).value;
+            var end = document.getElementById(endTimeKey).value;
+            var loc = document.getElementById(locationKey).value;
+            var dow = document.getElementById(daysOfWeekKey).value;
+
+            c.addMeeting(type, start, end, loc, dow);
+        } //inner for
+        return c; //return the course created
+
+    } //getCourse(i)
 
 </script>
 
 
 <div id="main-container">
-	<div id="header">
-	<h1 >Your Schedule</h1>
-	<h4>Please double check that these were read correctly before inserting them into your Google Calendar</h4>
-	</div>
+    <div id="header">
+    <h1 >Your Schedule</h1>
+    <h4>Please double check that these were read correctly before inserting them into your Google Calendar</h4>
+    </div>
 
 <div id="authorize-div" style="display: none">
       <span>Please authorize access to SB2CAL to add to the calendar you selected before submitting!</span>
@@ -282,42 +286,42 @@ for ($i = 0; $i < $numCourses; $i++) {
 </div>
 <?php
 
-	//Double-check with user. Is everything inserted correctly??
-	for ($i = 0; $i < Course::$numCourses; $i++) {
-		$currentCourse = $courseArray[$i];
-		if ($i % 2 == 0) {
-			echo '<div class="two-tables">';
-			echo '<table class="left-course-table">';
+    //Double-check with user. Is everything inserted correctly??
+    for ($i = 0; $i < Course::$numCourses; $i++) {
+        $currentCourse = $courseArray[$i];
+        if ($i % 2 == 0) {
+            echo '<div class="two-tables">';
+            echo '<table class="left-course-table">';
 
-		} 
-		else {
-			echo '<table class="right-course-table">';
-		}
+        } 
+        else {
+            echo '<table class="right-course-table">';
+        }
 
-		echo '<col style="width:20%"> <col style="width:40%">'
-			.'<col style="width:40%"><thead>';
+        echo '<col style="width:20%"> <col style="width:40%">'
+            .'<col style="width:40%"><thead>';
 
-		//create table header row for current course
-		printHeader($currentCourse, $i);
+        //create table header row for current course
+        printHeader($currentCourse, $i);
 
-		//output all the meetings
-		for ($j = 0; $j < $currentCourse->numMeetings; $j++) {
-			$currentMeeting = $currentCourse->meetingArray[$j];
-			printMeeting( $currentMeeting, $i, $j);			
-		} //inner for
+        //output all the meetings
+        for ($j = 0; $j < $currentCourse->numMeetings; $j++) {
+            $currentMeeting = $currentCourse->meetingArray[$j];
+            printMeeting( $currentMeeting, $i, $j);            
+        } //inner for
 
-		echo '</table>';
-		if ($i % 2 == 1) {
-			echo '</div>';
-		} 
-		
-	} //outer for
+        echo '</table>';
+        if ($i % 2 == 1) {
+            echo '</div>';
+        } 
+        
+    } //outer for
 
-	if ($i % 2 == 1) {
-		echo '</div>';
-	}
+    if ($i % 2 == 1) {
+        echo '</div>';
+    }
 
-	echo '<input type="hidden" id="numCourses" value="' . $numCourses . '" >';
+    echo '<input type="hidden" id="numCourses" value="' . $numCourses . '" >';
 
 ?>
 
