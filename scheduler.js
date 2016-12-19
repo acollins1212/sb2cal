@@ -52,8 +52,7 @@ function parseSchedule() {
     var splitSchedule = fullSchedule.split(uniqueDelim);
     splitSchedule.shift(); //removes the first element, which is nothing
 
-
-       return splitSchedule;
+    return splitSchedule;
 } //parseSchedule()
 
 var Course = function(nameStr, section, desc, finalDate, finalTime){

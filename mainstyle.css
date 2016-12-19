@@ -35,6 +35,11 @@ a:hover {
 	color: #C99700;
 }
 
+form {
+	width: 50%;
+	position: relative;
+}
+
 #main-container {
 	margin: auto;
 	width: 90%;
@@ -64,7 +69,7 @@ ul {
 
 textarea {
 	background-color: #F9F9F9;
-	width: 40%; 
+	width: 100%; 
 	height: 100px;
 	margin: 3px;
 	border-style: solid;
@@ -73,7 +78,7 @@ textarea {
 }
 
 #calendar-id {
-	width: 300px;
+	width: 100%;
 	height: 21px;
 	margin: 3px;
 	padding: 1px 5px;
@@ -108,12 +113,16 @@ input[type=submit], button {
 	width: 120px;
 }
 
+#submit-schedule {
+	position: absolute;
+	right: 0px
+}
+
 input[type=submit]:hover, button:hover {
     background: yellow;
 }
 
 input[type=submit]:active, button:active {
-	top: 2px;
     background: #C99700;
 }
 

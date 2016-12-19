@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <link rel="stylesheet" type="text/css" href="mainstyle.css">
+  <head>
+	<link rel="stylesheet" type="text/css" href="mainstyle.css">
   
-  <script type="text/javascript" src="scheduler.js"></script>
+	<script type="text/javascript" src="scheduler.js"></script>
+	<script type="text/javascript">
+
+		function fixID() {
+			var idInput = document.forms["form"]["CALENDAR_ID"].value;
+			var invalidCharacters = /[^@.\d\w_]/gi; //the only characters allowed, in a complement set
+			var scrubbedInput = idInput.replace(invalidCharacters, "");
+			document.forms["form"]["CALENDAR_ID"].value = scrubbedInput;
+			if (scrubbedInput.length > 100) {
+				return false;
+			}
+			return true;
+		}
+
+	</script>
   </head>
 
   <body>
@@ -29,15 +43,15 @@
 				<ul>
 		</ol>
 	</div>
-    <div id="form">
-      <form action="handle.php" method="post">
+    <div>
+      <form name="form" action="handle.php" method="post" onsubmit="return(fixID())">
 
-        <div><input name="CALENDAR_ID" id="calendar-id" type="text"  placeholder="xxxxxxxxxx@group.calendar.google.com">
+        <div><input name="CALENDAR_ID" id="calendar-id" type="text"  placeholder="xxxxxxxxxxxxxxx@group.calendar.google.com" required>
         </div>
-        <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" ></textarea>
+        <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" required ></textarea>
 
-    		<br>
-        <input type="submit" value="Submit">
+    	<br>
+        <input id="submit-schedule" type="submit" value="Submit">
 
       </form>
 
@@ -47,6 +61,7 @@
     <pre id="output"></pre>
 	<br>
 	<p id="footer"> sb2cal.com </p>
+
 
     
 
