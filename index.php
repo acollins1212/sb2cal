@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<link rel="stylesheet" type="text/css" href="mainstyle.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
   
 	<script type="text/javascript" src="scheduler.js"></script>
 	<script type="text/javascript">
 
 		function fixID() {
 			var idInput = document.forms["form"]["CALENDAR_ID"].value;
-			var invalidCharacters = /[^@.\d\w_]/gi; //the only characters allowed, in a complement set
+			var invalidCharacters = /[^@.\d\w_]|Calendar ID:/gi; //the only characters allowed, in a complement set
 			var scrubbedInput = idInput.replace(invalidCharacters, "");
 			document.forms["form"]["CALENDAR_ID"].value = scrubbedInput;
 			if (scrubbedInput.length > 100) {

@@ -1,7 +1,7 @@
 <html>
 <head>
 
-  <link rel="stylesheet" type="text/css" href="./mainstyle.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/javascript" src="scheduler.js"></script>
   <?php require 'classes.php'; ?>
 
@@ -206,11 +206,10 @@ for ($i = 0; $i < $numCourses; $i++) {
                 });
 
                 request.execute(function(event) {
-              //appendPre('Event created: ' +   event.htmlLink);
+                    appendPre(event.summary + ' - inserted');
+                });
 
-            });
-
-          } //inner for
+            } //inner for
 
           //insert the Final Exam event
           var finalExam = currentCourse.getFinalJSON();
@@ -220,11 +219,11 @@ for ($i = 0; $i < $numCourses; $i++) {
           });
 
           request.execute(function(finalExam) {
-            //appendPre('Final created: ' +   finalExam.htmlLink);
+              appendPre(finalExam.summary + ' - inserted');
 
           });
         } //outer for
-            
+        appendPre('Hope you enjoyed using sb2cal =)\n');
     } //insertAllCourses()
 
     function getCourse(i) {
@@ -272,18 +271,23 @@ for ($i = 0; $i < $numCourses; $i++) {
 
 
 <div id="main-container">
+    <div id="authorize-div" style="display: none">
+        <span >Please click Authorize first! This gives <strong>sb2cal</strong> permission to insert your schedule.</span>
+        
+        <!--Button for the user to click to initiate auth sequence -->
+        <button id="authorize-button" onclick="handleAuthClick(event)" style="background-color: yellow">
+          <strong>Authorize</strong>
+        </button>
+
+    </div>
+
     <div id="header">
+      
     <h1 >Your Schedule</h1>
     <h4>Please double check that these were read correctly before inserting them into your Google Calendar</h4>
     </div>
 
-<div id="authorize-div" style="display: none">
-      <span>Please authorize access to SB2CAL to add to the calendar you selected before submitting!</span>
-      <!--Button for the user to click to initiate auth sequence -->
-      <button id="authorize-button" onclick="handleAuthClick(event)">
-        Authorize
-      </button>
-</div>
+
 <?php
 
     //Double-check with user. Is everything inserted correctly??
@@ -328,13 +332,14 @@ for ($i = 0; $i < $numCourses; $i++) {
 <div style="clear: both; text-align: center; margin-top: 10px;">
 <button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
 </div>
+<pre id="output"></pre>
 <br>
 <br>
 <p id="footer" > sb2cal.com </p>
 
 </div> <!-- Close main-container-->
 
-<pre id="output"></pre>
+
 
 </body>
 </html>
