@@ -1,0 +1,177 @@
+/* 
+Color codes from: http://marketingtoolbox.ucdavis.edu/identity/color.html  
+	Blue: #002855  Gold: #C99700 Gray: #B1B3B3
+	Light blue: #E5E9EF
+	
+Positioning: http://www.barelyfitz.com/screencast/html-training/css/positioning/
+Tables: http://www.w3schools.com/css/css_table.asp;
+*/
+
+
+body {
+	margin: 5px;
+	padding: 5px;
+	background-color: #AAA;
+	color: #002855;
+	font-family: "proxima-nova","Lucida Grande","Lucida Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 16px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+h1 {
+	font-size: 2.2em;
+}
+
+li, p, pre {
+	font-size: 1em;
+}
+
+div {
+	display: block;
+}
+
+a:hover {
+	color: #C99700;
+}
+
+form {
+	width: 50%;
+	position: relative;
+}
+
+#main-container {
+	margin: auto;
+	width: 90%;
+	position: relative;
+	background-color: #D0D5DF;
+	padding: 5px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    padding: 5px; 
+
+}
+
+#instruction-div {
+	background-color: #F9F9F9;
+	border-style: solid;
+	border-width: 1px;
+	width: 95%;
+	padding: 5px;
+	margin: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px; 
+}
+
+ul {
+	list-style-type: disc;
+}
+
+textarea {
+	background-color: #F9F9F9;
+	width: 100%; 
+	height: 100px;
+	margin: 3px;
+	border-style: solid;
+	border-width: 1px;
+	color: #002855;
+}
+
+#calendar-id {
+	width: 100%;
+	height: 21px;
+	margin: 3px;
+	padding: 1px 5px;
+	border-style: solid;
+	border-width: 1px;
+}
+
+input {
+	background-color: #F9F9F9;
+	font-size: 1em;
+	margin-bottom: 2px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #002855;
+	width: 100%;
+
+}
+
+input[type=submit], button {
+    padding:5px 15px;
+	position: relative;
+	margin: 3px;
+    background:#CCC;
+    color: #002855;
+	border-style: solid;
+	border-color: #002855;
+    border-width: 1px;
+    cursor:pointer;
+    -webkit-border-radius: 3px;
+    border-radius: 3px; 
+	font-size:1em;
+	width: 120px;
+}
+
+#submit-schedule {
+	position: absolute;
+	right: 0px
+}
+
+input[type=submit]:hover, button:hover {
+    background: #ED8B00;
+}
+
+input[type=submit]:active, button:active {
+    background: yellow;
+}
+
+#loadCalendarApi-button {
+	margin: auto;
+}
+
+table {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background-color: #E6A65D;
+	border: 2px solid #002855;
+	padding: 3px;
+	width: 45%;
+	-webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.two-tables {
+	position: relative;
+	overflow: auto;
+}
+
+.left-course-table {
+	margin-left: 2%;
+	float: left;
+}
+
+.right-course-table {
+	margin-right: 2%;
+	float: right;
+}
+
+th, td {
+	padding: 1px;
+}
+
+#header {
+	margin-left:2%;
+}
+#footer {
+	text-align: right;
+	position: relative;
+}
+
+#authorize-div {
+	margin-left:2%;
+	width: 100%;
+	top: 10px;
+	background-color: yellow;
+}
+
