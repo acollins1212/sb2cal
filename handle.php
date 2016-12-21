@@ -1,5 +1,7 @@
 <html>
 <head>
+  <title>sb2cal</title>
+
 
   <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/javascript" src="scheduler.js"></script>
@@ -81,6 +83,13 @@
 <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 
 <?php
+
+$calendar = new Google_Service_Calendar_Calendar();
+$calendar->setSummary('calendarSummary');
+$calendar->setTimeZone('America/Los_Angeles');
+
+$createdCalendar = $service->calendars->insert($calendar);
+
 
 function parseSchedule() {
 

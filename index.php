@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+  	<title>sb2cal</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
   
 	<script type="text/javascript" src="scheduler.js"></script>
