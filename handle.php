@@ -84,13 +84,6 @@
 
 <?php
 
-$calendar = new Google_Service_Calendar_Calendar();
-$calendar->setSummary('calendarSummary');
-$calendar->setTimeZone('America/Los_Angeles');
-
-$createdCalendar = $service->calendars->insert($calendar);
-
-
 function parseSchedule() {
 
     $fullSchedule = $_POST["textArea"];
