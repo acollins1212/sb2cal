@@ -163,10 +163,7 @@ th, td {
 #header {
 	margin-left:2%;
 }
-#footer {
-	text-align: right;
-	position: relative;
-}
+
 
 #authorize-div {
 	margin-left:2%;
@@ -175,3 +172,7 @@ th, td {
 	background-color: yellow;
 }
 
+footer {
+	text-align: right;
+	position: relative;
+}

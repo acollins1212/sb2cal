@@ -337,7 +337,7 @@ for ($i = 0; $i < $numCourses; $i++) {
 <pre id="output"></pre>
 <br>
 <br>
-<p id="footer" > sb2cal.com </p>
+<footer> sb2cal.com </footer>
 
 </div> <!-- Close main-container-->
 

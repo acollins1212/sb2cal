@@ -24,6 +24,7 @@
   <body>
 	<div id="main-container">
     <h1>Schedule Builder to Google Calendar</h1>
+    <h3>Works for UC Davis Winter Quarter 2017</h3>
 	<div id="instruction-div">
 		<p><strong>Instructions</strong></p>
 		<ol>
@@ -61,7 +62,9 @@
     
     <pre id="output"></pre>
 	<br>
-	<p id="footer"> sb2cal.com </p>
+	<br>
+	<br>
+	<footer> <a href="about.html">About sb2cal.com</a> </footer>
 
 
     
