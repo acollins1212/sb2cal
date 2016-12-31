@@ -19,6 +19,9 @@ Steps:
 
 Originally written out in Python. Translated to Javascript + PHP to put it into a webpage.
 
+
+This repository is free for anyone to use under the terms of the MIT license.
+
 --------------------------------------------------------------------------------------------
 
 I got the idea for this when I was putting my schedule into my school schedule on my phone.
