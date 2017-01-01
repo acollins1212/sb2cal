@@ -14,7 +14,7 @@
 <script type="text/javascript">
  
     var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
-    var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
+    var SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
     /**
      * Check if current user has authorized this application.
