@@ -274,7 +274,7 @@ for ($i = 0; $i < $numCourses; $i++) {
 
 <div id="main-container">
     <div id="authorize-div" style="display: none">
-        <span >Please click Authorize first! This gives <strong>sb2cal</strong> permission to insert your schedule.</span>
+        <span >Please click Authorize first! This gives <strong>sb2cal</strong> permission to insert your schedule. Make sure that you authorize the account that has the desired calendar.</span>
         
         <!--Button for the user to click to initiate auth sequence -->
         <button id="authorize-button" onclick="handleAuthClick(event)" style="background-color: yellow">
