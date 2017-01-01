@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>sb2cal</title>
+  <title>sb2cal - Insert Events</title>
 
 
   <link rel="stylesheet" type="text/css" href="style.css">

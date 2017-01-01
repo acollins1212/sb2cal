@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-  	<title>sb2cal</title>
+  	<title>sb2cal - Home</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
   
 	<script type="text/javascript" src="scheduler.js"></script>
@@ -42,8 +42,9 @@
 			<li>Insert Events into Google Calendar! 
 				<ul>
 					<li>From there, you can export the calendar to any other type of calendar</li>
-				<ul>
+				</ul>
 		</ol>
+		<p>Or follow this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8">https://youtu.be/jqCcCRws8Z8</a></p>
 	</div>
     <div>
       <form name="form" action="handle.php" method="post" onsubmit="return(fixID())">
