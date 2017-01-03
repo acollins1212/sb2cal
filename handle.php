@@ -1,11 +1,20 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en">
 <head>
   <title>sb2cal - Insert Events</title>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
   <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/javascript" src="scheduler.js"></script>
   <?php require 'classes.php'; ?>
+
+  <meta charset="utf-8"> 
 
 </head>
 <body>
@@ -170,7 +179,7 @@ $courseArray = [];
 $numCourses = count($courseList);
 for($i = 0; $i < $numCourses; $i++) {
     $isCourse = true;
-    $courseName_pattern = '/[A-Z]{3} [0-9]{3}[A-Z]{0,1} [A-Z0-9]{3} - .*/';
+    $courseName_pattern = '/^[A-Z]{3} [0-9]{3}[A-Z]{0,1} [A-Z0-9]{3} - .*/';
     $isCourse = preg_match($courseName_pattern, $courseList[$i]);
 
     if(!$isCourse) {
@@ -231,6 +240,7 @@ for ($i = 0; $i < $numCourses; $i++) {
           });
         } //outer for
         appendPre('Hope you enjoyed using sb2cal =)\n');
+
     } //insertAllCourses()
 
     function getCourse(i) {
@@ -278,15 +288,7 @@ for ($i = 0; $i < $numCourses; $i++) {
 
 
 <div id="main-container">
-    <div id="authorize-div" style="display: none">
-        <span >Please click Authorize first! This gives <strong>sb2cal</strong> permission to insert your schedule. Make sure that you authorize the account that has the desired calendar.</span>
-        
-        <!--Button for the user to click to initiate auth sequence -->
-        <button id="authorize-button" onclick="handleAuthClick(event)" style="background-color: yellow">
-          <strong>Authorize</strong>
-        </button>
-
-    </div>
+    
 
     <div id="header">
       
@@ -337,6 +339,14 @@ for ($i = 0; $i < $numCourses; $i++) {
 ?>
 
 <div style="clear: both; text-align: center; margin-top: 10px;">
+    <div id="authorize-div" style="display: none">
+       
+        <!--Button for the user to click to initiate auth sequence -->
+        <button style="background-color: yellow" style="clear:both;" id="authorize-button" onclick="handleAuthClick(event)">
+          <strong>Authorize For Google Account!</strong>
+        </button>
+
+    </div>
 <button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
 </div>
 <pre id="output"></pre>

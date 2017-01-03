@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
   	<title>sb2cal - Home</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   
 	<script type="text/javascript" src="scheduler.js"></script>
 	<script type="text/javascript">
@@ -30,21 +35,25 @@
 		<ol>
 			<li>Create a new calendar in Google Calendar</li>
 			<li> Copy and paste the calendar ID into the first text box below</li>
-				<ul>
-					<li> Find the ID in "Calendar Settings" -> "Calendar Address"</li>
-				</ul>
+				<ol type="a">
+					<li> You can find the ID by clicking the arrow next to the calendar name</li> 
+					<li>Scroll down and look for "Calendar Settings" -> "Calendar Address"</li>
+				</ol>
 			<li>Go to <a href="https://my.ucdavis.edu/schedulebuilder/index.cfm?sb" target="_blank">Schedule Builder</a></li>
-			<li>Click "Show (Important) Details" for every single course in your schedule</li>
-			<li>Highlight all of your schedules on the page. Right-click and copy that selection</li>
-			<li>Paste your schedule into the second text box</li>
+				<ol type="a">
+					<li>Click "Show (Important) Details" for every single course in your schedule</li>
+					<li>Highlight all of your schedules on the page. Right-click and copy that selection</li>
+					<li>Paste your schedule into the second text box</li>
+				</ol>
+			
 			<li>Click Submit. The next page will give you a chance to edit any of your schedule entries</li>
-			<li>You must click the Authorize button for this to work. It will have you sign into your Google account</li>
 			<li>Insert Events into Google Calendar! 
-				<ul>
+				<ol type="a">
 					<li>From there, you can export the calendar to any other type of calendar</li>
-				</ul>
+					<li>Look up "how to import ics files" for your device to do this</li>
+				</ol>
 		</ol>
-		<p>Or follow this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8">https://youtu.be/jqCcCRws8Z8</a></p>
+		<p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8">https://youtu.be/jqCcCRws8Z8</a></p>
 	</div>
     <div>
       <form name="form" action="handle.php" method="post" onsubmit="return(fixID())">

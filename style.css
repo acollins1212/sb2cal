@@ -126,10 +126,6 @@ input[type=submit]:active, button:active {
     background: yellow;
 }
 
-#loadCalendarApi-button {
-	margin: auto;
-}
-
 table {
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -169,7 +165,6 @@ th, td {
 	margin-left:2%;
 	width: 100%;
 	top: 10px;
-	background-color: yellow;
 }
 
 footer {
