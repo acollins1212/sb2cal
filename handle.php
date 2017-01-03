@@ -84,6 +84,7 @@
 
 <?php
 
+//Splits full schedule up into array of course strings
 function parseSchedule() {
 
     $fullSchedule = $_POST["textArea"];
@@ -109,7 +110,7 @@ function parseSchedule() {
 
         $scheduleArray = preg_split($uniqueDelimiter_pattern, $fullSchedule, 
                                     NULL, PREG_SPLIT_NO_EMPTY);
-
+        //PREG_SPLIT_NO_EMPTY only returns non-empty strings
     } //for
 
     return $scheduleArray;
@@ -168,7 +169,11 @@ $courseArray = [];
 //Had something to do with a null character
 $numCourses = count($courseList);
 for($i = 0; $i < $numCourses; $i++) {
-    if(strlen($courseList[$i]) < 25) {
+    $isCourse = true;
+    $courseName_pattern = '/[A-Z]{3} [0-9]{3}[A-Z]{0,1} [A-Z0-9]{3} - .*/';
+    $isCourse = preg_match($courseName_pattern, $courseList[$i]);
+
+    if(!$isCourse) {
          array_splice($courseList, $i, 1);
          $numCourses--;
          $i--;

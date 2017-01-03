@@ -123,8 +123,6 @@ class Course {
 			$this->meetingArray[] = new Meeting($scheduleArray[0][$i]);			
 		} //for
 
-		//TO-DO: Insert final exams
-
 	} //Class constructor
 
 } //Course class
