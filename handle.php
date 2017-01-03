@@ -305,7 +305,7 @@ for ($i = 0; $i < $numCourses; $i++) {
     <div id="header">
       
     <h1 >Your Schedule</h1>
-    <h4>Please double check that these were read correctly before inserting them into your Google Calendar</h4>
+    <h4>You can <strong>edit</strong> these entries. Please double check that these were read correctly before inserting them into your Google Calendar</h4>
     </div>
 
 
@@ -355,12 +355,12 @@ for ($i = 0; $i < $numCourses; $i++) {
     <div id="authorize-div" style="display: none">
        
         <!--Button for the user to click to initiate auth sequence -->
-        <button style="background-color: yellow" style="clear:both;" id="authorize-button" onclick="handleAuthClick(event)">
+        <button class="btn btn-default" style="background-color: yellow" style="clear:both;" id="authorize-button" onclick="handleAuthClick(event)">
           <strong>Authorize For Google Account!</strong>
         </button>
 
     </div>
-<button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
+<button class="btn btn-default" id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
 </div>
 <br>
 <br>

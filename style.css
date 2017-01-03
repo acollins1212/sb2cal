@@ -3,32 +3,18 @@ Color codes from: http://marketingtoolbox.ucdavis.edu/identity/color.html
 	Blue: #002855  Gold: #C99700 Gray: #B1B3B3
 	Light blue: #E5E9EF
 	
+Kind of learned as I went...
 Positioning: http://www.barelyfitz.com/screencast/html-training/css/positioning/
 Tables: http://www.w3schools.com/css/css_table.asp;
 */
 
 
 body {
-	margin: 5px;
 	padding: 5px;
 	background-color: #AAA;
 	color: #002855;
-	font-family: "proxima-nova","Lucida Grande","Lucida Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-size: 16px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
-}
-
-h1 {
-	font-size: 2.2em;
-}
-
-li, p, pre {
-	font-size: 1em;
-}
-
-div {
-	display: block;
 }
 
 a:hover {
@@ -54,8 +40,6 @@ form {
 
 #instruction-div {
 	background-color: #F9F9F9;
-	border-style: solid;
-	border-width: 1px;
 	width: 95%;
 	padding: 5px;
 	margin: 3px;
@@ -82,8 +66,6 @@ textarea {
 	height: 21px;
 	margin: 3px;
 	padding: 1px 5px;
-	border-style: solid;
-	border-width: 1px;
 }
 
 input {
@@ -91,26 +73,15 @@ input {
 	font-size: 1em;
 	margin-bottom: 2px;
 	border-style: solid;
-	border-width: 1px;
+	border-width: 0px;
 	border-color: #002855;
 	width: 100%;
-
 }
 
 input[type=submit], button {
-    padding:5px 15px;
+    padding: 5px 15px;
 	position: relative;
 	margin: 3px;
-    background:#CCC;
-    color: #002855;
-	border-style: solid;
-	border-color: #002855;
-    border-width: 1px;
-    cursor:pointer;
-    -webkit-border-radius: 3px;
-    border-radius: 3px; 
-	font-size:1em;
-	width: 120px;
 }
 
 #submit-schedule {
@@ -118,23 +89,17 @@ input[type=submit], button {
 	right: 0px
 }
 
-input[type=submit]:hover, button:hover {
-    background: #ED8B00;
-}
-
-input[type=submit]:active, button:active {
-    background: yellow;
-}
-
 table {
 	margin-top: 10px;
 	margin-bottom: 10px;
-	background-color: #E6A65D;
 	border: 2px solid #002855;
-	padding: 3px;
 	width: 45%;
 	-webkit-border-radius: 3px;
     border-radius: 3px;
+}
+
+td, th {
+	border: 1px solid #002855;
 }
 
 .two-tables {
@@ -150,10 +115,6 @@ table {
 .right-course-table {
 	margin-right: 2%;
 	float: right;
-}
-
-th, td {
-	padding: 1px;
 }
 
 #header {

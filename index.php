@@ -56,8 +56,8 @@
 			<li>Click Submit. The next page will give you a chance to edit any of your schedule entries</li>
 			<li>Insert Events into Google Calendar! 
 				<ol type="a">
-					<li>From there, you can export the calendar to any other type of calendar</li>
-					<li>Look up "how to import ics files" for your device to do this</li>
+					<li>From there, you can export the calendar if you go to calendar settings again</li>
+					<li>To import, look up "how to import ics files" for your device</li>
 				</ol>
 		</ol>
 		<p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8" target="_blank">https://youtu.be/jqCcCRws8Z8</a></p>
@@ -70,7 +70,7 @@
         <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" required ></textarea>
 
     	<br>
-        <input id="submit-schedule" type="submit" value="Submit">
+        <input class="btn btn-default" id="submit-schedule" type="submit" value="Submit">
 
       </form>
 
