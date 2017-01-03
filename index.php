@@ -2,6 +2,10 @@
 <html lang="en">
   <head>
   	<title>sb2cal - Home</title>
+  	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 	<!-- Latest compiled and minified CSS -->
@@ -27,7 +31,7 @@
   </head>
 
   <body>
-	<div id="main-container">
+	<div class="container-fluid" id="main-container">
     <h1>Schedule Builder to Google Calendar</h1>
     <h3>Works for UC Davis Winter Quarter 2017</h3>
 	<div id="instruction-div">
@@ -53,7 +57,7 @@
 					<li>Look up "how to import ics files" for your device to do this</li>
 				</ol>
 		</ol>
-		<p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8">https://youtu.be/jqCcCRws8Z8</a></p>
+		<p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8" target="_blank">https://youtu.be/jqCcCRws8Z8</a></p>
 	</div>
     <div>
       <form name="form" action="handle.php" method="post" onsubmit="return(fixID())">
@@ -69,9 +73,7 @@
 
     </div>
 
-    
-    <pre id="output"></pre>
-	<br>
+   	<br>
 	<br>
 	<br>
 	<footer> <a href="about.html">About sb2cal.com</a> </footer>

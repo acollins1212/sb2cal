@@ -3,6 +3,9 @@
 <html lang="en">
 <head>
   <title>sb2cal - Insert Events</title>
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -14,7 +17,7 @@
   <script type="text/javascript" src="scheduler.js"></script>
   <?php require 'classes.php'; ?>
 
-  <meta charset="utf-8"> 
+  
 
 </head>
 <body>
@@ -287,7 +290,7 @@ for ($i = 0; $i < $numCourses; $i++) {
 </script>
 
 
-<div id="main-container">
+<div class="container" id="main-container">
     
 
     <div id="header">
