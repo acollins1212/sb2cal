@@ -38,7 +38,7 @@
     <h1>Schedule Builder to Google Calendar</h1>
     <h3>Works for UC Davis Winter Quarter 2017</h3>
 	<div id="instruction-div">
-		<p><strong>Instructions</strong></p>
+		<p style="text-decoration: underline;""><strong>Instructions</strong></p>
 		<ol>
 			<li>Create a new calendar in Google Calendar</li>
 			<li> Copy and paste the calendar ID into the first text box below</li>
