@@ -2,12 +2,19 @@
 <html lang="en">
   <head>
   	<title>sb2cal - Home</title>
+  	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<link rel="stylesheet" type="text/css" href="style.css">
+
 
 	<!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   
 	<script type="text/javascript" src="scheduler.js"></script>
 	<script type="text/javascript">
@@ -26,12 +33,12 @@
 	</script>
   </head>
 
-  <body>
-	<div id="main-container">
+  <body style="background-color: #AAA">
+	<div class="container-fluid" id="main-container">
     <h1>Schedule Builder to Google Calendar</h1>
     <h3>Works for UC Davis Winter Quarter 2017</h3>
 	<div id="instruction-div">
-		<p><strong>Instructions</strong></p>
+		<p style="text-decoration: underline;""><strong>Instructions</strong></p>
 		<ol>
 			<li>Create a new calendar in Google Calendar</li>
 			<li> Copy and paste the calendar ID into the first text box below</li>
@@ -49,11 +56,11 @@
 			<li>Click Submit. The next page will give you a chance to edit any of your schedule entries</li>
 			<li>Insert Events into Google Calendar! 
 				<ol type="a">
-					<li>From there, you can export the calendar to any other type of calendar</li>
-					<li>Look up "how to import ics files" for your device to do this</li>
+					<li>From there, you can export the calendar if you go to calendar settings again</li>
+					<li>To import, look up "how to import ics files" for your device</li>
 				</ol>
 		</ol>
-		<p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8">https://youtu.be/jqCcCRws8Z8</a></p>
+		<p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8" target="_blank">https://youtu.be/jqCcCRws8Z8</a></p>
 	</div>
     <div>
       <form name="form" action="handle.php" method="post" onsubmit="return(fixID())">
@@ -63,15 +70,13 @@
         <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" required ></textarea>
 
     	<br>
-        <input id="submit-schedule" type="submit" value="Submit">
+        <input class="btn btn-default" id="submit-schedule" type="submit" value="Submit">
 
       </form>
 
     </div>
 
-    
-    <pre id="output"></pre>
-	<br>
+   	<br>
 	<br>
 	<br>
 	<footer> <a href="about.html">About sb2cal.com</a> </footer>

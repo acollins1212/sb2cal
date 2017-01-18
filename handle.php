@@ -3,21 +3,26 @@
 <html lang="en">
 <head>
   <title>sb2cal - Insert Events</title>
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="style.css">
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-  <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/javascript" src="scheduler.js"></script>
   <?php require 'classes.php'; ?>
 
-  <meta charset="utf-8"> 
+  
 
 </head>
-<body>
+<body style="background-color: #AAA">
 
 <!--Google Calendar API Functions -->
 <script type="text/javascript">
@@ -83,6 +88,9 @@
     */
     function appendPre(message) {
         var pre = document.getElementById('output');
+
+        if(pre.style.display == "none")
+            pre.style.display = "block";
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
     }
@@ -207,6 +215,10 @@ for ($i = 0; $i < $numCourses; $i++) {
         COURSE_ARRAY = [];
         var numCourses = <?php echo $numCourses; ?>;
 
+        //Get rid of submit button. You don't want people submitting more than once
+        var submitDiv = document.getElementById('submit-div');
+        submitDiv.style.display = 'none';
+
         for (var i = 0; i < numCourses; i++) {
             var currentCourse = getCourse(i);
 
@@ -287,13 +299,13 @@ for ($i = 0; $i < $numCourses; $i++) {
 </script>
 
 
-<div id="main-container">
+<div class="container" id="main-container">
     
 
     <div id="header">
       
     <h1 >Your Schedule</h1>
-    <h4>Please double check that these were read correctly before inserting them into your Google Calendar</h4>
+    <h4>You can <strong>edit</strong> these entries. Please double check that these were read correctly before inserting them into your Google Calendar</h4>
     </div>
 
 
@@ -337,22 +349,22 @@ for ($i = 0; $i < $numCourses; $i++) {
     echo '<input type="hidden" id="numCourses" value="' . $numCourses . '" >';
 
 ?>
+<pre style="display: none" id="output"></pre>
 
-<div style="clear: both; text-align: center; margin-top: 10px;">
+<div id="submit-div" style="clear: both; text-align: center; margin-top: 10px;">
     <div id="authorize-div" style="display: none">
        
         <!--Button for the user to click to initiate auth sequence -->
-        <button style="background-color: yellow" style="clear:both;" id="authorize-button" onclick="handleAuthClick(event)">
+        <button class="btn btn-default" style="background-color: yellow" style="clear:both;" id="authorize-button" onclick="handleAuthClick(event)">
           <strong>Authorize For Google Account!</strong>
         </button>
 
     </div>
-<button id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
+<button class="btn btn-default" id="loadCalendarApi-button" onclick="loadCalendarApi()">Insert Events</button>
 </div>
-<pre id="output"></pre>
 <br>
 <br>
-<footer> sb2cal.com </footer>
+<footer > <a href="about.html">About sb2cal.com</a> </footer>
 
 </div> <!-- Close main-container-->
 
