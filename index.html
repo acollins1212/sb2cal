@@ -42,7 +42,7 @@
     <h1>Schedule Builder to Google Calendar</h1>
     <h3>Works for UC Davis Winter Quarter 2017</h3>
 	<div id="instruction-div">
-		<p style="text-decoration: underline;""><strong>Instructions</strong></p>
+		<p ><strong>Instructions</strong></p>
 		<ol>
 			<li>Create a new calendar in Google Calendar</li>
 			<li> Copy and paste the calendar ID into the first text box below</li>
@@ -66,12 +66,17 @@
 		</ol>
 		<p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8" target="_blank">https://youtu.be/jqCcCRws8Z8</a></p>
 	</div>
+
     <div ng-app="myApp" ng-controller="myCtrl">
       <form name="form" action="handle.php" method="post" onsubmit="return(fixID())">
 
-        <div><input ng-model="cid_test" name="CALENDAR_ID" id="calendar-id" type="text" required>
+        <div>
+            <!-- BEWARE THE FAILED ATTEMPT AT PUTTING PARSED TIME INTO ANGULAR MODEL -->
+            <input ng-model="time_test" name="CALENDAR_ID" id="calendar-id" type="text" >
+            <input ng-model="parsed_time" type="text" value="">
+            <button id="click-me" value="click-me" onclick="parseTime()">
         </div>
-        <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" required ></textarea>
+        <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" ></textarea>
 
     	<br>
         <input class="btn btn-default" id="submit-schedule" type="submit" value="Submit">
@@ -81,13 +86,17 @@
 
     </div>
 	
+    <script>
+    
+    </script>
 	<script>
 	var app = angular.module('myApp', []);
 	app.controller('myCtrl', function($scope) {
-		$scope.cid_test = "xxxxxxxxxxxxxxx@group.calendar.google.com@@@";
+
 	});
 	</script>
 
+    
    	<br>
 	<br>
 	<br>

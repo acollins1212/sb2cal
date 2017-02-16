@@ -10,14 +10,17 @@ This packages up that input and calls the REST api
 
 **/
 
-
-var  FIRST_DAY = new Date(2017, 0, 9, 1, 0, 0, 0);
-var  LAST_DAY = new Date(2017, 2, 18, 16, 59, 0, 0);
+//Spring quarter 2017 
+var  FIRST_DAY = new Date(2017, 3, 3, 1, 0, 0, 0);
+var  LAST_DAY = new Date(2017, 5, 8, 16, 59, 0, 0);
 
 function parseTime(time_str) {
 
     //time_str is expected as (X)X:XX AM/PM
     
+    //TEMPORARY PRACTICE WITH ANGULAR FIXME
+    time_str = document.getElementByID('calendar-id');
+
     var splitStr = time_str.split(' ');
     var hourAndMinute = splitStr[0];
     var whichHalfOfDay = splitStr[1];
