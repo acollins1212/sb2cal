@@ -5,7 +5,11 @@
   	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<!-- commenting out so I can try and get Angular to simply work with just HTML
 	<link rel="stylesheet" type="text/css" href="style.css">
+	-->
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
 
 	<!-- Latest compiled and minified CSS -->
@@ -33,7 +37,7 @@
 	</script>
   </head>
 
-  <body style="background-color: #AAA">
+  <body  style="background-color: #AAA" >
 	<div class="container-fluid" id="main-container">
     <h1>Schedule Builder to Google Calendar</h1>
     <h3>Works for UC Davis Winter Quarter 2017</h3>
@@ -62,10 +66,10 @@
 		</ol>
 		<p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8" target="_blank">https://youtu.be/jqCcCRws8Z8</a></p>
 	</div>
-    <div>
+    <div ng-app="myApp" ng-controller="myCtrl">
       <form name="form" action="handle.php" method="post" onsubmit="return(fixID())">
 
-        <div><input name="CALENDAR_ID" id="calendar-id" type="text"  placeholder="xxxxxxxxxxxxxxx@group.calendar.google.com" required>
+        <div><input ng-model="cid_test" name="CALENDAR_ID" id="calendar-id" type="text" required>
         </div>
         <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" required ></textarea>
 
@@ -73,8 +77,16 @@
         <input class="btn btn-default" id="submit-schedule" type="submit" value="Submit">
 
       </form>
+	  <p> ID = {{cid_test}} </p>
 
     </div>
+	
+	<script>
+	var app = angular.module('myApp', []);
+	app.controller('myCtrl', function($scope) {
+		$scope.cid_test = "xxxxxxxxxxxxxxx@group.calendar.google.com@@@";
+	});
+	</script>
 
    	<br>
 	<br>
