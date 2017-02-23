@@ -14,13 +14,14 @@ This packages up that input and calls the REST api
 var  FIRST_DAY = new Date(2017, 3, 3, 1, 0, 0, 0);
 var  LAST_DAY = new Date(2017, 5, 8, 16, 59, 0, 0);
 
-function parseTime(time_str) {
+function parseTime(timestr) {
 
     //time_str is expected as (X)X:XX AM/PM
     
     //TEMPORARY PRACTICE WITH ANGULAR FIXME
-    time_str = document.getElementByID('calendar-id');
-
+    var time_str = document.getElementById('calendar-id').value;
+	console.log(time_str);
+	
     var splitStr = time_str.split(' ');
     var hourAndMinute = splitStr[0];
     var whichHalfOfDay = splitStr[1];
@@ -33,7 +34,7 @@ function parseTime(time_str) {
     if(time[0] != "12" && whichHalfOfDay == "PM"){
         time[0] += 12;
     }
-    
+    document.getElementById('parsedTime_').innerHTML = time;
     return time;
 } //parseTime()
 
