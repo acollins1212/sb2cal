@@ -20,7 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   
-	<script type="text/javascript" src="scheduler.js"></script>
+	<script type="text/javascript" src="early_sched.js"></script>
 	<script type="text/javascript">
 
 		function fixID() {
@@ -67,45 +67,40 @@
 		<p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8" target="_blank">https://youtu.be/jqCcCRws8Z8</a></p>
 	</div>
 
-    <div >
+    <div ng-app="myApp" ng-controller="myCtrl">
       <form name="form" action="handle.php" method="post" onsubmit="return(fixID())">
 
         
-        <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" ></textarea>
+        <textarea name="textArea" id="textArea_id" placeholder="Paste schedule here" ></textarea>
 
 		
     	<br>
         <input class="btn btn-default" id="submit-schedule" type="submit" value="Submit">
 
-      </form>
-
-    </div>
-	
-	<div ng-app="myApp" ng-controller="myCtrl">
-		
+      </form
+		>
 		<!-- BEWARE THE FAILED ATTEMPT AT PUTTING PARSED TIME INTO ANGULAR MODEL -->
 		<input  name="CALENDAR_ID" id="calendar-id" type="text" />
-		<p ng-model="parsedTime.value" id="parsedTime_" ></p>
-		<button  class="btn btn-default" onclick="parseTime(0)">TEST</button>
+		<br/>
+		<input ng-model="time_input" />
 		<button ng-click="update()" class="btn btn-default" >UPDATE</button>
 		
 		<br/>
 		
-		<p> ID = {{ parsedTime.value }} </p>
+		<p> ID = {{ output }} </p>
 	
 	</div>
 	
     
 	<script>
-	document.getElementById('parsedTime_').innerHTML = "change me";
 	
 	var app = angular.module('myApp', []);
 	app.controller('myCtrl', function($scope) {
-		parsedTime.value = "hello";
 		
 		$scope.update = function() {
-			output = parsedTime.value;
+			$scope.output = new Course(parseSchedule()[0]);
 		}
+
 	});
 	</script>
 
