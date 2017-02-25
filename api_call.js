@@ -1,10 +1,19 @@
 
 
-    var CALENDAR_ID = document.getElementById("calendar-id").value; 
     var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
     var SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
+    function insertCalendar(str) {
+        var request = gapi.client.calendar.insert({
+            'summary': str
+        });
+
+        request.execute(function(event) { console.log("success!"); } );
+    }
+
     function insertAllCourses(numCourses) {
+        var CALENDAR_ID = document.getElementById("calendar-id").value; 
+
 
 
         //Get rid of submit button. You don't want people submitting more than once

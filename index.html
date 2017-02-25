@@ -23,10 +23,10 @@
   
     <script type="text/javascript" src="scheduler.js"></script>
 
-    <!--
-        <script src="api_call.js"></script>
-        <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
-    -->
+    
+    <script type="text/javascript" src="api_call.js"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+
     
   </head>
 
@@ -60,6 +60,15 @@
         <p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8" target="_blank">https://youtu.be/jqCcCRws8Z8</a></p>
     </div>
 
+    <div id="authorize-div" style="display: none">
+       
+        <!--Button for the user to click to initiate auth sequence -->
+        <button class="btn btn-default" style="background-color: yellow" style="clear:both;" id="authorize-button" onclick="handleAuthClick(event)">
+          <strong>Authorize For Google Account!</strong>
+        </button>
+
+    </div>
+
     <div ng-app="myApp" ng-controller="myCtrl">
         <script src="controller.js"></script>
           
@@ -73,11 +82,17 @@
         <button ng-click="update()" class="btn btn-default" >UPDATE</button>
         <button ng-click="createTable()" class="btn btn-default" >CREATE TABLE</button>
 
-        <table>
-            <tr ng-repeat="course in courseArray">
+        <table ng-repeat="course in courseArray">
+            <tr>
                 <td> {{ course.name_str }} </td>
             </tr>
+            <tr ng-repeat="meeting in course.meeting_array">
+                <td> {{ meeting.meeting_type }} </td>
+                <td> {{ meeting.start_time }} - {{ meeting.end_time }} </td>
+            </tr>
         </table>
+
+        <button onclick="insertCalendar('testcal')">Insert test calendar</button>
       
         
 
