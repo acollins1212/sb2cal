@@ -11,30 +11,18 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
+	<!-- unsplit the dashes when uncommenting Bootstrap!
 
-	<!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+		<!- - Latest compiled and minified CSS - ->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	    <!- - jQuery library - ->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	    <!- - Latest compiled JavaScript - ->
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    -->
   
-	<script type="text/javascript" src="early_sched.js"></script>
-	<script type="text/javascript">
-
-		function fixID() {
-			var idInput = document.forms["form"]["CALENDAR_ID"].value;
-			var invalidCharacters = /[^@.\d\w_]|Calendar ID:/gi; //the only characters allowed, in a complement set
-			var scrubbedInput = idInput.replace(invalidCharacters, "");
-			document.forms["form"]["CALENDAR_ID"].value = scrubbedInput;
-			if (scrubbedInput.length > 100) {
-				return false;
-			}
-			return true;
-		}
-
-	</script>
+	<script type="text/javascript" src="scheduler.js"></script>
+	
   </head>
 
   <body  style="background-color: #AAA" >

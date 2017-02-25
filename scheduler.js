@@ -2,190 +2,210 @@
 A.J. Collins
 October 2016
 
-This is translated from python code I wrote.
-
-Reworked on October 28 because the server-side 
-    script does all of the parsing from the user input.
-This packages up that input and calls the REST api 
+This is translated from python.
 
 **/
 
-//Spring quarter 2017 
-var  FIRST_DAY = new Date(2017, 3, 3, 1, 0, 0, 0);
-var  LAST_DAY = new Date(2017, 5, 8, 16, 59, 0, 0);
+
+var  FIRST_DAY = new Date(2017, 0, 9, 1, 0, 0, 0);
+var  LAST_DAY = new Date(2017, 2, 18, 16, 59, 0, 0);
+var DAYS_OFF;
+
+//I plan to form validate with Angular eventually. This is a crappy fix
+function fixID() {
+			var idInput = document.forms["form"]["CALENDAR_ID"].value;
+			var invalidCharacters = /[^@.\d\w_]|Calendar ID:/gi; //the only characters allowed, in a complement set
+			var scrubbedInput = idInput.replace(invalidCharacters, "");
+			document.forms["form"]["CALENDAR_ID"].value = scrubbedInput;
+			if (scrubbedInput.length > 100) {
+				return false;
+			}
+			return true;
+}
 
 function parseTime(time_str) {
 
-    //time_str is expected as (X)X:XX AM/PM
-    
-	console.log(time_str);
+	//time_str is expected as (X)X:XX AM/PM
 	
-    var splitStr = time_str.split(' ');
-    var hourAndMinute = splitStr[0];
-    var whichHalfOfDay = splitStr[1];
+	var split_str = time_str.split(' ');
+	var hour_minute = split_str[0];
+	var day_half = split_str[1];
 
-    var time = hourAndMinute.split(':');
-    time[0] = parseInt(time[0]);
-    time[1] = parseInt(time[1]);
+	var time = hour_minute.split(':');
+	time[0] = parseInt(time[0]);
+	time[1] = parseInt(time[1]);
 
-    //this changes the hour to 24-hour time
-    if(time[0] != "12" && whichHalfOfDay == "PM"){
-        time[0] += 12;
-    }
-    
-    return time;
+	//this changes the hour to 24-hour time
+	if(time[0] != "12" && day_half == "PM"){
+		time[0] += 12;
+	}
+	
+	return time;
 } //parseTime()
 
 function parseSchedule() {
-    var fullSchedule = document.getElementById("textArea_id").value;
+	var full_schedule = document.getElementById("textArea_id").value;
 
-    var courseNamePattern = /[A-Z]{3} [0-9]{3}[A-Z]{0,1} [A-Z0-9]{3} - .*/gm;
-    var courseNameArray = fullSchedule.match(courseNamePattern);
+	var course_name_pattern = /[A-Z]{3} [0-9]{3}[A-Z]{0,1} [A-Z0-9]{3} - .*/gm;
+	var course_name_array = full_schedule.match(course_name_pattern);
 
-    var uniqueDelim = "!@#$%^&*";
-    var numCourses = courseNameArray.length;
-    for(var i = 0; i < numCourses; i++){
-        var currentCourse = courseNameArray[i];
-        //Inserting random punctuation as delimiter to split up full schedule
-        fullSchedule = fullSchedule.replace(currentCourse, 
-                                            uniqueDelim.concat(currentCourse));
-    }
+	var unique_delimiter = "!@#$%^&*";
+	var num_courses = course_name_array.length;
+	for(var i = 0; i < num_courses; i++){
+		var current_course = course_name_array[i];
+		//Adding random punctuation as future delimiter to split up full schedule
+		full_schedule = full_schedule.replace(current_course, unique_delimiter.concat(current_course));
+	}
 
-    var splitSchedule = fullSchedule.split(uniqueDelim);
-    splitSchedule.shift(); //removes the first element, which is nothing
+	var split_schedule = full_schedule.split(unique_delimiter);
+	split_schedule.shift();
 
-    return splitSchedule;
+   	return split_schedule;
 } //parseSchedule()
 
-var Course = function(nameStr, section, desc, finalDate, finalTime){
+var Course = function(class_string){
 
-    this.nameStr = nameStr;
-    this.section = section;
-    this.descriptionStr = desc;
-    this.meetingArray = [];
+	//WEEKLY SCHEDULE PORTION
+	var name_pattern = /(^[A-Z]{3} \d{3}[A-Z]{0,2}) (.{3}) - (.+)/m;
+	var schedule_pattern = /^[A-Z][a-zA-Z\/ ]*[\r\n]*[0-9]{1,2}:[0-9]{2} [A|P]M - [0-9]{1,2}:[0-9]{2} [A|P]M[\r\n]*[A-Z]*[\r\n]*.*$/gm;
+	var exam_pattern = /.* (\d{1,2}\/\d{1,2}\/\d{4}) (\d{1,2}:\d{2} [A|P]M)/m;
 
-    //FINAL EXAM PORTION
-    this.finalExam_start = finalDate;
-    //The date is in MM/DD/YYYY format. 
-    var mmddyyyy = this.finalExam_start.split('/');
-    var time = parseTime(finalTime);
-    //Months are zero indexed, so I'm subtracting one inside constructor
-    this.finalExam_start = new Date(mmddyyyy[2], mmddyyyy[0] - 1, mmddyyyy[1], 
-                                    time[0], time[1], 0, 0 );
-    //Subtract 7 for timezone offset
-    this.finalExam_start.setHours(this.finalExam_start.getHours() - 7); 
-    this.finalExam_end = new Date(this.finalExam_start);
-    //finals last for two hours
-    this.finalExam_end.setHours(this.finalExam_start.getHours() + 2); 
-    
-    this.finalExam_start = this.finalExam_start.toISOString();
-    this.finalExam_start = this.finalExam_start.replace('.000Z', '-07:00');
-    this.finalExam_end = this.finalExam_end.toISOString();
-    this.finalExam_end = this.finalExam_end.replace('.000Z', '-07:00');
+	var reg_obj_name = class_string.match(name_pattern);
+
+	this.name_str = reg_obj_name[1];
+	this.section = reg_obj_name[2];
+	this.description_str = reg_obj_name[3];
+
+	this.schedule_array = class_string.match(schedule_pattern);
+
+	this.meeting_array = [];
 
 
-    this.addMeeting = function(type, start, end, loc, dow) {
-        var m = new Course_meeting(type, start, end, loc, dow);
-        this.meetingArray.push(m);
-    } //this.addMeeting()
+	for(i = 0; i < this.schedule_array.length; i++){
+		this.meeting_array.push(new Course_meeting(this.schedule_array[i]));
+	}
+
+	
+	//FINAL EXAM PORTION
+	this.finalExam_str = class_string.match(exam_pattern);
+	//The date is in MM/DD/YYYY format. 
+	var mmddyyyy = this.finalExam_str[1].split('/');
+	var time = parseTime(this.finalExam_str[2]);
+	//Months are zero indexed, so I'm subtracting one inside constructor
+	this.finalExam_date = new Date(mmddyyyy[2], mmddyyyy[0] - 1, mmddyyyy[1], time[0], time[1], 0, 0 );
+	this.finalExam_date.setHours(this.finalExam_date.getHours() - 7); //-7 for timezone offset
+	this.finalExam_end = new Date(this.finalExam_date);
+	this.finalExam_end.setHours(this.finalExam_date.getHours() + 2); //finals last for two hours
+	
+	this.finalExam_date = this.finalExam_date.toISOString();
+	this.finalExam_date = this.finalExam_date.replace('.000Z', '-07:00');
+	this.finalExam_end = this.finalExam_end.toISOString();
+	this.finalExam_end = this.finalExam_end.replace('.000Z', '-07:00');
 
 
-    this.getFinalJSON = function() {
+
+	this.getFinalJSON = function() {
+		console.log("Final Exam date: " + this.finalExam_date);
 
 
 
-        finalExam = {
-            'summary': this.nameStr + " Final",
-            'description': "Good luck!",
-            'start': {
-                'dateTime': this.finalExam_start,
-                'timeZone': 'America/Los_Angeles'
-            },
-            'end': {
-                'dateTime': this.finalExam_end,
-                'timeZone': 'America/Los_Angeles'
-            },
-        } //finalExam
+		finalExam = {
+			'summary': this.name_str+ " Final",
+			'description': "Good luck!",
+			'start': {
+				'dateTime': this.finalExam_date,
+				'timeZone': 'America/Los_Angeles'
+			},
+			'end': {
+				'dateTime': this.finalExam_end,
+				'timeZone': 'America/Los_Angeles'
+			},
+    		//FEATURE IDEA: ask user for reminders they want set
+    	} //finalExam
 
-        return finalExam;
+    	return finalExam;
     } //this.getFinalJSON()
 
 
-    this.getEventJSON = function(meetingNum) {
+    this.getEventJSON = function(meeting_number) {
 
-        var courseEvent = this.meetingArray[meetingNum];
-        var desc = this.descriptionStr + "\nSection: " + this.section;
+    	var course_event = this.meeting_array[meeting_number];
+    	var desc = this.description_str + "\nSection: " + this.section;
 
-        var lastDay_iso = LAST_DAY.toISOString().replace(/[:\-.]/g,'');
-        lastDay_iso = lastDay_iso.replace(/00000Z/, '00Z');
+    	var last_day_iso = LAST_DAY.toISOString().replace(/[:\-.]/g,'');
+    	last_day_iso = last_day_iso.replace(/00000Z/, '00Z');
 
 
-        //RECURRENCE STRING
-        var frequencyStr = 'FREQ=WEEKLY';
-        var untilStr = 'UNTIL='+lastDay_iso;
-        var byDayStr = "BYDAY="+courseEvent.daysOfWeek;
-        var recurrenceStr = 'RRULE:WKST=SU;' + frequencyStr + ';'
-        + untilStr + ';' +byDayStr;
+		//RECURRENCE STRING
+		var frequency_string = 'FREQ=WEEKLY';
+		var until_string = 'UNTIL='+last_day_iso;
+		var byday_string = "BYDAY="+course_event.days_of_week;
+		var recurrence_string = 'RRULE:WKST=SU;' + frequency_string + ';'
+		+ until_string + ';' +byday_string;
+		var exceptionString = "";
 
-        //To give the proper start date of a class
-        var addition = 0;
-        if(courseEvent.daysOfWeek.search('MO') != -1){
-            addition = 0;
+		console.log(until_string);
 
-        }
-        else if(courseEvent.daysOfWeek.search('TU') != -1){
-            addition = 1;
-        }
-        else if(courseEvent.daysOfWeek.search('WE') != -1){
-            addition = 2;
-        }
-        else if(courseEvent.daysOfWeek.search('TH') != -1){
-            addition = 3;
-        }
-        else if(courseEvent.daysOfWeek.search('FR') != -1){
-            addition = 4;
-        }
+		//To give the proper start date of a class
+		var addition = 0;
+		if(course_event.days_of_week.search('MO') != -1){
+			addition = 0;
 
-        var startDateTime = new Date(FIRST_DAY);
-        startDateTime.setDate(FIRST_DAY.getDate() + addition);
+		}
+		else if(course_event.days_of_week.search('TU') != -1){
+			addition = 1;
+		}
+		else if(course_event.days_of_week.search('WE') != -1){
+			addition = 2;
+		}
+		else if(course_event.days_of_week.search('TH') != -1){
+			addition = 3;
+		}
+		else if(course_event.days_of_week.search('FR') != -1){
+			addition = 4;
+		}
 
-        startDateTime.setHours(courseEvent.startTime[0] - 7); 
-        startDateTime.setMinutes(courseEvent.startTime[1]);
-        startDateTime = startDateTime.toISOString();
-        startDateTime = startDateTime.replace('.000Z', '-07:00');
+		var start_datetime = new Date(FIRST_DAY);
+		start_datetime.setDate(FIRST_DAY.getDate() + addition);
+		start_datetime.setHours(course_event.start_time[0] - 7); //-7 accounts for toISOString() adding 7
+		start_datetime.setMinutes(course_event.start_time[1]);
+		start_datetime = start_datetime.toISOString();
+		start_datetime = start_datetime.replace('.000Z', '-07:00');
 
-        var endDateTime = new Date(FIRST_DAY);
-        endDateTime.setDate(FIRST_DAY.getDate() + addition);
-        //Subtracting 7 to account for toISOString() adding 7
-        endDateTime.setHours(courseEvent.endTime[0] - 7); 
-        endDateTime.setMinutes(courseEvent.endTime[1]);
-        endDateTime = endDateTime.toISOString();
-        endDateTime = endDateTime.replace('.000Z', '-07:00');
+		console.log(start_datetime);
 
-        //This was set to a -7 offset because I wrote it during Daylight Savings
-        //I'm pretty relieved that it still works after DST. Maybe it's because 
-        //    I set the timezone when I insert the event, and GCalendar fixes it
+		var end_datetime = new Date(FIRST_DAY);
+		end_datetime.setDate(FIRST_DAY.getDate() + addition);
+		end_datetime.setHours(course_event.end_time[0] - 7); //-7 accounts for toISOString() adding 7 
+		end_datetime.setMinutes(course_event.end_time[1]);
+		end_datetime = end_datetime.toISOString();
+		end_datetime = end_datetime.replace('.000Z', '-07:00');
 
-        var summaryStr = this.nameStr + " " + courseEvent.meetingType;
-        
-        var event = {
-            "summary": summaryStr,
-            "location": courseEvent.location,
-            "description": desc,
-            "start": {
-                "dateTime": startDateTime,
-                "timeZone": "America/Los_Angeles"
-            }, 
-            "end": {
-                "dateTime": endDateTime,
-                "timeZone": "America/Los_Angeles"
-            },
-            "recurrence": [
-                recurrenceStr
-            ]
+		console.log(end_datetime);
+		
+		//I'M REALLY NOT UNDERSTANDING TIMEZONING. HOPEFULLY ILL UNDERSTAND IT L8R
+		//I JUST DISCOVERED THAT THE GCALENDAR IS SET TO GMT (due to daylight savings)
 
-        }; //event
-        return event;
+		var summary_string = this.name_str + " " + course_event.meeting_type;
+		
+		var event = {
+			"summary": summary_string,
+			"location": course_event.location,
+			"description": desc,
+			"start": {
+				"dateTime": start_datetime,
+				"timeZone": "America/Los_Angeles"
+			}, 
+			"end": {
+				"dateTime": end_datetime,
+				"timeZone": "America/Los_Angeles"
+			},
+			"recurrence": [
+				recurrence_string
+			]
+
+		}; //event
+		return event;
 
     } //this.getEventJSON()
 
@@ -194,17 +214,41 @@ var Course = function(nameStr, section, desc, finalDate, finalTime){
 } //Course
 
 
-var Course_meeting = function(type, start, end, loc, dow){
-    
-    this.meetingType = type;
+var Course_meeting = function(single_schedule){
 
-    this.startTime = start;
-    this.startTime = parseTime(this.startTime);
+	fullPattern = /([a-zA-Z/]+)[\r\n]*(\d{1,2}:\d{2} [A|P]M) - (\d{1,2}:\d{2} [A|P]M)[\r\n]*([MTWRFS]+)[\r\n]*([A-Z].*)/m;
+	if (scheduleString = single_schedule.match(fullPattern)){
+		//do nothing
+	}
+	else {
+		console.log("scheduleString not found!");
+	}
+	console.log(scheduleString);
 
-    this.endTime = end;
-    this.endTime = parseTime(this.endTime);
 
-    this.location = loc;
-    this.daysOfWeek = dow;
-    
+	this.meeting_type = "";
+	this.start_time = "";
+	this.end_time = "";
+	this.days_of_week = "";
+	this.location = "";
+
+	console.log(" --- " + single_schedule + "----");
+	console.log(scheduleString[4]);
+
+	this.meeting_type = scheduleString[1];
+	this.start_time = scheduleString[2];
+	this.end_time = scheduleString[3];
+	this.days_of_week = scheduleString[4];
+	this.location = scheduleString[5];
+
+	//RFC 5545 takes recurrence dates given with two letter abbreviations
+	this.days_of_week = this.days_of_week.replace('M', 'MO,');
+	this.days_of_week = this.days_of_week.replace('T', 'TU,');
+	this.days_of_week = this.days_of_week.replace('W', 'WE,');
+	this.days_of_week = this.days_of_week.replace('R', 'TH,');
+	this.days_of_week = this.days_of_week.replace('F', 'FR,');
+	var dow_length = this.days_of_week.length-1;
+	this.days_of_week = this.days_of_week.substring(0,dow_length);
+	
+	
 } //Course_meeting()
