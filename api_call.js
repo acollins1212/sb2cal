@@ -1,12 +1,11 @@
 
 
-    var CALENDAR_ID = document.getElementById("calendar-id"); 
+    var CALENDAR_ID = document.getElementById("calendar-id").value; 
+    var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
+    var SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
-    function insertAllCourses() {
-        COURSE_ARRAY = [];
+    function insertAllCourses(numCourses) {
 
-        //FIXME: FIGURE OUT HOW TO GET NUMCOURSES 
-        var numCourses = <?php echo $numCourses; ?>;
 
         //Get rid of submit button. You don't want people submitting more than once
         var submitDiv = document.getElementById('submit-div');
@@ -32,17 +31,21 @@
 
             } //inner for
 
-          //insert the Final Exam event
+          //insert the Final Exam event. Should be skipped if no final exam
           var finalExam = currentCourse.getFinalJSON();
-          var request = gapi.client.calendar.events.insert({
-              'calendarId': CALENDAR_ID,
-              'resource': finalExam
-          });
 
-          request.execute(function(finalExam) {
-              appendPre(finalExam.summary + ' - inserted');
+          if (finalExam != "-1") {
+              var request = gapi.client.calendar.events.insert({
+                  'calendarId': CALENDAR_ID,
+                  'resource': finalExam
+              });
 
-          });
+              request.execute(function(finalExam) {
+                  appendPre(finalExam.summary + ' - inserted');
+
+              });
+          } //if
+
         } //outer for
         appendPre('Hope you enjoyed using sb2cal =)\n');
 
@@ -89,10 +92,6 @@
 
     } //getCourse(i)
 
-
- 
-    var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
-    var SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
     /**
      * Check if current user has authorized this application.

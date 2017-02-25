@@ -90,26 +90,35 @@ var Course = function(class_string){
 	// FIXME: Deal with lack of final exam for certain courses
 	//FINAL EXAM PORTION
 	this.finalExam_str = class_string.match(exam_pattern);
-	//The date is in MM/DD/YYYY format. 
-	var mmddyyyy = this.finalExam_str[1].split('/');
-	var time = parseTime(this.finalExam_str[2]);
-	//Months are zero indexed, so I'm subtracting one inside constructor
-	this.finalExam_date = new Date(mmddyyyy[2], mmddyyyy[0] - 1, mmddyyyy[1], time[0], time[1], 0, 0 );
-	this.finalExam_date.setHours(this.finalExam_date.getHours() - 7); //-7 for timezone offset
-	this.finalExam_end = new Date(this.finalExam_date);
-	this.finalExam_end.setHours(this.finalExam_date.getHours() + 2); //finals last for two hours
-	
-	this.finalExam_date = this.finalExam_date.toISOString();
-	this.finalExam_date = this.finalExam_date.replace('.000Z', '-07:00');
-	this.finalExam_end = this.finalExam_end.toISOString();
-	this.finalExam_end = this.finalExam_end.replace('.000Z', '-07:00');
+
+	if (this.finalExam_str == null) {
+		this.finalExam_str = "-1";
+	} 
+	else {
+		//The date is in MM/DD/YYYY format. 
+		var mmddyyyy = this.finalExam_str[1].split('/');
+		var time = parseTime(this.finalExam_str[2]);
+		//Months are zero indexed, so I'm subtracting one inside constructor
+		this.finalExam_date = new Date(mmddyyyy[2], mmddyyyy[0] - 1, mmddyyyy[1], time[0], time[1], 0, 0 );
+		this.finalExam_date.setHours(this.finalExam_date.getHours() - 7); //-7 for timezone offset
+		this.finalExam_end = new Date(this.finalExam_date);
+		this.finalExam_end.setHours(this.finalExam_date.getHours() + 2); //finals last for two hours
+		
+		this.finalExam_date = this.finalExam_date.toISOString();
+		this.finalExam_date = this.finalExam_date.replace('.000Z', '-07:00');
+		this.finalExam_end = this.finalExam_end.toISOString();
+		this.finalExam_end = this.finalExam_end.replace('.000Z', '-07:00');
+	}
 
 
 
 	this.getFinalJSON = function() {
 		console.log("Final Exam date: " + this.finalExam_date);
 
-
+		//This will help stop the attempted insertion of null event
+		if (this.finalExam_str == "-1") {
+			return "-1";
+		}
 
 		finalExam = {
 			'summary': this.name_str+ " Final",
