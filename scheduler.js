@@ -1,15 +1,17 @@
 /**
 A.J. Collins
-October 2016
 
-This is translated from python.
+CONTAINS:
+	Parsing functions
+	Course and Course_Meeting class definitions
+
 
 **/
 
 
 var  FIRST_DAY = new Date(2017, 0, 9, 1, 0, 0, 0);
 var  LAST_DAY = new Date(2017, 2, 18, 16, 59, 0, 0);
-var DAYS_OFF;
+var  DAYS_OFF;
 
 //I plan to form validate with Angular eventually. This is a crappy fix
 function fixID() {
@@ -85,7 +87,7 @@ var Course = function(class_string){
 		this.meeting_array.push(new Course_meeting(this.schedule_array[i]));
 	}
 
-	
+	// FIXME: Deal with lack of final exam for certain courses
 	//FINAL EXAM PORTION
 	this.finalExam_str = class_string.match(exam_pattern);
 	//The date is in MM/DD/YYYY format. 
@@ -120,7 +122,6 @@ var Course = function(class_string){
 				'dateTime': this.finalExam_end,
 				'timeZone': 'America/Los_Angeles'
 			},
-    		//FEATURE IDEA: ask user for reminders they want set
     	} //finalExam
 
     	return finalExam;
@@ -223,8 +224,6 @@ var Course_meeting = function(single_schedule){
 	else {
 		console.log("scheduleString not found!");
 	}
-	console.log(scheduleString);
-
 
 	this.meeting_type = "";
 	this.start_time = "";
@@ -232,16 +231,13 @@ var Course_meeting = function(single_schedule){
 	this.days_of_week = "";
 	this.location = "";
 
-	console.log(" --- " + single_schedule + "----");
-	console.log(scheduleString[4]);
-
 	this.meeting_type = scheduleString[1];
 	this.start_time = scheduleString[2];
 	this.end_time = scheduleString[3];
 	this.days_of_week = scheduleString[4];
 	this.location = scheduleString[5];
 
-	//RFC 5545 takes recurrence dates given with two letter abbreviations
+	//RFC 5545 takes recurrence dates as two letter abbreviations
 	this.days_of_week = this.days_of_week.replace('M', 'MO,');
 	this.days_of_week = this.days_of_week.replace('T', 'TU,');
 	this.days_of_week = this.days_of_week.replace('W', 'WE,');

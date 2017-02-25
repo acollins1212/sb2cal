@@ -22,6 +22,11 @@
     -->
   
 	<script type="text/javascript" src="scheduler.js"></script>
+
+	<!--
+		<script src="api_call.js"></script>
+		<script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+	-->
 	
   </head>
 
@@ -56,50 +61,34 @@
 	</div>
 
     <div ng-app="myApp" ng-controller="myCtrl">
-      <form name="form" action="handle.php" method="post" onsubmit="return(fixID())">
+    	<script src="controller.js"></script>
+      	
 
-        
+
         <textarea name="textArea" id="textArea_id" placeholder="Paste schedule here" ></textarea>
-
 		
     	<br>
         <input class="btn btn-default" id="submit-schedule" type="submit" value="Submit">
 
-      </form
-		>
-		<!-- BEWARE THE FAILED ATTEMPT AT PUTTING PARSED TIME INTO ANGULAR MODEL -->
-		<input  name="CALENDAR_ID" id="calendar-id" type="text" />
+        <input  name="CALENDAR_ID" id="calendar-id" type="text" />
 		<br/>
-		<input ng-model="time_input" />
 		<button ng-click="update()" class="btn btn-default" >UPDATE</button>
+		<button ng-click="createTable()" class="btn btn-default" >CREATE TABLE</button>
+
+		<p> {{ courseArray }} </p>
+
+      
 		
-		<br/>
-		
-		<p> ID = {{ output }} </p>
+
 	
 	</div>
 	
-    
-	<script>
-	
-	var app = angular.module('myApp', []);
-	app.controller('myCtrl', function($scope) {
-		
-		$scope.update = function() {
-			$scope.output = new Course(parseSchedule()[0]);
-		}
-
-	});
-	</script>
-
     
    	<br>
 	<br>
 	<br>
 	<footer> <a href="about.html">About sb2cal.com</a> </footer>
 
-
-    
 
 	</div>
   </body>
