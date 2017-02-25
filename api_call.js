@@ -1,19 +1,44 @@
+/**
+A.J. Collins
 
+CONTAINS:
+    Google Calendar API boilerplate
+    Calendar insert functions
+    Event insert functions
+
+
+**/
 
     var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
     var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+    var CALENDAR_ID;
 
-    function insertCalendar(str) {
-        var request = gapi.client.calendar.insert({
-            'summary': str
+    function _insertCalendar() {
+        var summary = document.getElementById("calendar-name").value;
+
+        var body = {
+            'summary': summary,
+            'description': "Created by sb2cal.com",
+            'timeZone': "America/Los_Angeles",
+            'location': "Davis"
+        }
+
+        var args = {
+            'path': 'https://www.googleapis.com/calendar/v3/calendars',
+            'method': 'POST',
+            'body': body
+        }
+
+        var request = gapi.client.request(args);
+        request.then(function(response) {
+            CALENDAR_ID = response.result.id;
+        },      function(reason) {
+            //rejected. Add functionality to deal with this
         });
 
-        request.execute(function(event) { console.log("success!"); } );
     }
 
     function insertAllCourses(numCourses) {
-        var CALENDAR_ID = document.getElementById("calendar-id").value; 
-
 
 
         //Get rid of submit button. You don't want people submitting more than once
@@ -148,7 +173,11 @@
      * once client library is loaded.
     */
     function loadCalendarApi() {
-        gapi.client.load('calendar', 'v3', insertAllCourses);
+        //gapi.client.load('calendar', 'v3', insertCalendar);
+    }
+
+    function insertCalendar() {
+        gapi.client.load('calendar', 'v3', _insertCalendar);
     }
 
 

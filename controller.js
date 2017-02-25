@@ -1,9 +1,5 @@
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope) {
-    
-    $scope.update = function() {
-        $scope.output = new Course(parseSchedule()[0]);
-    }
 
     $scope.createTable = function() {
         stringArray = parseSchedule();

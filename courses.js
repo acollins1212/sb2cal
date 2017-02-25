@@ -13,18 +13,6 @@ var  FIRST_DAY = new Date(2017, 0, 9, 1, 0, 0, 0);
 var  LAST_DAY = new Date(2017, 2, 18, 16, 59, 0, 0);
 var  DAYS_OFF;
 
-//I plan to form validate with Angular eventually. This is a crappy fix
-function fixID() {
-            var idInput = document.forms["form"]["CALENDAR_ID"].value;
-            var invalidCharacters = /[^@.\d\w_]|Calendar ID:/gi; //the only characters allowed, in a complement set
-            var scrubbedInput = idInput.replace(invalidCharacters, "");
-            document.forms["form"]["CALENDAR_ID"].value = scrubbedInput;
-            if (scrubbedInput.length > 100) {
-                return false;
-            }
-            return true;
-}
-
 function parseTime(time_str) {
 
     //time_str is expected as (X)X:XX AM/PM

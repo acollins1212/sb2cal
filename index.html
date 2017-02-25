@@ -21,9 +21,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     -->
   
-    <script type="text/javascript" src="scheduler.js"></script>
+    <script type="text/javascript" src="courses.js"></script>
 
-    
+    <script src="https://apis.google.com/js/api.js"></script>
     <script type="text/javascript" src="api_call.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 
@@ -37,12 +37,7 @@
     <div id="instruction-div">
         <p ><strong>Instructions</strong></p>
         <ol>
-            <li>Create a new calendar in Google Calendar</li>
-            <li> Copy and paste the calendar ID into the first text box below</li>
-                <ol type="a">
-                    <li> You can find the ID by clicking the arrow next to the calendar name</li> 
-                    <li>Scroll down and look for "Calendar Settings" -> "Calendar Address"</li>
-                </ol>
+            <li>Type what you want your calendar called</li>
             <li>Go to <a href="https://my.ucdavis.edu/schedulebuilder/index.cfm?sb" target="_blank">Schedule Builder</a></li>
                 <ol type="a">
                     <li>Click "Show (Important) Details" for every single course in your schedule</li>
@@ -72,14 +67,17 @@
     <div ng-app="myApp" ng-controller="myCtrl">
         <script src="controller.js"></script>
           
-        <input  name="CALENDAR_ID" id="calendar-id" type="text" />
+        <input required id="calendar-name" type="text" placeholder="Type a calendar name..." />
+        <button onclick="insertCalendar()">Insert calendar</button>
+
+        <br/>
+
         <textarea name="textArea" id="textArea_id" placeholder="Paste schedule here" ></textarea>
         
-        <br>
+        <br/>
         <input class="btn btn-default" id="submit-schedule" type="submit" value="Submit">
 
         <br/>
-        <button ng-click="update()" class="btn btn-default" >UPDATE</button>
         <button ng-click="createTable()" class="btn btn-default" >CREATE TABLE</button>
 
         <table ng-repeat="course in courseArray">
@@ -87,12 +85,12 @@
                 <td> {{ course.name_str }} </td>
             </tr>
             <tr ng-repeat="meeting in course.meeting_array">
-                <td> {{ meeting.meeting_type }} </td>
+                <td> <input ng-model="meeting.meeting_type"/> </td>
                 <td> {{ meeting.start_time }} - {{ meeting.end_time }} </td>
+                <td> {{ meeting.location }} </td>
             </tr>
         </table>
 
-        <button onclick="insertCalendar('testcal')">Insert test calendar</button>
       
         
 
