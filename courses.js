@@ -5,9 +5,7 @@ CONTAINS:
     Parsing functions
     Course and Course_Meeting class definitions
 
-
 **/
-
 
 var  FIRST_DAY = new Date(2017, 3, 3, 1, 1, 0, 0);
 var  LAST_DAY = new Date(2017, 5, 8, 16, 59, 0, 0);
@@ -101,8 +99,7 @@ var Course = function(class_string){
 
 
     this.getFinalJSON = function() {
-        console.log("Final Exam date: " + this.finalExam_date);
-
+        
         //This will help stop the attempted insertion of null event
         if (this.finalExam_array == "-1") {
             return "-1";
@@ -135,7 +132,6 @@ var Course = function(class_string){
 
         // var exceptionISO = DAYS_OFF.toISOString().replace(/[:\-.]/g,'');
         // exceptionISO = exceptionISO.replace(/00000Z/, '00Z');
-        // console.log("!! -- " + exceptionISO);
 
         //RECURRENCE STRING
         var frequency_string = 'FREQ=WEEKLY';
@@ -167,8 +163,6 @@ var Course = function(class_string){
 
         parsedStart = parseTime(course_event.start_time);
         parsedEnd = parseTime(course_event.end_time);
-
-        console.log(parsedStart + "-->" + parsedEnd);
 
         var start_datetime = new Date(FIRST_DAY);
         start_datetime.setDate(FIRST_DAY.getDate() + addition);

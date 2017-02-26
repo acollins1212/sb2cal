@@ -5,15 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- commenting out so I can try and get Angular to simply work with just HTML
-    <link rel="stylesheet" type="text/css" href="style.css">
-    -->
-    
-    <!-- Google Calendar API Client Library -->
-    <script src="https://apis.google.com/js/api.js"></script>
-
     <!-- Angular -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+    <script src="controller.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Google Calendar API Client Library -->
+    <script src="https://apis.google.com/js/api.js"></script>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -21,37 +21,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
 
     <script type="text/javascript" src="courses.js"></script>
     <script type="text/javascript" src="api_call.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
   </head>
 
-  <body  style="background-color: #AAA" >
-    <div class="container-fluid" id="main-container">
-    <h1>Schedule Builder to Google Calendar</h1>
-    <h3>Works for UC Davis Spring Quarter 2017</h3>
-    <div id="instruction-div">
-        <p ><strong>Instructions</strong></p>
-        <ol>
-            <li>Type what you want your calendar called</li>
-            <li>Go to <a href="https://my.ucdavis.edu/schedulebuilder/index.cfm?sb" target="_blank">Schedule Builder</a></li>
-                <ol type="a">
-                    <li>Click "Show (Important) Details" for every single course in your schedule</li>
-                    <li>Highlight all of your schedules on the page. Right-click and copy that selection</li>
-                    <li>Paste your schedule into the second text box</li>
-                </ol>
-            
-            <li>Click Submit. The next page will give you a chance to edit any of your schedule entries</li>
-            <li>Insert Events into Google Calendar! 
-                <ol type="a">
-                    <li>From there, you can export the calendar if you go to calendar settings again</li>
-                    <li>To import, look up "how to import ics files" for your device</li>
-                </ol>
-        </ol>
-        
-    </div>
+  <body  style="background-color: #999" >
+    <div ng-app="myApp" ng-controller="myCtrl" class="container-fluid" id="main-container">
+    <h1>Schedule Builder to Google Calendar <small>Spring 2017</small></h1>
+    
 
     <div id="authorize-div" style="display: none">
        
@@ -62,11 +41,14 @@
 
     </div>
 
-    <div ng-app="myApp" ng-controller="myCtrl">
-        <script src="controller.js"></script>
-          
-        <input required id="calendar-name" type="text" placeholder="Type a calendar name..." />
-        <button onclick="insertCalendar()">Insert calendar</button>
+
+    <div >
+        <div ng-hide="invisibleCC" class="createCalendar-div">
+            <input class="input-lg" id="calendar-name" type="text" placeholder="Type your new calendar name..." />  
+            <button ng-click="insertCal()">Create new calendar</button>
+        </div>
+
+        
 
         <br/>
 
@@ -76,7 +58,7 @@
         
         <button ng-click="getCourses()" id="get-button" class="btn btn-default" >GET COURSES</button>
 
-        <table >
+        <table class="table" ng-hide="courseArray.length == 0" id="courseTable" style="display: none">
             <tr>
                 <td> {{ courseArray[courseIndex].name_str }} </td>
             </tr>

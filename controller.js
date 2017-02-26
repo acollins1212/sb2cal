@@ -1,7 +1,8 @@
-var app = angular.module('myApp', []);
+var app = angular.module('myApp', ['ngAnimate']);
 app.controller('myCtrl', function($scope) {
 
     $scope.courseIndex = 0;
+    $scope.invisibleCC = false;
 
     $scope.getCourses = function() {
         stringArray = parseSchedule();
@@ -13,6 +14,7 @@ app.controller('myCtrl', function($scope) {
         //Hide button and textbox after clicking it
         document.getElementById('get-button').style.display = 'none';
         document.getElementById('textArea-id').style.display = 'none';
+        document.getElementById('courseTable').style.display = 'block';
 
     } //createTable()
 
@@ -38,8 +40,15 @@ app.controller('myCtrl', function($scope) {
 
         exam = currentCourse.getFinalJSON();
         insertEvent(exam);
+        $scope.courseArray.splice(index, 1);
+        $scope.courseIndex--;
         
     } //insertCourse()
+
+    $scope.insertCal = function() {
+        insertCalendar();
+        $scope.invisibleCC = true;
+    } //insertCal()
 
 });
 

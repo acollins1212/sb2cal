@@ -6,12 +6,11 @@ CONTAINS:
     Calendar insert functions
     Event insert functions
 
-
 **/
 
     var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
     var SCOPES = ["https://www.googleapis.com/auth/calendar"];
-    var CALENDAR_ID = "28jrtdbechofa8tmb3f26a67t4@group.calendar.google.com"; //HARDCODED FOR TESTING. FIXME!
+    var CALENDAR_ID;
 
     function _insertCalendar() {
         var summary = document.getElementById("calendar-name").value;
@@ -31,7 +30,7 @@ CONTAINS:
 
         var request = gapi.client.request(args);
         request.then(function(response) {
-            //CALENDAR_ID = response.result.id;
+            CALENDAR_ID = response.result.id;
         },           function(reason)   {
             //rejected. Add functionality to deal with this
         });
@@ -79,7 +78,7 @@ CONTAINS:
         if (authResult && !authResult.error) {
           // Hide auth UI, then load client library.
           authorizeDiv.style.display = 'none';
-          
+
         } else {
           // Show auth UI, allowing the user to initiate authorization by
           // clicking authorize button.
