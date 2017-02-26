@@ -11,7 +11,7 @@ CONTAINS:
 
     var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
     var SCOPES = ["https://www.googleapis.com/auth/calendar"];
-    var CALENDAR_ID;
+    var CALENDAR_ID = "7geg1qa7qgpa6ikref76k7v6b0@group.calendar.google.com"; //HARDCODED FOR TESTING. FIXME!
 
     function _insertCalendar() {
         var summary = document.getElementById("calendar-name").value;
@@ -31,19 +31,16 @@ CONTAINS:
 
         var request = gapi.client.request(args);
         request.then(function(response) {
-            CALENDAR_ID = response.result.id;
-        },      function(reason) {
+            //CALENDAR_ID = response.result.id;
+        },           function(reason)   {
             //rejected. Add functionality to deal with this
         });
 
     }
 
+
+
     function insertAllCourses(numCourses) {
-
-
-        //Get rid of submit button. You don't want people submitting more than once
-        var submitDiv = document.getElementById('submit-div');
-        submitDiv.style.display = 'none';
 
         for (var i = 0; i < numCourses; i++) {
             var currentCourse = getCourse(i);
@@ -174,6 +171,10 @@ CONTAINS:
     */
     function loadCalendarApi() {
         //gapi.client.load('calendar', 'v3', insertCalendar);
+    }
+
+    function insertCourse() {
+        gapi.client.load('calendar', 'v3', _insertCourse);
     }
 
     function insertCalendar() {

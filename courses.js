@@ -9,8 +9,8 @@ CONTAINS:
 **/
 
 
-var  FIRST_DAY = new Date(2017, 0, 9, 1, 0, 0, 0);
-var  LAST_DAY = new Date(2017, 2, 18, 16, 59, 0, 0);
+var  FIRST_DAY = new Date(2017, 3, 3, 1, 1, 0, 0);
+var  LAST_DAY = new Date(2017, 5, 88, 16, 59, 0, 0);
 var  DAYS_OFF;
 
 function parseTime(time_str) {
@@ -133,7 +133,6 @@ var Course = function(class_string){
         var last_day_iso = LAST_DAY.toISOString().replace(/[:\-.]/g,'');
         last_day_iso = last_day_iso.replace(/00000Z/, '00Z');
 
-
         //RECURRENCE STRING
         var frequency_string = 'FREQ=WEEKLY';
         var until_string = 'UNTIL='+last_day_iso;
@@ -142,13 +141,10 @@ var Course = function(class_string){
         + until_string + ';' +byday_string;
         var exceptionString = "";
 
-        console.log(until_string);
-
         //To give the proper start date of a class
         var addition = 0;
         if(course_event.days_of_week.search('MO') != -1){
             addition = 0;
-
         }
         else if(course_event.days_of_week.search('TU') != -1){
             addition = 1;
@@ -163,10 +159,13 @@ var Course = function(class_string){
             addition = 4;
         }
 
+        parsedStart = parseTime(course_event.start_time);
+        parsedEnd = parseTime(course_event.end_time);
+
         var start_datetime = new Date(FIRST_DAY);
         start_datetime.setDate(FIRST_DAY.getDate() + addition);
-        start_datetime.setHours(course_event.start_time[0] - 7); //-7 accounts for toISOString() adding 7
-        start_datetime.setMinutes(course_event.start_time[1]);
+        start_datetime.setHours(parsedStart[0] - 7); //-7 accounts for toISOString() adding 7
+        start_datetime.setMinutes(parsedStart[1]);
         start_datetime = start_datetime.toISOString();
         start_datetime = start_datetime.replace('.000Z', '-07:00');
 
@@ -174,16 +173,13 @@ var Course = function(class_string){
 
         var end_datetime = new Date(FIRST_DAY);
         end_datetime.setDate(FIRST_DAY.getDate() + addition);
-        end_datetime.setHours(course_event.end_time[0] - 7); //-7 accounts for toISOString() adding 7 
-        end_datetime.setMinutes(course_event.end_time[1]);
+        end_datetime.setHours(parsedEnd[0] - 7); //-7 accounts for toISOString() adding 7 
+        end_datetime.setMinutes(parsedEnd[1]);
         end_datetime = end_datetime.toISOString();
         end_datetime = end_datetime.replace('.000Z', '-07:00');
 
         console.log(end_datetime);
         
-        //I'M REALLY NOT UNDERSTANDING TIMEZONING. HOPEFULLY ILL UNDERSTAND IT L8R
-        //I JUST DISCOVERED THAT THE GCALENDAR IS SET TO GMT (due to daylight savings)
-
         var summary_string = this.name_str + " " + course_event.meeting_type;
         
         var event = {

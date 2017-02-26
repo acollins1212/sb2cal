@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      <title>sb2cal - Home</title>
-      <meta charset="utf-8">
+    <title>sb2cal - Home</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- commenting out so I can try and get Angular to simply work with just HTML
@@ -20,10 +20,12 @@
         <!- - Latest compiled JavaScript - ->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     -->
+
   
     <script type="text/javascript" src="courses.js"></script>
 
     <script src="https://apis.google.com/js/api.js"></script>
+
     <script type="text/javascript" src="api_call.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 
@@ -52,7 +54,7 @@
                     <li>To import, look up "how to import ics files" for your device</li>
                 </ol>
         </ol>
-        <p>If you have issues, follow along with this <strong>video walkthrough</strong>: <a href="https://youtu.be/jqCcCRws8Z8" target="_blank">https://youtu.be/jqCcCRws8Z8</a></p>
+        
     </div>
 
     <div id="authorize-div" style="display: none">
@@ -75,7 +77,6 @@
         <textarea name="textArea" id="textArea_id" placeholder="Paste schedule here" ></textarea>
         
         <br/>
-        <input class="btn btn-default" id="submit-schedule" type="submit" value="Submit">
 
         <br/>
         <button ng-click="createTable()" class="btn btn-default" >CREATE TABLE</button>
@@ -85,11 +86,15 @@
                 <td> {{ course.name_str }} </td>
             </tr>
             <tr ng-repeat="meeting in course.meeting_array">
-                <td> <input ng-model="meeting.meeting_type"/> </td>
+                <td> <input class="meeting-type" ng-model="meeting.meeting_type"/> </td>
                 <td> {{ meeting.start_time }} - {{ meeting.end_time }} </td>
                 <td> {{ meeting.location }} </td>
             </tr>
+
+            <td><button ng-click="insertCourse($index)" class="btn btn-default">Insert this course</button></td>
         </table>
+
+        
 
       
         
@@ -98,7 +103,7 @@
     </div>
     
     
-       <br>
+    <br>
     <br>
     <br>
     <footer> <a href="about.html">About sb2cal.com</a> </footer>
