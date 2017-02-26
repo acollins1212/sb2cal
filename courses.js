@@ -10,8 +10,8 @@ CONTAINS:
 
 
 var  FIRST_DAY = new Date(2017, 3, 3, 1, 1, 0, 0);
-var  LAST_DAY = new Date(2017, 5, 88, 16, 59, 0, 0);
-var  DAYS_OFF;
+var  LAST_DAY = new Date(2017, 5, 8, 16, 59, 0, 0);
+//var  DAYS_OFF = new Date(2017, 3, 5, 1, 1, 0, 0);  DOESNT WORK (2/25)
 
 function parseTime(time_str) {
 
@@ -34,7 +34,7 @@ function parseTime(time_str) {
 } //parseTime()
 
 function parseSchedule() {
-    var full_schedule = document.getElementById("textArea_id").value;
+    var full_schedule = document.getElementById("textArea-id").value;
 
     var course_name_pattern = /[A-Z]{3} [0-9]{3}[A-Z]{0,1} [A-Z0-9]{3} - .*/gm;
     var course_name_array = full_schedule.match(course_name_pattern);
@@ -77,15 +77,15 @@ var Course = function(class_string){
 
     // FIXME: Deal with lack of final exam for certain courses
     //FINAL EXAM PORTION
-    this.finalExam_str = class_string.match(exam_pattern);
+    this.finalExam_array = class_string.match(exam_pattern);
 
-    if (this.finalExam_str == null) {
-        this.finalExam_str = "-1";
+    if (this.finalExam_array == null) {
+        this.finalExam_array = "-1";
     } 
     else {
         //The date is in MM/DD/YYYY format. 
-        var mmddyyyy = this.finalExam_str[1].split('/');
-        var time = parseTime(this.finalExam_str[2]);
+        var mmddyyyy = this.finalExam_array[1].split('/');
+        var time = parseTime(this.finalExam_array[2]);
         //Months are zero indexed, so I'm subtracting one inside constructor
         this.finalExam_date = new Date(mmddyyyy[2], mmddyyyy[0] - 1, mmddyyyy[1], time[0], time[1], 0, 0 );
         this.finalExam_date.setHours(this.finalExam_date.getHours() - 7); //-7 for timezone offset
@@ -104,7 +104,7 @@ var Course = function(class_string){
         console.log("Final Exam date: " + this.finalExam_date);
 
         //This will help stop the attempted insertion of null event
-        if (this.finalExam_str == "-1") {
+        if (this.finalExam_array == "-1") {
             return "-1";
         }
 
@@ -133,13 +133,19 @@ var Course = function(class_string){
         var last_day_iso = LAST_DAY.toISOString().replace(/[:\-.]/g,'');
         last_day_iso = last_day_iso.replace(/00000Z/, '00Z');
 
+        // var exceptionISO = DAYS_OFF.toISOString().replace(/[:\-.]/g,'');
+        // exceptionISO = exceptionISO.replace(/00000Z/, '00Z');
+        // console.log("!! -- " + exceptionISO);
+
         //RECURRENCE STRING
         var frequency_string = 'FREQ=WEEKLY';
         var until_string = 'UNTIL='+last_day_iso;
         var byday_string = "BYDAY="+course_event.days_of_week;
         var recurrence_string = 'RRULE:WKST=SU;' + frequency_string + ';'
-        + until_string + ';' +byday_string;
-        var exceptionString = "";
+        + until_string + ';' + byday_string ;
+
+        //var exceptionString = "EXDATE:" + exceptionISO;
+
 
         //To give the proper start date of a class
         var addition = 0;
@@ -162,6 +168,8 @@ var Course = function(class_string){
         parsedStart = parseTime(course_event.start_time);
         parsedEnd = parseTime(course_event.end_time);
 
+        console.log(parsedStart + "-->" + parsedEnd);
+
         var start_datetime = new Date(FIRST_DAY);
         start_datetime.setDate(FIRST_DAY.getDate() + addition);
         start_datetime.setHours(parsedStart[0] - 7); //-7 accounts for toISOString() adding 7
@@ -169,16 +177,12 @@ var Course = function(class_string){
         start_datetime = start_datetime.toISOString();
         start_datetime = start_datetime.replace('.000Z', '-07:00');
 
-        console.log(start_datetime);
-
         var end_datetime = new Date(FIRST_DAY);
         end_datetime.setDate(FIRST_DAY.getDate() + addition);
         end_datetime.setHours(parsedEnd[0] - 7); //-7 accounts for toISOString() adding 7 
         end_datetime.setMinutes(parsedEnd[1]);
         end_datetime = end_datetime.toISOString();
         end_datetime = end_datetime.replace('.000Z', '-07:00');
-
-        console.log(end_datetime);
         
         var summary_string = this.name_str + " " + course_event.meeting_type;
         

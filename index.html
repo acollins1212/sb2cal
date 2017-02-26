@@ -9,33 +9,29 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     -->
     
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
-    <!-- unsplit the dashes when uncommenting Bootstrap!
-
-        <!- - Latest compiled and minified CSS - ->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!- - jQuery library - ->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <!- - Latest compiled JavaScript - ->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    -->
-
-  
-    <script type="text/javascript" src="courses.js"></script>
-
+    <!-- Google Calendar API Client Library -->
     <script src="https://apis.google.com/js/api.js"></script>
 
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+
+    <script type="text/javascript" src="courses.js"></script>
     <script type="text/javascript" src="api_call.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
-
-    
   </head>
 
   <body  style="background-color: #AAA" >
     <div class="container-fluid" id="main-container">
     <h1>Schedule Builder to Google Calendar</h1>
-    <h3>Works for UC Davis Winter Quarter 2017</h3>
+    <h3>Works for UC Davis Spring Quarter 2017</h3>
     <div id="instruction-div">
         <p ><strong>Instructions</strong></p>
         <ol>
@@ -60,7 +56,7 @@
     <div id="authorize-div" style="display: none">
        
         <!--Button for the user to click to initiate auth sequence -->
-        <button class="btn btn-default" style="background-color: yellow" style="clear:both;" id="authorize-button" onclick="handleAuthClick(event)">
+        <button class="btn btn-default" id="authorize-button" onclick="handleAuthClick(event)">
           <strong>Authorize For Google Account!</strong>
         </button>
 
@@ -74,30 +70,28 @@
 
         <br/>
 
-        <textarea name="textArea" id="textArea_id" placeholder="Paste schedule here" ></textarea>
+        <textarea name="textArea" id="textArea-id" placeholder="Paste schedule here" ></textarea>
         
         <br/>
+        
+        <button ng-click="getCourses()" id="get-button" class="btn btn-default" >GET COURSES</button>
 
-        <br/>
-        <button ng-click="createTable()" class="btn btn-default" >CREATE TABLE</button>
-
-        <table ng-repeat="course in courseArray">
+        <table >
             <tr>
-                <td> {{ course.name_str }} </td>
+                <td> {{ courseArray[courseIndex].name_str }} </td>
             </tr>
-            <tr ng-repeat="meeting in course.meeting_array">
+            <tr ng-repeat="meeting in courseArray[courseIndex].meeting_array">
                 <td> <input class="meeting-type" ng-model="meeting.meeting_type"/> </td>
-                <td> {{ meeting.start_time }} - {{ meeting.end_time }} </td>
+                <td> {{ meeting.days_of_week }} </td>
+                <td> | {{ meeting.start_time }}-{{ meeting.end_time }} </td>
+                <td> @ </td>
                 <td> {{ meeting.location }} </td>
+                <tr><td> {{ course.finalExam_array[0] }} </td></tr>
             </tr>
 
-            <td><button ng-click="insertCourse($index)" class="btn btn-default">Insert this course</button></td>
+            <td><button ng-click="insertCourse(courseIndex)" class="btn btn-default">Insert this course</button></td>
+            <td><button ng-click="incrementIndex()" class="btn btn-default">Next Course</button></td>
         </table>
-
-        
-
-      
-        
 
     
     </div>
@@ -106,7 +100,7 @@
     <br>
     <br>
     <br>
-    <footer> <a href="about.html">About sb2cal.com</a> </footer>
+    <footer> <a href="about.html">About</a> </footer>
 
 
     </div>
