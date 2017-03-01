@@ -10,7 +10,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
     <script src="controller.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
 
     <!-- Google Calendar API Client Library -->
     <script src="https://apis.google.com/js/api.js"></script>
@@ -25,6 +24,10 @@
     <script type="text/javascript" src="courses.js"></script>
     <script type="text/javascript" src="api_call.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="style.css">
+
   </head>
 
   <body  style="background-color: #999" >
@@ -35,8 +38,8 @@
     <div id="authorize-div" style="display: none">
        
         <!--Button for the user to click to initiate auth sequence -->
-        <button class="btn btn-default" id="authorize-button" onclick="handleAuthClick(event)">
-          <strong>Authorize For Google Account!</strong>
+        <button class="btn btn-primary" id="authorize-button" onclick="handleAuthClick(event)">
+          Authorize Application
         </button>
 
     </div>
@@ -45,8 +48,17 @@
     <div >
         <div ng-hide="invisibleCC" class="createCalendar-div">
             <input class="input-lg" id="calendar-name" type="text" placeholder="Type your new calendar name..." />  
-            <button ng-click="insertCal()">Create new calendar</button>
+            <button class="btn btn-default" ng-click="insertCal()">Create new calendar</button>
         </div>
+
+        <!-- LOADING FUNC -->
+        <script>
+        $(document).ready(function(){
+            $(".btn").click(function(){
+                $(this).button('loading');
+            });   
+        });
+        </script>
 
         
 
@@ -56,7 +68,7 @@
         
         <br/>
         
-        <button ng-click="getCourses()" id="get-button" class="btn btn-default" >GET COURSES</button>
+        <button ng-click="getCourses()" id="get-button" class="btn btn-default" >Get Courses</button>
 
         <table class="table" ng-hide="courseArray.length == 0" id="courseTable" style="display: none">
             <tr>
@@ -71,7 +83,7 @@
                 <tr><td> {{ course.finalExam_array[0] }} </td></tr>
             </tr>
 
-            <td><button ng-click="insertCourse(courseIndex)" class="btn btn-default">Insert this course</button></td>
+            <td><button ng-click="insertCourse(courseIndex)" class="btn btn-primary">Insert this course</button></td>
             <td><button ng-click="incrementIndex()" class="btn btn-default">Next Course</button></td>
         </table>
 

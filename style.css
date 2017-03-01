@@ -27,6 +27,10 @@ body {
 	color: #002855;
     -webkit-border-radius: 3px;
     border-radius: 3px;
+    
+
+    font-family: 'Lato', sans-serif;
+
 }
 
 a:hover {
