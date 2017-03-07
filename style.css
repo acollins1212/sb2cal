@@ -105,20 +105,43 @@ input[type=submit], button {
 }
 
 
-table, th, td {
+table, th, td, thead, tbody {
+	border: 0px solid;
+	padding: 4px;
+
+}
+
+thead {
+	color: black;
 }
 
 #courseTable {
 	width: 60%;
-	background-color: #2CC;
+	min-height: 175px;
+	background-color: #F9F9F9;
 	-webkit-border-radius: 6px;
     border-radius: 6px;
     border-collapse: collapse;
+	border: 0px solid;
+}
+
+#courses-div button {
+	margin-bottom: 5px;
+}
+
+td input {
+	background-color: #FFF;
+	border: 1px solid #d1d1d1;
+	padding: 1px;
+}
+
+tbody tr {
+	border-top: 1px solid #ddd;
 }
 
 
 footer {
-	margin-top: 100px;
+	margin-top: 40px;
 	text-align: right;
 	position: relative;
 }

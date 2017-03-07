@@ -8,7 +8,7 @@
     <!-- Angular -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
-    <script src="controller.js"></script>
+    <script src="./controller.js"></script>
 
 
     <!-- Google Calendar API Client Library -->
@@ -64,16 +64,15 @@
         <button ng-click="getCourses()" id="get-button" class="btn btn-default" >Get Courses</button>
 
 
-        <div id="courses-div" ng-hide="hideTable()"
-        >
+        <div id="courses-div" ng-hide="hideTable()">
         <button ng-click="insertCourse(courseIndex)" class="btn btn-primary">Insert this course</button>
         <button ng-click="decrementIndex()" class="btn btn-default">←</button>
         <button ng-click="incrementIndex()" class="btn btn-default">→</button>
 
-        <table class="table table-bordered" id="courseTable" >
+        <table class="table" id="courseTable" >
             <thead>
                 <tr>
-                <td> {{ courseArray[courseIndex].name_str }} </td>
+                <td > <strong> {{ courseArray[courseIndex].name_str }} </strong> </td>
                 </tr>
             </thead>
             <tbody>
@@ -82,8 +81,8 @@
                 <td> {{ meeting.days_of_week }} </td>
                 <td> {{ meeting.start_time }}-{{ meeting.end_time }} </td>
                 <td> @ {{ meeting.location }} </td>
-                <tr><td> {{ course.finalExam_array[0] }} </td></tr>
             </tr>
+			<tr><td> {{ courseArray[courseIndex].finalExam_array[0] }} </td><td></td><td></td><td></td></tr>
             </tbody>
 
         </table>
@@ -95,7 +94,7 @@
     </div>
     
 
-    <footer> <a href="about.html">About</a> </footer>
+    <footer> <a href="./about.html">About</a> </footer>
 
 
     </div>
