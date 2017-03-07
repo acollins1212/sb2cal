@@ -37,6 +37,9 @@ CONTAINS:
             document.getElementById("calendar-name").style.color = "#AAA";
         },           function(reason)   {
             //rejected. Add functionality to deal with this
+            document.getElementById("calendar-button").disabled = false;
+            document.getElementById("calendar-button").innerHTML = "Create new calendar";
+
         	alert("Please sign in with Google to create a calendar");
         });
 
@@ -44,6 +47,9 @@ CONTAINS:
 
 
     function insertCalendar() {
+    	document.getElementById("calendar-button").innerHTML = "Loading...";
+        document.getElementById("calendar-button").disabled = true;
+
         gapi.client.load('calendar', 'v3', _insertCalendar);
     }
 
@@ -97,6 +103,7 @@ CONTAINS:
      * @param {Event} event Button click event.
     */
     function handleAuthClick(event) {
+    	document.getElementById("google-button").disabled = true;
         gapi.auth.authorize(
         {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
              handleAuthResult);

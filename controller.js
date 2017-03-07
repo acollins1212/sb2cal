@@ -39,6 +39,15 @@ app.controller('myCtrl', function($scope) {
         }
     } //incrementIndex()
 
+    $scope.decrementIndex = function() {
+        if($scope.courseIndex <= 0) {
+            $scope.courseIndex = $scope.courseArray.length - 1;
+        }
+        else {
+            $scope.courseIndex--;
+        }
+    }
+
     $scope.insertCourse = function(index) {
 
         var currentCourse = $scope.courseArray[index];

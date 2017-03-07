@@ -25,7 +25,6 @@
     <script type="text/javascript" src="api_call.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
     <link rel="stylesheet" type="text/css" href="style.css">
 
   </head>
@@ -40,7 +39,6 @@
         <!--Button for the user to click to initiate auth sequence -->
         <button id="google-button" class="btn" onclick="handleAuthClick(event)" />
 
-
     </div>
 
     <div  ng-app="myApp" ng-controller="myCtrl">
@@ -50,21 +48,12 @@
         </div>
 
         <script>
+            document.getElementById("google-button").disabled = false;
             document.getElementById("calendar-button").disabled = false;
             document.getElementById("calendar-name").disabled = false;
             document.getElementById("calendar-name").value = "";
         </script>
-
-        <!-- LOADING FUNC 
-        <script>
-        $(document).ready(function(){
-            $(".btn").click(function(){
-                $(this).button('loading');
-            });   
-        });
-        </script>
-		-->
-        
+  
 
         <br/>
 
@@ -77,22 +66,29 @@
 
         <div id="courses-div" ng-hide="hideTable()"
         >
-        <table class="table" id="courseTable" >
-            <tr>
+        <button ng-click="insertCourse(courseIndex)" class="btn btn-primary">Insert this course</button>
+        <button ng-click="decrementIndex()" class="btn btn-default">←</button>
+        <button ng-click="incrementIndex()" class="btn btn-default">→</button>
+
+        <table class="table table-bordered" id="courseTable" >
+            <thead>
+                <tr>
                 <td> {{ courseArray[courseIndex].name_str }} </td>
-            </tr>
+                </tr>
+            </thead>
+            <tbody>
             <tr ng-repeat="meeting in courseArray[courseIndex].meeting_array">
                 <td> <input class="meeting-type" ng-model="meeting.meeting_type"/> </td>
                 <td> {{ meeting.days_of_week }} </td>
-                <td> | {{ meeting.start_time }}-{{ meeting.end_time }} </td>
-                <td> @ </td>
-                <td> {{ meeting.location }} </td>
+                <td> {{ meeting.start_time }}-{{ meeting.end_time }} </td>
+                <td> @ {{ meeting.location }} </td>
                 <tr><td> {{ course.finalExam_array[0] }} </td></tr>
             </tr>
+            </tbody>
 
-            <td><button ng-click="insertCourse(courseIndex)" class="btn btn-primary">Insert this course</button></td>
-            <td><button ng-click="incrementIndex()" class="btn btn-default">Next Course</button></td>
         </table>
+
+
         </div>
 
     

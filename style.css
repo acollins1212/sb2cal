@@ -4,6 +4,7 @@ Color codes from: http://marketingtoolbox.ucdavis.edu/identity/color.html
 	Light blue: #E5E9EF
 	
 */
+@import url('https://fonts.googleapis.com/css?family=Lato|Roboto');
 
 @keyframes slow-hide {
 	from {
@@ -71,12 +72,17 @@ a:hover {
 	background: url(google_signin_buttons/pressed_small.png) no-repeat;
 }
 
+#google-button[disabled] {
+	background: url(google_signin_buttons/disabled_small.png) no-repeat;	
+}
+
 textarea {
 	background-color: #F9F9F9;
 	width: 95%; 
 	margin: 3px;
 	border-style: solid;
 	border-width: 0px;
+	resize: none;
 }
 
 input[disabled] {
@@ -97,6 +103,19 @@ input[type=submit], button {
 	position: relative;
 	margin: 3px;
 }
+
+
+table, th, td {
+}
+
+#courseTable {
+	width: 60%;
+	background-color: #2CC;
+	-webkit-border-radius: 6px;
+    border-radius: 6px;
+    border-collapse: collapse;
+}
+
 
 footer {
 	margin-top: 100px;
