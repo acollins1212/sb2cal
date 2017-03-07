@@ -38,18 +38,22 @@
     <div id="authorize-div" style="display: none">
        
         <!--Button for the user to click to initiate auth sequence -->
-        <button class="btn btn-primary" id="authorize-button" onclick="handleAuthClick(event)">
-          Authorize Application
-        </button>
+        <button id="google-button" class="btn" onclick="handleAuthClick(event)" />
+
 
     </div>
 
-
     <div  ng-app="myApp" ng-controller="myCtrl">
-        <div ng-hide="invisibleCC" class="createCalendar-div">
+        <div class="createCalendar-div">    
             <input class="input-lg" id="calendar-name" type="text" placeholder="Type your new calendar name..." />  
-            <button class="btn btn-default" ng-click="insertCal()">Create new calendar</button>
+            <button class="btn btn-default" id="calendar-button" onclick="insertCalendar()">Create new calendar</button>
         </div>
+
+        <script>
+            document.getElementById("calendar-button").disabled = false;
+            document.getElementById("calendar-name").disabled = false;
+            document.getElementById("calendar-name").value = "";
+        </script>
 
         <!-- LOADING FUNC 
         <script>
@@ -70,7 +74,10 @@
         
         <button ng-click="getCourses()" id="get-button" class="btn btn-default" >Get Courses</button>
 
-        <table class="table" ng-hide="courseArray.length == 0" id="courseTable" style="display: none">
+
+        <div id="courses-div" ng-hide="hideTable()"
+        >
+        <table class="table" id="courseTable" >
             <tr>
                 <td> {{ courseArray[courseIndex].name_str }} </td>
             </tr>
@@ -86,14 +93,12 @@
             <td><button ng-click="insertCourse(courseIndex)" class="btn btn-primary">Insert this course</button></td>
             <td><button ng-click="incrementIndex()" class="btn btn-default">Next Course</button></td>
         </table>
+        </div>
 
     
     </div>
     
-    
-    <br>
-    <br>
-    <br>
+
     <footer> <a href="about.html">About</a> </footer>
 
 

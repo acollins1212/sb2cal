@@ -2,14 +2,26 @@ var app = angular.module('myApp', ['ngAnimate']);
 app.controller('myCtrl', function($scope) {
 
     $scope.courseIndex = 0;
-    $scope.invisibleCC = false;
+    $scope.noInput = true;
+    $scope.courseArray = [];
+
+    
+
+    $scope.hideTable = function() {
+        if ($scope.courseArray.length <= 0){
+            return true;
+        } 
+        else
+            return false;
+    }
 
     $scope.getCourses = function() {
         stringArray = parseSchedule();
-        $scope.courseArray = [];
         for (var i = 0; i < stringArray.length; i++) {
             $scope.courseArray.push(new Course(stringArray[i]));
         } //for
+
+        $scope.noInput = false;
 
         //Hide button and textbox after clicking it
         document.getElementById('get-button').style.display = 'none';
@@ -49,7 +61,6 @@ app.controller('myCtrl', function($scope) {
 
     $scope.insertCal = function() {
         insertCalendar();
-        $scope.invisibleCC = true;
     } //insertCal()
 
 });
