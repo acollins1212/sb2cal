@@ -30,6 +30,7 @@ app.controller('myCtrl', function($scope) {
     $scope.insertCourse = function(index) {
 
         var currentCourse = $scope.courseArray[index];
+		var len = $scope.courseArray.length;
         var event;
         var exam;
 
@@ -41,7 +42,8 @@ app.controller('myCtrl', function($scope) {
         exam = currentCourse.getFinalJSON();
         insertEvent(exam);
         $scope.courseArray.splice(index, 1);
-        $scope.courseIndex--;
+        if ($scope.courseIndex > len - 2)
+			$scope.courseIndex--;
         
     } //insertCourse()
 

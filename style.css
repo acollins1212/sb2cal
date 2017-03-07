@@ -23,6 +23,7 @@ Color codes from: http://marketingtoolbox.ucdavis.edu/identity/color.html
 
 body {
 	padding: 5px;
+	height: 100%;
 	background-color: #AAA;
 	color: #002855;
     -webkit-border-radius: 3px;
@@ -39,7 +40,8 @@ a:hover {
 
 #main-container {
 	margin: auto;
-	width: 90%;
+	width: 80%;
+	height: 100%;
 	position: relative;
 	background-color: #D0D5DF;
 	padding: 5px;
@@ -49,28 +51,21 @@ a:hover {
 
 }
 
-ul {
-	list-style-type: disc;
-}
-
 textarea {
 	background-color: #F9F9F9;
-	width: 100%; 
-	height: 100px;
+	width: 95%; 
 	margin: 3px;
 	border-style: solid;
-	border-width: 1px;
-	color: #002855;
+	border-width: 0px;
 }
 
 input {
 	background-color: #F9F9F9;
+	width: 95%;
 	font-size: 1em;
 	margin-bottom: 2px;
 	border-style: solid;
 	border-width: 0px;
-	border-color: #002855;
-	width: 90%;
 }
 
 input[type=submit], button {
