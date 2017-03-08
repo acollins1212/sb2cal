@@ -5,7 +5,16 @@ app.controller('myCtrl', function($scope) {
     $scope.noInput = true;
     $scope.courseArray = [];
 	$scope.hideTextBox = false;
+	$scope.showInstructions = false;
 
+	$scope.toggleInstructions = function() {
+		$scope.showInstructions = !$scope.showInstructions;
+
+		if ($scope.showInstructions)
+			document.getElementById("arrow-span").innerHTML = "▼";
+		else 
+			document.getElementById("arrow-span").innerHTML = "▶";
+	}
     
 
     $scope.hideTable = function() {
@@ -22,6 +31,11 @@ app.controller('myCtrl', function($scope) {
 
     $scope.getCourses = function() {
         stringArray = parseSchedule();
+		
+		for (var i = 0; i < $scope.courseArray.length; i++) {
+            $scope.courseArray.pop();
+        } //for
+		
         for (var i = 0; i < stringArray.length; i++) {
             $scope.courseArray.push(new Course(stringArray[i]));
         } //for

@@ -6,24 +6,28 @@ Color codes from: http://marketingtoolbox.ucdavis.edu/identity/color.html
 */
 @import url('https://fonts.googleapis.com/css?family=Lato|Roboto');
 
-@keyframes slow-hide {
+@keyframes slow-show {
 	from {
-		opacity: 1;
+		height: 0px;
 	} to {
-		opacity: 0;
+		height: 75px;
 	}
 }
 
-.createCalendar-div.ng-hide {
-	animation: 2s slow-hide;
-}
 
-.createCalendar-div {
-	opacity: 1;
+/*
+#instruction-list:active {
+	animation: 0.5s slow-show;
+}
+*/
+
+html {
+	height: 100%;
 }
 
 body {
 	padding: 5px;
+	height: 100%;
 	background-color: #AAA;
 	color: #002855;
     -webkit-border-radius: 3px;
@@ -42,9 +46,10 @@ a:hover {
 #main-container {
 	margin: auto;
 	width: 60%;
-	height: 100%;
+	min-height: 50%;
 	position: relative;
-	transform: translateY(35%);
+	top: 16%;
+	
 	
 	background-color: #D0D5DF;
 	padding: 5px;
@@ -74,6 +79,34 @@ a:hover {
 #google-button[disabled] {
 	background: url(google_signin_buttons/disabled_small.png) no-repeat;	
 }
+
+.createCalendar-div {
+	margin: 7px;
+}
+
+#instructions ol {
+	
+}
+
+
+#instructions p {
+	margin-left: 7px;
+	cursor: pointer;
+	font-size: 120%;
+	width: 120px;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+#arrow-span {
+	font-size: 70%
+}
+
 
 textarea {
 	background-color: #F9F9F9;
