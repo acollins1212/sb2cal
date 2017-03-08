@@ -29,7 +29,7 @@
 
   </head>
 
-  <body  style="background-color: #999" >
+  <body   >
     <div class="container-fluid" id="main-container">
     <h1>Schedule Builder to Google Calendar <small>Spring 2017</small></h1>
     
@@ -53,17 +53,12 @@
             document.getElementById("calendar-name").disabled = false;
             document.getElementById("calendar-name").value = "";
         </script>
-  
-
-        <br/>
-
-        <textarea name="textArea" class="input-lg" rows="5" id="textArea-id" placeholder="Paste schedule here" ></textarea>
-        
-        <br/>
-        
-        <button ng-click="getCourses()" id="get-button" class="btn btn-default" >Get Courses</button>
-
-
+ 
+		<div ng-hide="hideTextArea()">
+			<textarea name="textArea" class="input-lg" rows="5" id="textArea-id" placeholder="Paste schedule here" ></textarea>        
+			<button ng-click="getCourses()" id="get-button" class="btn btn-default" >Get Courses</button>
+		</div>
+		
         <div id="courses-div" ng-hide="hideTable()">
         <button ng-click="insertCourse(courseIndex)" class="btn btn-primary">Insert this course</button>
         <button ng-click="decrementIndex()" class="btn btn-default">←</button>

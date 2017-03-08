@@ -24,12 +24,14 @@ Color codes from: http://marketingtoolbox.ucdavis.edu/identity/color.html
 
 body {
 	padding: 5px;
-	height: 100%;
 	background-color: #AAA;
 	color: #002855;
     -webkit-border-radius: 3px;
     border-radius: 3px;
     font-family: 'Lato', sans-serif;
+	background: url(background.jpg) no-repeat center fixed;
+	background-size: cover;
+
 }
 
 a:hover {
@@ -39,20 +41,17 @@ a:hover {
 
 #main-container {
 	margin: auto;
-	width: 80%;
+	width: 60%;
 	height: 100%;
 	position: relative;
+	transform: translateY(35%);
+	
 	background-color: #D0D5DF;
 	padding: 5px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
-    padding: 5px; 
-
-}
-
-#authorize-button {
-	margin: 5px;
-	margin-bottom: 15px;
+    padding: 5px 30px 5px 30px; 
+	box-shadow: 7px 7px 7px #222;
 }
 
 #google-button {
@@ -78,11 +77,13 @@ a:hover {
 
 textarea {
 	background-color: #F9F9F9;
-	width: 95%; 
+	width: 70%; 
 	margin: 3px;
 	border-style: solid;
 	border-width: 0px;
 	resize: none;
+	margin-top: 20px;
+	margin-bottom: 2px;
 }
 
 input[disabled] {
@@ -91,14 +92,19 @@ input[disabled] {
 
 input {
 	background-color: #F9F9F9;
-	width: 95%;
+	width: 70%;
 	font-size: 1em;
 	margin-bottom: 2px;
 	border-style: solid;
 	border-width: 0px;
 }
 
-input[type=submit], button {
+#calendar-button, #get-button {
+	display: block;
+	clear: both;
+}
+
+button {
     padding: 5px 15px;
 	position: relative;
 	margin: 3px;
@@ -116,7 +122,7 @@ thead {
 }
 
 #courseTable {
-	width: 60%;
+	width: 70%;
 	min-height: 175px;
 	background-color: #F9F9F9;
 	-webkit-border-radius: 6px;
@@ -124,7 +130,9 @@ thead {
     border-collapse: collapse;
 	border: 0px solid;
 }
-
+#courses-div {
+	margin-top: 30px;
+}
 #courses-div button {
 	margin-bottom: 5px;
 }

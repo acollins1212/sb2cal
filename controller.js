@@ -4,6 +4,7 @@ app.controller('myCtrl', function($scope) {
     $scope.courseIndex = 0;
     $scope.noInput = true;
     $scope.courseArray = [];
+	$scope.hideTextBox = false;
 
     
 
@@ -14,6 +15,10 @@ app.controller('myCtrl', function($scope) {
         else
             return false;
     }
+	
+	$scope.hideTextArea = function() {
+		return $scope.hideTextBox;
+	}
 
     $scope.getCourses = function() {
         stringArray = parseSchedule();
@@ -21,7 +26,7 @@ app.controller('myCtrl', function($scope) {
             $scope.courseArray.push(new Course(stringArray[i]));
         } //for
 
-        $scope.noInput = false;
+		$scope.hideTextBox = true;
 
         //Hide button and textbox after clicking it
         document.getElementById('get-button').style.display = 'none';
