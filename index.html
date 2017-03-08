@@ -10,7 +10,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
     <script src="./controller.js"></script>
 
-
     <!-- Google Calendar API Client Library -->
     <script src="https://apis.google.com/js/api.js"></script>
 
@@ -21,40 +20,36 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript" src="courses.js"></script>
-    <script type="text/javascript" src="api_call.js"></script>
+    <script type="text/javascript" src="./courses.js"></script>
+    <script type="text/javascript" src="./api_call.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 
     <link rel="stylesheet" type="text/css" href="style.css">
 
   </head>
 
-  <body   >
+  <body >
     <div class="container-fluid" id="main-container">
     <h1>Schedule Builder to Google Calendar <small>Spring 2017</small></h1>
     
 
     <div id="authorize-div" style="display: none">
-       
         <!--Button for the user to click to initiate auth sequence -->
         <button id="google-button" class="btn" onclick="handleAuthClick(event)" />
-
     </div>
 
     <div  ng-app="myApp" ng-controller="myCtrl">
-		
 		<div id="instructions">
 			<p ng-click="toggleInstructions()">Instructions <span id="arrow-span" >▶</span></p>
 			<ol id="instruction-list" ng-show="showInstructions" >
-				<li>Create a calendar</li>
-				<li>Go to Schedule Builder and click "Show Important Details" for every course</li>
+				<li>Create a calendar below</li>
+				<li>Go to <a href="https://my.ucdavis.edu/schedulebuilder/index.cfm?termCode=201703&helpTour=" target="_blank">Schedule Builder</a> and click <strong>Show Important Details</strong> for every course</li>
 				<li>Select-all and copy</li>
 				<li>Paste into box below and click "Get Courses"</li>
+				<li>Make sure the courses are read correctly, insert them one by one.</li>
 			</ol>
 		</div>
- 
-	
-	
+ 	
         <div class="createCalendar-div">    
             <input class="input-lg" id="calendar-name" type="text" placeholder="Type your new calendar name..." />  
             <button class="btn btn-default" id="calendar-button" onclick="insertCalendar()">Create new calendar</button>
@@ -67,13 +62,10 @@
             document.getElementById("calendar-name").value = "";
         </script>
 		
-		
 		<div ng-hide="hideTextArea()">
 			<textarea name="textArea" class="input-lg" rows="5" id="textArea-id" placeholder="Paste schedule here" ></textarea>        
 			<button ng-click="getCourses()" id="get-button" class="btn btn-default" >Get Courses</button>
 		</div>
-		
-		
 		
         <div id="courses-div" ng-hide="hideTable()">
         <button ng-click="insertCourse(courseIndex)" class="btn btn-primary">Insert this course</button>
@@ -95,18 +87,11 @@
             </tr>
 			<tr><td> {{ courseArray[courseIndex].finalExam_array[0] }} </td><td></td><td></td><td></td></tr>
             </tbody>
-
         </table>
-
-
         </div>
-
-    
     </div>
     
-
-    <footer> <a href="./about.html">About</a> </footer>
-
+	<footer> <a href="./about.html">About</a> </footer>
 
     </div>
   </body>
