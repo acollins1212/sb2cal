@@ -6,6 +6,7 @@ app.controller('myCtrl', function($scope) {
     $scope.courseArray = [];
 	$scope.hideTextBox = false;
 	$scope.showInstructions = false;
+    $scope.allDone = false;
 
 	$scope.toggleInstructions = function() {
 		$scope.showInstructions = !$scope.showInstructions;
@@ -84,6 +85,9 @@ app.controller('myCtrl', function($scope) {
         $scope.courseArray.splice(index, 1);
         if ($scope.courseIndex > len - 2)
 			$scope.courseIndex--;
+
+        if ($scope.courseArray.length <= 0)
+            $scope.allDone = true;
         
     } //insertCourse()
 
