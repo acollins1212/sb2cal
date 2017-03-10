@@ -1,7 +1,7 @@
 # sb2cal.com
 Easily insert your UCD schedule into Google Calendar
 
-Set to be online as sb2cal.com by January 1, 2017!
+Online now!
 
 --------------------------------------------------------------------------------------------
 
