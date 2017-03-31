@@ -8,7 +8,7 @@ CONTAINS:
 
 **/
 
-    var CLIENT_ID = '939118948007-sdlatljv3k8rpir0m4anb2ub73i9sr6a.apps.googleusercontent.com';
+    var CLIENT_ID = '633313323364-7s07sgpq2vsahi8irjgi0iop8ue9td99.apps.googleusercontent.com';
     var SCOPES = ["https://www.googleapis.com/auth/calendar"];
     var CALENDAR_ID;
 
