@@ -17,7 +17,7 @@ Steps:
 
 (5). You can easily export that calendar to whatever app you wish
 
-Originally written out in Python. Translated to Javascript + PHP to put it into a webpage.
+Originally written out in Python. Then translated to Javascript + PHP to put it into a webpage. Finally, AngularJS was used instead of PHP, Bootstrap was used for CSS. This is largely the final product.
 
 
 This repository is free for anyone to use under the terms of the MIT license.
@@ -25,4 +25,4 @@ This repository is free for anyone to use under the terms of the MIT license.
 --------------------------------------------------------------------------------------------
 
 I got the idea for this when I was putting my schedule into my school schedule on my phone.
-I realized that I was able to write a script that could do this for me! Admittedly, I'm going past simply inserting whatever is pasted into the page.
+I realized that I was able to write a script that could automate this task! Taking it one step further to integrate it into a website taught me a lot.
