@@ -9,7 +9,9 @@ CONTAINS:
 
 var  FIRST_DAY = new Date(2017, 3, 3, 1, 1, 0, 0);
 var  LAST_DAY = new Date(2017, 5, 8, 16, 59, 0, 0);
-//var  DAYS_OFF = new Date(2017, 3, 5, 1, 1, 0, 0);  DOESNT WORK (2/25)
+//CHANGE DAYS_OFF EVERY QUARTER. THE MONTHS ARE ZERO_INDEXED 
+//	(e.g January is 0, February is 1,..., December is 11)
+var  DAYS_OFF = [new Date(2017, 4, 29, 1, 0, 0, 0)];  
 
 function parseTime(time_str) {
 
@@ -124,60 +126,17 @@ var Course = function(class_string){
 
     this.getEventJSON = function(meeting_number) {
 
-        var course_event = this.meeting_array[meeting_number];
+		var course_event = this.meeting_array[meeting_number];
         var desc = this.description_str + "\nSection: " + this.section;
 
-        var last_day_iso = LAST_DAY.toISOString().replace(/[:\-.]/g,'');
-        last_day_iso = last_day_iso.replace(/00000Z/, '00Z');
+      	var parsedStart = parseTime(course_event.start_time);
+        var parsedEnd = parseTime(course_event.end_time);
 
-        // var exceptionISO = DAYS_OFF.toISOString().replace(/[:\-.]/g,'');
-        // exceptionISO = exceptionISO.replace(/00000Z/, '00Z');
+        var exceptionString = "EXDATE;TZID=America/Los_Angeles:" + course_event.getExceptionDates();
 
-        //RECURRENCE STRING
-        var frequency_string = 'FREQ=WEEKLY';
-        var until_string = 'UNTIL='+last_day_iso;
-        var byday_string = "BYDAY="+course_event.days_of_week;
-        var recurrence_string = 'RRULE:WKST=SU;' + frequency_string + ';'
-        + until_string + ';' + byday_string ;
-
-        //var exceptionString = "EXDATE:" + exceptionISO;
-
-
-        //To give the proper start date of a class
-        var addition = 0;
-        if(course_event.days_of_week.search('MO') != -1){
-            addition = 0;
-        }
-        else if(course_event.days_of_week.search('TU') != -1){
-            addition = 1;
-        }
-        else if(course_event.days_of_week.search('WE') != -1){
-            addition = 2;
-        }
-        else if(course_event.days_of_week.search('TH') != -1){
-            addition = 3;
-        }
-        else if(course_event.days_of_week.search('FR') != -1){
-            addition = 4;
-        }
-
-        parsedStart = parseTime(course_event.start_time);
-        parsedEnd = parseTime(course_event.end_time);
-
-        var start_datetime = new Date(FIRST_DAY);
-        start_datetime.setDate(FIRST_DAY.getDate() + addition);
-        start_datetime.setHours(parsedStart[0] - 7); //-7 accounts for toISOString() adding 7
-        start_datetime.setMinutes(parsedStart[1]);
-        start_datetime = start_datetime.toISOString();
-        start_datetime = start_datetime.replace('.000Z', '-07:00');
-
-        var end_datetime = new Date(FIRST_DAY);
-        end_datetime.setDate(FIRST_DAY.getDate() + addition);
-        end_datetime.setHours(parsedEnd[0] - 7); //-7 accounts for toISOString() adding 7 
-        end_datetime.setMinutes(parsedEnd[1]);
-        end_datetime = end_datetime.toISOString();
-        end_datetime = end_datetime.replace('.000Z', '-07:00');
-        
+        var start_datetime = course_event.getDT(parsedStart);
+        var end_datetime = course_event.getDT(parsedEnd);
+       
         var summary_string = this.name_str + " " + course_event.meeting_type;
         
         var event = {
@@ -193,13 +152,17 @@ var Course = function(class_string){
                 "timeZone": "America/Los_Angeles"
             },
             "recurrence": [
-                recurrence_string
+                course_event.getRecurrenceString(),
+                exceptionString
             ]
 
         }; //event
+
         return event;
 
     } //this.getEventJSON()
+
+    
 
 
 
@@ -236,6 +199,75 @@ var Course_meeting = function(single_schedule){
     this.days_of_week = this.days_of_week.replace('F', 'FR,');
     var dow_length = this.days_of_week.length-1;
     this.days_of_week = this.days_of_week.substring(0,dow_length);
+
+
+    //Gives the proper start day of week for a meeting
+    this.getFirstDayOfWeek = function() {
+    	var addition = 0;
+        if(this.days_of_week.search('MO') != -1){
+            addition = 0;
+        }
+        else if(this.days_of_week.search('TU') != -1){
+            addition = 1;
+        }
+        else if(this.days_of_week.search('WE') != -1){
+            addition = 2;
+        }
+        else if(this.days_of_week.search('TH') != -1){
+            addition = 3;
+        }
+        else if(this.days_of_week.search('FR') != -1){
+            addition = 4;
+        }
+
+        return addition;
+    }
+
+    this.getDT = function(parsedStart) {
+    	
+    	var dt = new Date(FIRST_DAY);
+        dt.setDate(FIRST_DAY.getDate() + this.getFirstDayOfWeek());
+        dt.setHours(parsedStart[0]);  
+        dt.setMinutes(parsedStart[1]);
+        dt = dt.toISOString();
+        dt = dt.replace('.000Z', 'Z');
+
+        return dt;
+    }
+
+    this.getRecurrenceString = function() {
+    	var last_day_iso = LAST_DAY.toISOString().replace(/[:\-.]/g,'');
+        last_day_iso = last_day_iso.replace(/00000Z/, '00Z');
+
+        //RECURRENCE STRING
+        var frequency_string = 'FREQ=WEEKLY';
+        var until_string = 'UNTIL=' + last_day_iso;
+        var byday_string = "BYDAY=" + this.days_of_week;
+        var recurrence_string = 'RRULE:WKST=SU;' + frequency_string + ';'
+        + until_string + ';' + byday_string ;
+
+        return recurrence_string;
+    }
     
+    this.getExceptionDates = function() {
+
+    	var dates = "";
+
+    	var parsedStart = parseTime(this.start_time);
+
+    	for (var i = 0; i < DAYS_OFF.length; i++) {
+	    	var singleDayOff = new Date(DAYS_OFF[i]);
+	        singleDayOff.setHours(parsedStart[0]);
+	        singleDayOff.setMinutes(parsedStart[1]);
+	        var exceptionISO = singleDayOff.toISOString().replace(/[:\-.]/g,'');
+	        exceptionISO = exceptionISO.replace(/00000Z/, '00Z');
+
+	        dates += exceptionISO + ',';
+    	}
+
+    	dates = dates.substring(0, dates.length - 1);
+
+    	return dates;
+    }
     
 } //Course_meeting()

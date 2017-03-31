@@ -30,7 +30,9 @@ CONTAINS:
 
         var request = gapi.client.request(args);
         request.then(function(response) {
-            CALENDAR_ID = response.result.id;
+            
+            CALENDAR_ID = response.result.id; 
+   
             document.getElementById("calendar-button").innerHTML = "Calendar created!";
             document.getElementById("calendar-button").disabled = true;
             document.getElementById("calendar-name").disabled = true;
