@@ -31,6 +31,12 @@ app.controller('myCtrl', function($scope) {
 	}
 
     $scope.getCourses = function() {
+
+        if (document.getElementById('calendar-button').disabled == false) {
+            alert("You must create a Calendar first!");
+            return false;
+        }
+
         stringArray = parseSchedule();
 		
 		for (var i = 0; i < $scope.courseArray.length; i++) {
