@@ -6,12 +6,12 @@ CONTAINS:
     Course and Course_Meeting class definitions
 
 **/
-
-var  FIRST_DAY = new Date(2017, 3, 3, 1, 1, 0, 0);
-var  LAST_DAY = new Date(2017, 5, 8, 16, 59, 0, 0);
-//CHANGE DAYS_OFF EVERY QUARTER. THE MONTHS ARE ZERO_INDEXED 
+//THE MONTHS ARE ZERO_INDEXED 
+var  FIRST_DAY = new Date(2017, 5, 26, 1, 1, 0, 0);
+var  LAST_DAY = new Date(2017, 7, 4, 16, 59, 0, 0);
+//CHANGE DAYS_OFF EVERY QUARTER. 
 //	(e.g January is 0, February is 1,..., December is 11)
-var  DAYS_OFF = [new Date(2017, 4, 29, 1, 0, 0, 0)];  
+var  DAYS_OFF = [new Date(2017, 6, 4, 1, 0, 0, 0)];  
 
 function parseTime(time_str) {
 
