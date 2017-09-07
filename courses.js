@@ -7,11 +7,13 @@ CONTAINS:
 
 **/
 //THE MONTHS ARE ZERO_INDEXED 
-var  FIRST_DAY = new Date(2017, 5, 26, 1, 1, 0, 0);
-var  LAST_DAY = new Date(2017, 7, 4, 16, 59, 0, 0);
+var  FIRST_DAY = new Date(2017, 8, 27, 1, 1, 0, 0);
+var  LAST_DAY = new Date(2017, 11, 9, 16, 59, 0, 0);
 //CHANGE DAYS_OFF EVERY QUARTER. 
 //	(e.g January is 0, February is 1,..., December is 11)
-var  DAYS_OFF = [new Date(2017, 6, 4, 1, 0, 0, 0)];  
+var  DAYS_OFF = [new Date(2017, 10, 10, 1, 0, 0, 0), 
+		 new Date(2017, 10, 23, 1, 0, 0, 0), 
+		 new Date(2017, 10, 24, 1, 0, 0, 0)];  
 
 function parseTime(time_str) {
 
@@ -204,6 +206,25 @@ var Course_meeting = function(single_schedule){
     //Gives the proper start day of week for a meeting
     this.getFirstDayOfWeek = function() {
     	var addition = 0;
+	 //first day of classes is Wednesday!
+	 if(this.days_of_week.search('WE') != -1){
+            addition = 0;
+        }
+        else if(this.days_of_week.search('TH') != -1){
+            addition = 1;
+        }
+        else if(this.days_of_week.search('FR') != -1){
+            addition = 2;
+        }
+        else if(this.days_of_week.search('MO') != -1){
+            addition = 5;
+        }
+        else if(this.days_of_week.search('TU') != -1){
+            addition = 6;
+        }
+	    
+	/* USE THIS BLOCK WHEN FIRST DAY OF CLASSES IS MONDAY
+	*
         if(this.days_of_week.search('MO') != -1){
             addition = 0;
         }
@@ -219,6 +240,7 @@ var Course_meeting = function(single_schedule){
         else if(this.days_of_week.search('FR') != -1){
             addition = 4;
         }
+	*/
 
         return addition;
     }
